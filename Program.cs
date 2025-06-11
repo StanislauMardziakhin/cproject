@@ -9,8 +9,21 @@ builder.Services.AddControllersWithViews();
 
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
+if (string.IsNullOrWhiteSpace(connectionString))
+{
+    throw new InvalidOperationException("Connection string is missing or empty. Ensure DATABASE_URL or DefaultConnection is set.");
+}
+var logSafeConnectionString = connectionString;
+var atIndex = connectionString.IndexOf('@');
+if (atIndex > 10)
+{
+    logSafeConnectionString = connectionString[..10] + "****" + connectionString[atIndex..];
+}
+Console.WriteLine($"Using connection string: {logSafeConnectionString}");
 if (connectionString.StartsWith("postgresql://"))
     connectionString = connectionString.Replace("postgresql://", "postgres://");
+Console.WriteLine($"Converted connection string: {logSafeConnectionString.Replace("postgresql://", "postgres://")}");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
