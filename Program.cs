@@ -6,8 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") 
-                       ?? Environment.GetEnvironmentVariable("DATABASE_URL");
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+                       ?? builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -35,8 +35,9 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    await DataInitializer.SeedRolesAndAdmin(services);
+    var dbContext = scope.ServiceProvider.GetRequiredService<CourseProject.Models.AppDbContext>();
+    dbContext.Database.Migrate();
+    await DataInitializer.SeedRolesAndAdmin(scope.ServiceProvider);
 }
 
 app.Run();
