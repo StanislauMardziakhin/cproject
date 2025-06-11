@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-Console.WriteLine($"DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl[..10] + "****" + (databaseUrl.IndexOf('@') > 0 ? databaseUrl[databaseUrl.IndexOf('@')..] : "invalid"))}");
+Console.WriteLine($"Raw DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl)}");
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 Console.WriteLine($"DefaultConnection: {(string.IsNullOrEmpty(defaultConnection) ? "null or empty" : defaultConnection)}");
 var connectionString = databaseUrl ?? defaultConnection;
@@ -16,7 +16,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
 {
     throw new InvalidOperationException("Connection string is missing or empty. Ensure DATABASE_URL or DefaultConnection is set.");
 }
-
+Console.WriteLine($"Using connection string: {connectionString}");
 builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
