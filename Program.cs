@@ -16,19 +16,6 @@ if (string.IsNullOrWhiteSpace(connectionString))
 {
     throw new InvalidOperationException("Connection string is missing or empty. Ensure DATABASE_URL or DefaultConnection is set.");
 }
-var logSafeConnectionString = connectionString;
-var passwordStart = connectionString.IndexOf(':') + 1;
-var passwordEnd = connectionString.IndexOf('@');
-if (passwordEnd > passwordStart)
-{
-    logSafeConnectionString = connectionString[..passwordStart] + "****" + connectionString[passwordEnd..];
-}
-Console.WriteLine($"Using connection string: {logSafeConnectionString}");
-if (connectionString.StartsWith("postgresql://"))
-{
-    connectionString = connectionString.Replace("postgresql://", "postgres://");
-    Console.WriteLine($"Converted connection string: {logSafeConnectionString.Replace("postgresql://", "postgres://")}");
-}
 
 builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
     options.UseNpgsql(connectionString));
