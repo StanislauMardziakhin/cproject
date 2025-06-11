@@ -1,18 +1,21 @@
+using CourseProject.Models;
+using CourseProject.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using CourseProject.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL") 
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL")
                        ?? builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
+if (connectionString.StartsWith("postgresql://"))
+    connectionString = connectionString.Replace("postgresql://", "postgres://");
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-builder.Services.AddIdentity<CourseProject.Models.ApplicationUser, IdentityRole>()
-    .AddEntityFrameworkStores<CourseProject.Models.AppDbContext>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
 var app = builder.Build();
@@ -30,12 +33,12 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    "default",
+    "{controller=Home}/{action=Index}/{id?}");
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<CourseProject.Models.AppDbContext>();
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
     await DataInitializer.SeedRolesAndAdmin(scope.ServiceProvider);
 }
