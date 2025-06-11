@@ -17,7 +17,7 @@ if (string.IsNullOrWhiteSpace(connectionString))
     throw new InvalidOperationException("Connection string is missing or empty. Ensure DATABASE_URL or DefaultConnection is set.");
 }
 Console.WriteLine($"Using connection string: {connectionString}");
-builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
+builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
@@ -44,8 +44,6 @@ app.MapControllerRoute(
 
 using (var scope = app.Services.CreateScope())
 {
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate();
     await DataInitializer.SeedRolesAndAdmin(scope.ServiceProvider);
 }
 
