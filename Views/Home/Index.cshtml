@@ -1,27 +1,10 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using CourseProject.Models
+@inject UserManager<ApplicationUser> UserManager
+@{
     ViewData["Title"] = "Home";
     var templates = ViewData["Templates"] as List<CourseProject.Models.Template>;
 }
 <div class="text-center">
-    <h1 class="display-4">Hello, World!</h1>
-    <p>Welcome to CourseProject!</p>
-    <div class="container">
-        <button class="btn btn-primary">Test Button</button>
-        <h2>Templates</h2>
-        @if (templates != null && templates.Any())
-        {
-            <ul class="list-group">
-                @foreach (var template in templates)
-                {
-                    <li class="list-group-item">
-                        @template.Name - @template.Description (Category: @template.Theme)
-                    </li>
-                }
-            </ul>
-        }
-        else
-        {
-            <p>No templates found.</p>
-        }
-    </div>
+    <h1 class="display-4">Hello, @ViewData["UserName"]!</h1>
 </div>

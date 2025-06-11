@@ -2,36 +2,31 @@ using CourseProject.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace CourseProject.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly AppDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(AppDbContext context)
+        public HomeController(AppDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
         {
-            var template = new Template
-            {
-                Name = "Test Template",
-                Description = "A test template for education",
-                IsPublic = true,
-                Theme = "Education"
-            };
-            _context.Templates.Add(template);
-            await _context.SaveChangesAsync();
-            
-            var templates = await _context.Templates.ToListAsync();
-            ViewData["Templates"] = templates;
-
+            var user = await _userManager.GetUserAsync(User);
+            ViewData["UserName"] = user?.Name ?? "Guest";
             return View();
         }
-
+        
+        [AllowAnonymous]
         public IActionResult Privacy()
         {
             return View();
