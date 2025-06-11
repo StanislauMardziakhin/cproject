@@ -30,6 +30,9 @@ if (connectionString.StartsWith("postgresql://"))
     Console.WriteLine($"Converted connection string: {logSafeConnectionString.Replace("postgresql://", "postgres://")}");
 }
 
+builder.Services.AddDbContext<CourseProject.Models.AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
+
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
