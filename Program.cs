@@ -10,15 +10,14 @@ builder.Services.AddControllersWithViews();
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 Console.WriteLine($"Raw DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl)}");
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine($"DefaultConnection: {(string.IsNullOrEmpty(defaultConnection) ? "null or empty" : defaultConnection)}");
-var connectionString = databaseUrl ?? defaultConnection;
-if (string.IsNullOrWhiteSpace(connectionString))
-{
-    throw new InvalidOperationException("Connection string is missing or empty. Ensure DATABASE_URL or DefaultConnection is set.");
-}
-Console.WriteLine($"Using connection string: {connectionString}");
+Console.WriteLine(
+    $"DefaultConnection: {(string.IsNullOrEmpty(defaultConnection) ? "null or empty" : defaultConnection)}");
+
+var connectionStringService = new ConnectionStringConverter(databaseUrl, defaultConnection);
+var efConnectionString = connectionStringService.GetConnectionString();
+Console.WriteLine($"Using connection string: {efConnectionString}");
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseNpgsql(efConnectionString));
 
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
@@ -33,8 +32,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseRouting();
 app.UseStaticFiles();
+app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
