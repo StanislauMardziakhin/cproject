@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSingleton<ICloudinaryService, CloudinaryService>();
+builder.Services.AddScoped<ITemplateService, TemplateService>();
 
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 Console.WriteLine($"Raw DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl)}");

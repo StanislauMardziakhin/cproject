@@ -1,4 +1,8 @@
 ﻿bin/
 obj/
+appsettings.json
 appsettings.*.json
 *.user
+*.csproj.user
+*.csproj.DotSettings
+.idea/

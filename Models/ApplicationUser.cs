@@ -5,4 +5,5 @@ namespace CourseProject.Models;
 public class ApplicationUser : IdentityUser
 {
     public string Name { get; set; } = string.Empty;
+    public List<Template> Templates { get; set; } = new();
 }

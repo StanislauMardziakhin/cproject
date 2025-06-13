@@ -1,0 +1,46 @@
+﻿@model List<CourseProject.Models.TemplateViewModel>
+@{
+    ViewData["Title"] = "Templates";
+}
+<h2>Templates</h2>
+<a asp-action="Create" class="btn btn-primary mb-3">Create New Template</a>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Theme</th>
+                <th>Owner</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in Model)
+            {
+                <tr>
+                    <td><a asp-action="Details" asp-route-id="@template.Id">@template.Name</a></td>
+                    <td>@template.Theme</td>
+                    <td>@template.OwnerName</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">Actions</button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-action="Details" asp-route-id="@template.Id">View</a></li>
+                                @if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || template.OwnerName == User.Identity.Name))
+                                {
+                                    <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@template.Id">Edit</a></li>
+                                    <li>
+                                        <form asp-action="Delete" asp-route-id="@template.Id" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="dropdown-item" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

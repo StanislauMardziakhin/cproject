@@ -1,0 +1,19 @@
+﻿@model CourseProject.Models.TemplateViewModel
+@using Markdig
+@{
+    ViewData["Title"] = Model.Name;
+}
+<h2>@Model.Name</h2>
+<div>@Markdown.ToHtml(Model.Description, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build())</div>
+<p><strong>Theme:</strong> @Model.Theme</p>
+<p><strong>Public:</strong> @Model.IsPublic</p>
+<p><strong>Tags:</strong> @Model.Tags</p>
+<p><strong>Owner:</strong> @Model.OwnerName</p>
+@if (Model.ImageUrl != null)
+{
+    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid" style="max-width: 300px;" />
+}
+@if (User.Identity.IsAuthenticated && (User.IsInRole("Admin") || Model.OwnerName == User.Identity.Name))
+{
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+}
