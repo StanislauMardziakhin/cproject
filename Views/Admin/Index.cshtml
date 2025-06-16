@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CourseProject.ViewModels.UserViewModel>
+@{
+    ViewData["Title"] = "Users management";
+}
+<h2>Users management</h2>
+
+<table class="table table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Status</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Name</td>
+                <td>@user.Email</td>
+                <td>@(user.IsLocked ? "Blocked" : "Active")</td>
+                <td>@(user.IsAdmin ? "Admin" : "User")</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Actions
+                        </button>
+                        <ul class="dropdown-menu">
+                            @if (!user.IsLocked)
+                            {
+                                <li>
+                                    <form asp-action="Block" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@user.Id"/>
+                                        <button type="submit" class="dropdown-item">Block</button>
+                                    </form>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <form asp-action="Unblock" method="post">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="id" value="@user.Id"/>
+                                        <button type="submit" class="dropdown-item">Unblock</button>
+                                    </form>
+                                </li>
+                            }
+                            <li>
+                                <form asp-action="ToggleAdmin" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@user.Id"/>
+                                    <button type="submit" class="dropdown-item">
+                                        @(user.IsAdmin ? "Remove from admin role" : "Assign as admin")
+                                    </button>
+                                </form>
+                            </li>
+                            <li>
+                                <form asp-action="Delete" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="id" value="@user.Id"/>
+                                    <button type="submit" class="dropdown-item">Delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,87 +1,71 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using CourseProject.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CourseProject.Models;
-using System.Threading.Tasks;
 
-namespace CourseProject.Controllers
+namespace CourseProject.Controllers;
+
+public class AccountController : Controller
 {
-    [AllowAnonymous]
-    public class AccountController : Controller
+    private readonly AccountService _accountService;
+
+    public AccountController(AccountService accountService)
     {
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly SignInManager<ApplicationUser> _signInManager;
+        _accountService = accountService;
+    }
 
-        public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
-        {
-            _userManager = userManager;
-            _signInManager = signInManager;
-        }
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Login(string returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        return View();
+    }
 
-        [HttpGet]
-        public IActionResult Login(string returnUrl = null)
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(string email, string password, bool rememberMe, string returnUrl = null)
+    {
+        ViewData["ReturnUrl"] = returnUrl;
+        if (!ModelState.IsValid) return View();
         {
-            ViewData["ReturnUrl"] = returnUrl;
+            var (succeeded, errors) = await _accountService.LoginAsync(email, password, rememberMe);
+            if (succeeded) return RedirectToLocal(returnUrl);
+            foreach (var error in errors) ModelState.AddModelError(string.Empty, error);
             return View();
         }
+    }
 
-        [HttpPost]
-        public async Task<IActionResult> Login(string email, string password, bool rememberMe, string returnUrl = null)
-        {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (ModelState.IsValid)
-            {
-                var user = await _userManager.FindByEmailAsync(email);
-                if (user != null)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, password, rememberMe, lockoutOnFailure: false);
-                    if (result.Succeeded)
-                    {
-                        return LocalRedirect(returnUrl ?? Url.Action("Index", "Home"));
-                    }
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "User not found.");
-                }
-            }
-            return View();
-        }
+    [HttpGet]
+    [AllowAnonymous]
+    public IActionResult Register()
+    {
+        return View();
+    }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+    [HttpPost]
+    [AllowAnonymous]
+    public async Task<IActionResult> Register(string email, string password, string name)
+    {
+        if (ModelState.IsValid) return View();
 
-        [HttpPost]
-        public async Task<IActionResult> Register(string email, string password, string name)
-        {
-            if (ModelState.IsValid)
-            {
-                var user = new ApplicationUser { UserName = email, Email = email, Name = name };
-                var result = await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "User"); 
-                    await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction("Index", "Home");
-                }
-                foreach (var error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error.Description);
-                }
-            }
-            return View();
-        }
+        var (succeeded, errors) = await _accountService.RegisterAsync(email, password, name);
+        if (succeeded) return RedirectToAction("Index", "Home");
 
-        [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Logout()
-        {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home");
-        }
+        foreach (var error in errors) ModelState.AddModelError(string.Empty, error);
+        return View();
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> Logout()
+    {
+        await _accountService.LogoutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
+    private IActionResult RedirectToLocal(string? returnUrl)
+    {
+        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl)) return LocalRedirect(returnUrl);
+        return RedirectToAction("Index", "Home");
     }
 }

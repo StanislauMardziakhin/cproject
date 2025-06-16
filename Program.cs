@@ -5,8 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
-
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
 Console.WriteLine($"Raw DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl)}");
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -16,12 +14,15 @@ Console.WriteLine(
 var connectionStringService = new ConnectionStringConverter(databaseUrl, defaultConnection);
 var efConnectionString = connectionStringService.GetConnectionString();
 Console.WriteLine($"Using connection string: {efConnectionString}");
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(efConnectionString));
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.AddControllersWithViews();
+builder.Services.AddScoped<UserManagementService>();
+builder.Services.AddScoped<AccountService>();
 
 var app = builder.Build();
 
