@@ -15,27 +15,28 @@ public class ConnectionStringConverter
     {
         var connectionString = string.IsNullOrWhiteSpace(_databaseUrl) ? _defaultConnection : _databaseUrl;
 
-        if (string.IsNullOrWhiteSpace(connectionString))
+        if (!string.IsNullOrWhiteSpace(_databaseUrl))
         {
-            throw new InvalidOperationException("Connection string is missing or empty");
-        }
-        try
-        {
-            var uri = new Uri(connectionString);
-            var userInfo = uri.UserInfo.Split(':');
-            if (userInfo.Length != 2)
+            try
             {
-                throw new InvalidOperationException("Invalid user info format");
-            }
+                var uri = new Uri(connectionString);
+                var userInfo = uri.UserInfo.Split(':');
+                if (userInfo.Length != 2)
+                {
+                    throw new InvalidOperationException("Invalid user info format");
+                }
 
-            var efConnectionString = $"Host={uri.Host};Port={uri.Port};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]}";
-            Console.WriteLine($"Converted to EF format: {efConnectionString}");
-            return efConnectionString;
+                var efConnectionString =
+                    $"Host={uri.Host};Port={uri.Port};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]}";
+                Console.WriteLine($"Converted to EF format: {efConnectionString}");
+                return efConnectionString;
+            }
+            catch (UriFormatException ex)
+            {
+                Console.WriteLine($"Error parsing URI: {ex.Message}");
+                throw new InvalidOperationException("Invalid DATABASE_URL format", ex);
+            }
         }
-        catch (UriFormatException ex)
-        {
-            Console.WriteLine($"Error parsing URI: {ex.Message}");
-            throw;
-        }
+        return connectionString;
     }
 }
