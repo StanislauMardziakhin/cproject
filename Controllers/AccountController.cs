@@ -1,4 +1,5 @@
 ﻿using CourseProject.Services;
+using CourseProject.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,32 +24,31 @@ public class AccountController : Controller
 
     [HttpPost]
     [AllowAnonymous]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Login(string email, string password, bool rememberMe, string returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
         if (!ModelState.IsValid) return View();
-        {
-            var (succeeded, errors) = await _accountService.LoginAsync(email, password, rememberMe);
-            if (succeeded) return RedirectToLocal(returnUrl);
-            foreach (var error in errors) ModelState.AddModelError(string.Empty, error);
-            return View();
-        }
+        var (succeeded, errors) = await _accountService.LoginAsync(email, password, rememberMe);
+        if (succeeded) return RedirectToLocal(returnUrl);
+        foreach (var error in errors) ModelState.AddModelError(string.Empty, error);
+        return View();
     }
 
     [HttpGet]
     [AllowAnonymous]
     public IActionResult Register()
     {
-        return View();
+        return View(new RegisterViewModel());
     }
 
     [HttpPost]
     [AllowAnonymous]
-    public async Task<IActionResult> Register(string email, string password, string name)
+    public async Task<IActionResult> Register(RegisterViewModel model)
     {
-        if (ModelState.IsValid) return View();
+        if (!ModelState.IsValid) return View();
 
-        var (succeeded, errors) = await _accountService.RegisterAsync(email, password, name);
+        var (succeeded, errors) = await _accountService.RegisterAsync(model.Email, model.Password, model.Name);
         if (succeeded) return RedirectToAction("Index", "Home");
 
         foreach (var error in errors) ModelState.AddModelError(string.Empty, error);
@@ -57,6 +57,7 @@ public class AccountController : Controller
 
     [HttpPost]
     [Authorize]
+    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Logout()
     {
         await _accountService.LogoutAsync();

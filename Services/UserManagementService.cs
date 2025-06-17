@@ -7,73 +7,108 @@ namespace CourseProject.Services;
 
 public class UserManagementService
 {
+    private readonly AppDbContext _dbContext;
+    private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserManagementService(UserManager<ApplicationUser> userManager)
+    public UserManagementService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager,
+        AppDbContext dbContext)
     {
         _userManager = userManager;
+        _dbContext = dbContext;
+        _signInManager = signInManager;
     }
-    
+
     public async Task<List<UserViewModel>> GetAllUsersViewModelAsync()
     {
-        var users = await _userManager.Users.AsNoTracking().ToListAsync();
-        var userViewModels = new List<UserViewModel>();
+        var adminRoleId = await _dbContext.Roles
+            .Where(r => r.Name == "Admin").Select(r => r.Id).FirstAsync();
+        var users = await _dbContext.Users
+            .AsNoTracking()
+            .GroupJoin(_dbContext.UserRoles.Where(ur => ur.RoleId == adminRoleId),
+                u => u.Id, ur => ur.UserId,
+                (u, roles) => new UserViewModel
+                {
+                    Id = u.Id, Name = u.Name, Email = u.Email,
+                    IsLocked = u.LockoutEnd != null, IsAdmin = roles.Any()
+                })
+            .ToListAsync();
+        return users;
+    }
 
-        foreach (var user in users)
+    public async Task BlockUserAsync(string[] userIds)
+    {
+        await ExecuteInTransactionAsync(async () =>
+            await FilterUsersByIds(userIds)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(u => u.LockoutEnd, DateTimeOffset.MaxValue)));
+    }
+
+    public async Task UnblockUserAsync(string[] userIds)
+    {
+        await ExecuteInTransactionAsync(async () =>
+            await FilterUsersByIds(userIds)
+                .ExecuteUpdateAsync(setters => setters.SetProperty(u => u.LockoutEnd, (DateTimeOffset?)null)));
+    }
+
+    public async Task AssignAdminRoleAsync(string[] userIds)
+    {
+        await ExecuteInTransactionAsync(async () =>
         {
-            var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
-            userViewModels.Add(new UserViewModel
-            {
-                Id = user.Id,
-                Name = user.Name,
-                Email = user.Email,
-                IsLocked = user.LockoutEnd != null,
-                IsAdmin = isAdmin
-            });
-        }
-
-        return userViewModels;
+            var adminRole = await _dbContext.Roles.FirstAsync(r => r.Name == "Admin");
+            var existingUserRoles = await FilterUserRolesByIds(userIds, adminRole.Id)
+                .Select(ur => ur.UserId).ToListAsync();
+            var newUserRoles = userIds.Except(existingUserRoles)
+                .Select(userId => new IdentityUserRole<string> { UserId = userId, RoleId = adminRole.Id });
+            await _dbContext.UserRoles.AddRangeAsync(newUserRoles);
+            await _dbContext.SaveChangesAsync();
+        });
     }
 
-    public async Task<bool> BlockUserAsync(string userId)
+    public async Task<bool> RemoveAdminRoleAsync(string[] userIds, string? currentUserId)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null) return false;
-        user.LockoutEnd = DateTimeOffset.MaxValue;
-        var result = await _userManager.UpdateAsync(user);
-        return result.Succeeded;
-    }
+        var requiresLogout = currentUserId != null && userIds.Contains(currentUserId);
 
-    public async Task<bool> UnblockUserAsync(string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null) return false;
-        user.LockoutEnd = null;
-        var result = await _userManager.UpdateAsync(user);
-        return result.Succeeded;
-    }
-
-    public async Task<bool> ToggleAdminRoleAsync(string userId)
-    {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null) return false;
-        if (await _userManager.IsInRoleAsync(user, "Admin"))
+        await ExecuteInTransactionAsync(async () =>
         {
-            var result = await _userManager.RemoveFromRoleAsync(user, "Admin");
-            return result.Succeeded;
-        }
-        else
-        {
-            var result = await _userManager.AddToRoleAsync(user, "Admin");
-            return result.Succeeded;
-        }
+            var adminRoleId = await _dbContext.Roles
+                .Where(r => r.Name == "Admin")
+                .Select(r => r.Id)
+                .FirstAsync();
+            await FilterUserRolesByIds(userIds, adminRoleId).ExecuteDeleteAsync();
+        });
+
+        if (requiresLogout) await _signInManager.SignOutAsync();
+
+        return requiresLogout;
     }
 
-    public async Task<bool> DeleteUserAsync(string userId)
+    public async Task<bool> DeleteUsersAsync(string[] userIds, string? currentUserId)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null) return false;
-        var result = await _userManager.DeleteAsync(user);
-        return result.Succeeded;
+        var requiresLogout = currentUserId != null && userIds.Contains(currentUserId);
+
+        await ExecuteInTransactionAsync(async () =>
+            await FilterUsersByIds(userIds).ExecuteDeleteAsync());
+
+        if (requiresLogout) await _signInManager.SignOutAsync();
+
+        return requiresLogout;
+    }
+
+    private async Task ExecuteInTransactionAsync(Func<Task> operation)
+    {
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
+        await operation();
+        await transaction.CommitAsync();
+    }
+
+    private IQueryable<ApplicationUser> FilterUsersByIds(string[] userIds)
+    {
+        return _dbContext.Users.Where(u => userIds.Contains(u.Id));
+    }
+
+    private IQueryable<IdentityUserRole<string>>
+        FilterUserRolesByIds(string[] userIds, string roleId)
+    {
+        return _dbContext.UserRoles.Where(ur => userIds.Contains(ur.UserId) && ur.RoleId == roleId);
     }
 }

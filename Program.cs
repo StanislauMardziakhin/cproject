@@ -20,6 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Home/Index"; });
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<UserManagementService>();
 builder.Services.AddScoped<AccountService>();

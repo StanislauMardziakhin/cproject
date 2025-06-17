@@ -5,8 +5,15 @@
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link" asp-controller="Account" asp-action="Login">Hello, @ViewData["UserName"]!</a>
+            <span class="nav-link">Hello, @(UserManager.GetUserAsync(User).Result?.Name ?? "User")!</span>
         </li>
+        @if (User.IsInRole("Admin"))
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+            </li>
+        }
+
         <li class="nav-item">
             <form asp-controller="Account" asp-action="Logout" method="post">
                 <button type="submit" class="nav-link btn btn-link">Logout</button>
