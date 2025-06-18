@@ -1,26 +1,28 @@
-﻿@model CourseProject.ViewModels.RegisterViewModel
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model CourseProject.ViewModels.RegisterViewModel
+@inject IStringLocalizer<SharedResources> Localizer
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = Localizer["RegisterTitle"];
 }
-<h2>Register</h2>
+<h2>@Localizer["RegisterTitle"]</h2>
 <form asp-action="Register" method="post">
     <div class="form-group">
-        <label asp-for="Email" class="form-label">Email</label>
+        <label asp-for="Email" class="form-label">@Localizer["RegisterEmail"]</label>
         <input asp-for="Email" class="form-control" required/>
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Password" class="form-label">Password</label>
+        <label asp-for="Password" class="form-label">@Localizer["RegisterPassword"]</label>
         <input asp-for="Password" class="form-control" required/>
         <span asp-validation-for="Password" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Name" class="form-label">Name</label>
+        <label asp-for="Name" class="form-label">@Localizer["RegisterName"]</label>
         <input asp-for="Name" class="form-control" required/>
         <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-    <button type="submit" class="btn btn-primary">Register</button>
-    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">@Localizer["RegisterButton"]</button>
 </form>
 
 @section Scripts {

@@ -1,36 +1,39 @@
-﻿@model IEnumerable<CourseProject.ViewModels.UserViewModel>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model IEnumerable<CourseProject.ViewModels.UserViewModel>
+@inject IStringLocalizer<SharedResources> Localizer
 @{
-    ViewData["Title"] = "Users management";
+    ViewData["Title"] = Localizer["AdminPanelTitle"];
 }
-<h2>User management</h2>
+<h2>@Localizer["AdminPanelTitle"]</h2>
 <form asp-action="ApplyAction" asp-controller="Admin" method="post" id="admin-form">
     @Html.AntiForgeryToken()
     <div id="error-alert" class="alert alert-danger d-none mt-3" role="alert">
-        Please select at least one user.
+        @Localizer["AdminErrorNoUsersSelected"]
     </div>
     <div class="mb-3">
         <div class="dropdown">
             <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                     aria-expanded="false">
-                Actions
+                @Localizer["AdminActions"]
             </button>
             <ul class="dropdown-menu">
                 <li>
-                    <button type="submit" name="action" value="Block" class="dropdown-item">Block</button>
+                    <button type="submit" name="action" value="Block" class="dropdown-item">@Localizer["AdminActionBlock"]</button>
                 </li>
                 <li>
-                    <button type="submit" name="action" value="Unblock" class="dropdown-item">Unblock</button>
+                    <button type="submit" name="action" value="Unblock" class="dropdown-item">@Localizer["AdminActionUnblock"]</button>
                 </li>
                 <li>
-                    <button type="submit" name="action" value="AssignAdmin" class="dropdown-item">Assign as Admin
+                    <button type="submit" name="action" value="AssignAdmin" class="dropdown-item">@Localizer["AdminActionAssignAdmin"]
                     </button>
                 </li>
                 <li>
-                    <button type="submit" name="action" value="RemoveAdmin" class="dropdown-item">Remove Admin Role
+                    <button type="submit" name="action" value="RemoveAdmin" class="dropdown-item">@Localizer["AdminActionRemoveAdmin"]
                     </button>
                 </li>
                 <li>
-                    <button type="submit" name="action" value="Delete" class="dropdown-item">Delete</button>
+                    <button type="submit" name="action" value="Delete" class="dropdown-item">@Localizer["AdminActionDelete"]</button>
                 </li>
             </ul>
         </div>
@@ -40,10 +43,10 @@
         <thead>
         <tr>
             <th><input type="checkbox" id="selectAll"/></th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Role</th>
+            <th>@Localizer["AdminTableName"]</th>
+            <th>@Localizer["AdminTableEmail"]</th>
+            <th>@Localizer["AdminTableStatus"]</th>
+            <th>@Localizer["AdminTableRole"]</th>
         </tr>
         </thead>
         <tbody>
@@ -53,8 +56,8 @@
                 <td><input type="checkbox" name="userIds" value="@user.Id"/></td>
                 <td>@user.Name</td>
                 <td>@user.Email</td>
-                <td>@(user.IsLocked ? "Blocked" : "Active")</td>
-                <td>@(user.IsAdmin ? "Admin" : "User")</td>
+                <td>@(user.IsLocked ? Localizer["AdminStatusBlocked"] : Localizer["AdminStatusActive"])</td>
+                <td>@(user.IsAdmin ? Localizer["AdminRoleAdmin"] : Localizer["AdminRoleUser"])</td>
             </tr>
         }
         </tbody>
@@ -77,14 +80,13 @@
             });
         });
 
-        const form = document.querySelector('form[action="/Admin/ApplyAction"]');
+        const form = document.getElementById('admin-form');
         if (form) {
             form.addEventListener('submit', function (e) {
                 if (!document.querySelectorAll('input[name="userIds"]:checked').length) {
                     e.preventDefault();
                     const alert = document.getElementById('error-alert');
                     alert.classList.remove('d-none');
-                    setTimeout(() => alert.classList.add('d-none'), 3000);
                 }
             });
         }

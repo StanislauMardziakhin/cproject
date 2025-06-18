@@ -1,6 +1,8 @@
+using System.Globalization;
 using CourseProject.Models;
 using CourseProject.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,11 +23,28 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 builder.Services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Home/Index"; });
-builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<UserManagementService>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
+
+var supportedCultures = new[] { new CultureInfo("en"), new CultureInfo("es") };
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("en"),
+    SupportedCultures = supportedCultures,
+    SupportedUICultures = supportedCultures,
+    RequestCultureProviders = [
+        new CookieRequestCultureProvider { CookieName = "UserCulture" },
+        new QueryStringRequestCultureProvider(),
+        new AcceptLanguageHeaderRequestCultureProvider()
+    ]
+});
 
 if (!app.Environment.IsDevelopment())
 {

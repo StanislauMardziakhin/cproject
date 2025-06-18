@@ -21,19 +21,32 @@ public class UserManagementService
 
     public async Task<List<UserViewModel>> GetAllUsersViewModelAsync()
     {
-        var adminRoleId = await _dbContext.Roles
-            .Where(r => r.Name == "Admin").Select(r => r.Id).FirstAsync();
-        var users = await _dbContext.Users
+        var adminRoleId = await GetAdminRoleIdAsync();
+        var users = await GetUsersWithRolesAsync(adminRoleId);
+        return users;
+    }
+    private async Task<string> GetAdminRoleIdAsync()
+    {
+        return await _dbContext.Roles
+            .Where(r => r.Name == "Admin")
+            .Select(r => r.Id)
+            .FirstAsync();
+    }
+    private async Task<List<UserViewModel>> GetUsersWithRolesAsync(string adminRoleId)
+    {
+        return await _dbContext.Users
             .AsNoTracking()
             .GroupJoin(_dbContext.UserRoles.Where(ur => ur.RoleId == adminRoleId),
                 u => u.Id, ur => ur.UserId,
                 (u, roles) => new UserViewModel
                 {
-                    Id = u.Id, Name = u.Name, Email = u.Email,
-                    IsLocked = u.LockoutEnd != null, IsAdmin = roles.Any()
+                    Id = u.Id,
+                    Name = u.Name,
+                    Email = u.Email,
+                    IsLocked = u.LockoutEnd != null,
+                    IsAdmin = roles.Any()
                 })
             .ToListAsync();
-        return users;
     }
 
     public async Task BlockUserAsync(string[] userIds)

@@ -3,6 +3,7 @@ using CourseProject.Models;
 using CourseProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 
 namespace CourseProject.Controllers;
 
@@ -33,10 +34,12 @@ public class AdminController : Controller
         };
 
     private readonly UserManagementService _userManagementService;
+    private readonly IStringLocalizer<SharedResources> _localizer;
 
-    public AdminController(UserManagementService userManagementService)
+    public AdminController(UserManagementService userManagementService, IStringLocalizer<SharedResources> localizer)
     {
         _userManagementService = userManagementService;
+        _localizer = localizer;
     }
 
     public async Task<IActionResult> Index()
@@ -50,10 +53,13 @@ public class AdminController : Controller
     public async Task<IActionResult> ApplyAction(string[] userIds, string action)
     {
         if (userIds == null || !userIds.Any() || !Enum.TryParse<ActionType>(action, true, out var actionType))
+        {
+            TempData["Error"] = _localizer["ErrorInvalidAction"].Value;
             return RedirectToAction("Index");
+        }
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var requiresLogout = await _actions[actionType](_userManagementService, userIds, currentUserId);
-
+        TempData["Success"] = string.Format(_localizer["SuccessActionApplied"].Value, actionType);
         return requiresLogout
             ? RedirectToAction("Index", "Home")
             : RedirectToAction(nameof(Index));

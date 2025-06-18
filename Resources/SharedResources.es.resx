@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<root>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+                xmlns="">
+        <xsd:element name="root" msdata:IsDataSet="true">
+
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="NavHome" xml:space="preserve">
+        <value>Inicio</value>
+    </data>
+    <data name="NavLogout" xml:space="preserve">
+        <value>Cerrar Sesión</value>
+    </data>
+    <data name="NavLogin" xml:space="preserve">
+        <value>Iniciar Sesión</value>
+    </data>
+    <data name="NavRegister" xml:space="preserve">
+        <value>Registrarse</value>
+    </data>
+    <data name="NavAdminPanel" xml:space="preserve">
+        <value>Panel de Administración</value>
+    </data>
+    <data name="LanguageSelector" xml:space="preserve">
+        <value>Idioma</value>
+    </data>
+    <data name="LanguageEnglish" xml:space="preserve">
+        <value>Inglés</value>
+    </data>
+    <data name="LanguageSpanish" xml:space="preserve">
+        <value>Español</value>
+    </data>
+    <data name="SuccessActionApplied" xml:space="preserve">
+        <value>Acción {0} aplicada con éxito.</value>
+    </data>
+    <data name="ErrorInvalidAction" xml:space="preserve">
+        <value>Acción inválida o ningún usuario seleccionado.</value>
+    </data>
+    <data name="SuccessLogin" xml:space="preserve">
+        <value>Inició sesión con éxito.</value>
+    </data>
+    <data name="ErrorLogin" xml:space="preserve">
+        <value>Error al iniciar sesión.</value>
+    </data>
+    <data name="SuccessRegister" xml:space="preserve">
+        <value>Registrado con éxito.</value>
+    </data>
+    <data name="ErrorRegister" xml:space="preserve">
+        <value>Error al registrarse.</value>
+    </data>
+    <data name="SuccessLogout" xml:space="preserve">
+        <value>Cerró sesión con éxito.</value>
+    </data>
+    <data name="ErrorInvalidInput" xml:space="preserve">
+        <value>Entrada inválida.</value>
+    </data>
+    <data name="AdminPanelTitle" xml:space="preserve">
+        <value>Gestión de usuarios</value>
+    </data>
+    <data name="AdminTableName" xml:space="preserve">
+        <value>Nombre</value>
+    </data>
+    <data name="AdminTableEmail" xml:space="preserve">
+        <value>Correo Electrónico</value>
+    </data>
+    <data name="AdminTableStatus" xml:space="preserve">
+        <value>Estado</value>
+    </data>
+    <data name="AdminTableRole" xml:space="preserve">
+        <value>Rol</value>
+    </data>
+    <data name="AdminStatusBlocked" xml:space="preserve">
+        <value>Bloqueado</value>
+    </data>
+    <data name="AdminStatusActive" xml:space="preserve">
+        <value>Activo</value>
+    </data>
+    <data name="AdminRoleAdmin" xml:space="preserve">
+        <value>Administrador</value>
+    </data>
+    <data name="AdminRoleUser" xml:space="preserve">
+        <value>Usuario</value>
+    </data>
+    <data name="AdminActions" xml:space="preserve">
+        <value>Acciones</value>
+    </data>
+    <data name="AdminActionBlock" xml:space="preserve">
+        <value>Bloquear</value>
+    </data>
+    <data name="AdminActionUnblock" xml:space="preserve">
+        <value>Desbloquear</value>
+    </data>
+    <data name="AdminActionAssignAdmin" xml:space="preserve">
+        <value>Asignar como Administrador</value>
+    </data>
+    <data name="AdminActionRemoveAdmin" xml:space="preserve">
+        <value>Eliminar Rol de Administrador</value>
+    </data>
+    <data name="AdminActionDelete" xml:space="preserve">
+        <value>Eliminar</value>
+    </data>
+    <data name="LoginTitle" xml:space="preserve">
+        <value>Iniciar Sesión</value>
+    </data>
+    <data name="LoginEmail" xml:space="preserve">
+        <value>Correo Electrónico</value>
+    </data>
+    <data name="LoginPassword" xml:space="preserve">
+        <value>Contraseña</value>
+    </data>
+    <data name="LoginRememberMe" xml:space="preserve">
+        <value>Recordarme</value>
+    </data>
+    <data name="LoginButton" xml:space="preserve">
+        <value>Iniciar Sesión</value>
+    </data>
+    <data name="RegisterTitle" xml:space="preserve">
+        <value>Registrarse</value>
+    </data>
+    <data name="RegisterEmail" xml:space="preserve">
+        <value>Correo Electrónico</value>
+    </data>
+    <data name="RegisterPassword" xml:space="preserve">
+        <value>Contraseña</value>
+    </data>
+    <data name="RegisterName" xml:space="preserve">
+        <value>Nombre</value>
+    </data>
+    <data name="RegisterButton" xml:space="preserve">
+        <value>Registrarse</value>
+    </data>
+    <data name="AdminErrorNoUsersSelected" xml:space="preserve">
+        <value>Por favor, seleccione al menos un usuario.</value>
+    </data>
+    <data name="CP" xml:space="preserve">
+        <value>Proyecto del curso</value>
+    </data>
+    <data name="Hello" xml:space="preserve">
+        <value>Hola</value>
+    </data>
+</root>
