@@ -36,6 +36,9 @@
             <li class="nav-item">
                 <span class="nav-link">@Localizer["Hello"], @userName!</span>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Templates" asp-action="Index">@Localizer["TemplatesTitle"]</a>
+            </li>
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">

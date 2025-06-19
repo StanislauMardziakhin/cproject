@@ -155,4 +155,109 @@
     <data name="Hello" xml:space="preserve">
         <value>Hola</value>
     </data>
+    <data name="TemplatesTitle" xml:space="preserve">
+    <value>Mis Plantillas</value>
+  </data>
+    <data name="CreateTemplate" xml:space="preserve">
+    <value>Crear Plantilla</value>
+  </data>
+    <data name="EditTemplate" xml:space="preserve">
+    <value>Editar Plantilla</value>
+  </data>
+    <data name="Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+    <data name="Description" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+    <data name="Theme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+    <data name="Public" xml:space="preserve">
+    <value>Público</value>
+  </data>
+    <data name="Tags" xml:space="preserve">
+    <value>Etiquetas</value>
+  </data>
+    <data name="TagsPlaceholder" xml:space="preserve">
+    <value>ej., quiz,educación</value>
+  </data>
+    <data name="Image" xml:space="preserve">
+    <value>Imagen</value>
+  </data>
+    <data name="Create" xml:space="preserve">
+    <value>Crear</value>
+  </data>
+    <data name="Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+    <data name="Edit" xml:space="preserve">
+    <value>Editar</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+    <data name="Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+    <data name="Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+    <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+    <data name="Education" xml:space="preserve">
+    <value>Educación</value>
+  </data>
+    <data name="Quiz" xml:space="preserve">
+    <value>Cuestionario</value>
+  </data>
+    <data name="Other" xml:space="preserve">
+    <value>Otro</value>
+  </data>
+    <data name="SuccessTemplateCreated" xml:space="preserve">
+    <value>Plantilla creada con éxito.</value>
+  </data>
+    <data name="SuccessTemplateUpdated" xml:space="preserve">
+    <value>Plantilla actualizada con éxito.</value>
+  </data>
+    <data name="SuccessTemplateDeleted" xml:space="preserve">
+    <value>Plantilla eliminada con éxito.</value>
+  </data>
+    <data name="TErrorInvalidInput" xml:space="preserve">
+    <value>Por favor, corrija los errores de entrada.</value>
+  </data>
+    <data name="UserIdRequired" xml:space="preserve">
+    <value>Se requiere el ID de usuario.</value>
+  </data>
+    <data name="TemplateNotFoundOrAccessDenied" xml:space="preserve">
+    <value>Plantilla no encontrada o acceso denegado.</value>
+  </data>
+    <data name="NameRequired" xml:space="preserve">
+    <value>El nombre es obligatorio.</value>
+  </data>
+    <data name="NameTooLong" xml:space="preserve">
+    <value>El nombre no puede exceder los 100 caracteres.</value>
+  </data>
+    <data name="DescriptionTooLong" xml:space="preserve">
+    <value>La descripción no puede exceder los 500 caracteres.</value>
+  </data>
+    <data name="ThemeTooLong" xml:space="preserve">
+    <value>El tema no puede exceder los 50 caracteres.</value>
+  </data>
+    <data name="TagsTooLong" xml:space="preserve">
+    <value>Las etiquetas no pueden exceder los 500 caracteres.</value>
+  </data>
+    <data name="ImageUrlTooLong" xml:space="preserve">
+    <value>La URL de la imagen no puede exceder los 500 caracteres.</value>
+  </data>
+    <data name="Browse" xml:space="preserve">
+    <value>Examinar...</value>
+  </data>
+    <data name="NoFileChosen" xml:space="preserve">
+    <value>Ningún archivo seleccionado</value>
+  </data>
+    <data name="CurrentImage" xml:space="preserve">
+    <value>Imagen actual</value>
+  </data>
 </root>

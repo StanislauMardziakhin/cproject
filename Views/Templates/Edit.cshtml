@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model CourseProject.Models.Template
+@inject IStringLocalizer<SharedResources> Localizer
+@{
+    ViewData["Title"] = Localizer["EditTemplate"];
+}
+<h2>@Localizer["EditTemplate"]</h2>
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="UserId" />
+    <input type="hidden" asp-for="CreatedAt" />
+    <div class="form-group mb-3">
+        <label asp-for="Name" class="form-label">@Localizer["Name"]</label>
+        <input asp-for="Name" class="form-control" required />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
+        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Theme" class="form-label">@Localizer["Theme"]</label>
+        <select asp-for="Theme" class="form-control">
+            <option value="Education">@Localizer["Education"]</option>
+            <option value="Quiz">@Localizer["Quiz"]</option>
+            <option value="Other">@Localizer["Other"]</option>
+        </select>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="IsPublic" class="form-check-label">
+            <input asp-for="IsPublic" type="checkbox" class="form-check-input" />
+            @Localizer["Public"]
+        </label>
+    </div>
+    <div class="form-group mb-3">
+        <label asp-for="Tags" class="form-label">@Localizer["Tags"]</label>
+        <input asp-for="Tags" class="form-control" placeholder="@Localizer["TagsPlaceholder"]" />
+    </div>
+    <div class="form-group mb-3">
+        <label for="image" class="form-label">@Localizer["Image"]</label>
+        <input type="file" name="image" class="form-control" accept="image/*" />
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="Current image" class="img-thumbnail mt-2" style="max-width: 200px;" />
+        }
+    </div>
+    <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+</form>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

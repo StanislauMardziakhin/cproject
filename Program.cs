@@ -25,6 +25,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.ConfigureApplicationCookie(options => { options.AccessDeniedPath = "/Home/Index"; });
 builder.Services.AddScoped<UserManagementService>();
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<TemplateService>();
+builder.Services.AddScoped<CloudinaryService>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()

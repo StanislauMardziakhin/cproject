@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
                 xmlns="">
         <xsd:element name="root" msdata:IsDataSet="true">
 
@@ -155,4 +156,109 @@
     <data name="Hello" xml:space="preserve">
         <value>Hello</value>
     </data>
+    <data name="TemplatesTitle" xml:space="preserve">
+    <value>My Templates</value>
+  </data>
+    <data name="CreateTemplate" xml:space="preserve">
+    <value>Create Template</value>
+  </data>
+    <data name="EditTemplate" xml:space="preserve">
+    <value>Edit Template</value>
+  </data>
+    <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+    <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+    <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+    <data name="Public" xml:space="preserve">
+    <value>Public</value>
+  </data>
+    <data name="Tags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+    <data name="TagsPlaceholder" xml:space="preserve">
+    <value>e.g., quiz,education</value>
+  </data>
+    <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+    <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+    <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+    <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+    <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+    <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+    <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+    <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+    <data name="Education" xml:space="preserve">
+    <value>Education</value>
+  </data>
+    <data name="Quiz" xml:space="preserve">
+    <value>Quiz</value>
+  </data>
+    <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+    <data name="SuccessTemplateCreated" xml:space="preserve">
+    <value>Template created successfully.</value>
+  </data>
+    <data name="SuccessTemplateUpdated" xml:space="preserve">
+    <value>Template updated successfully.</value>
+  </data>
+    <data name="SuccessTemplateDeleted" xml:space="preserve">
+    <value>Template deleted successfully.</value>
+  </data>
+    <data name="TErrorInvalidInput" xml:space="preserve">
+    <value>Please correct the input errors.</value>
+  </data>
+    <data name="UserIdRequired" xml:space="preserve">
+    <value>User ID is required.</value>
+  </data>
+    <data name="TemplateNotFoundOrAccessDenied" xml:space="preserve">
+    <value>Template not found or access denied.</value>
+  </data>
+    <data name="NameRequired" xml:space="preserve">
+    <value>Name is required.</value>
+  </data>
+    <data name="NameTooLong" xml:space="preserve">
+    <value>Name cannot exceed 100 characters.</value>
+  </data>
+    <data name="DescriptionTooLong" xml:space="preserve">
+    <value>Description cannot exceed 500 characters.</value>
+  </data>
+    <data name="ThemeTooLong" xml:space="preserve">
+    <value>Theme cannot exceed 50 characters.</value>
+  </data>
+    <data name="TagsTooLong" xml:space="preserve">
+    <value>Tags cannot exceed 500 characters.</value>
+  </data>
+    <data name="ImageUrlTooLong" xml:space="preserve">
+    <value>Image URL cannot exceed 500 characters.</value>
+  </data>
+    <data name="Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+    <data name="NoFileChosen" xml:space="preserve">
+    <value>No file chosen</value>
+  </data>
+    <data name="CurrentImage" xml:space="preserve">
+    <value>Current image</value>
+  </data>
 </root>

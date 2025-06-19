@@ -60,6 +60,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acciones.
+        /// </summary>
+        internal static string Actions {
+            get {
+                return ResourceManager.GetString("Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Asignar como Administrador.
         /// </summary>
         internal static string AdminActionAssignAdmin {
@@ -204,11 +213,101 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Examinar....
+        /// </summary>
+        internal static string Browse {
+            get {
+                return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Proyecto del curso.
         /// </summary>
         internal static string CP {
             get {
                 return ResourceManager.GetString("CP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crear.
+        /// </summary>
+        internal static string Create {
+            get {
+                return ResourceManager.GetString("Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crear Plantilla.
+        /// </summary>
+        internal static string CreateTemplate {
+            get {
+                return ResourceManager.GetString("CreateTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagen actual.
+        /// </summary>
+        internal static string CurrentImage {
+            get {
+                return ResourceManager.GetString("CurrentImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar.
+        /// </summary>
+        internal static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Descripción.
+        /// </summary>
+        internal static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La descripción no puede exceder los 500 caracteres..
+        /// </summary>
+        internal static string DescriptionTooLong {
+            get {
+                return ResourceManager.GetString("DescriptionTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar.
+        /// </summary>
+        internal static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar Plantilla.
+        /// </summary>
+        internal static string EditTemplate {
+            get {
+                return ResourceManager.GetString("EditTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Educación.
+        /// </summary>
+        internal static string Education {
+            get {
+                return ResourceManager.GetString("Education", resourceCulture);
             }
         }
         
@@ -254,6 +353,24 @@ namespace CourseProject.Resources {
         internal static string Hello {
             get {
                 return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagen.
+        /// </summary>
+        internal static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La URL de la imagen no puede exceder los 500 caracteres..
+        /// </summary>
+        internal static string ImageUrlTooLong {
+            get {
+                return ResourceManager.GetString("ImageUrlTooLong", resourceCulture);
             }
         }
         
@@ -330,6 +447,33 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El nombre es obligatorio..
+        /// </summary>
+        internal static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El nombre no puede exceder los 100 caracteres..
+        /// </summary>
+        internal static string NameTooLong {
+            get {
+                return ResourceManager.GetString("NameTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Panel de Administración.
         /// </summary>
         internal static string NavAdminPanel {
@@ -371,6 +515,51 @@ namespace CourseProject.Resources {
         internal static string NavRegister {
             get {
                 return ResourceManager.GetString("NavRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ningún archivo seleccionado.
+        /// </summary>
+        internal static string NoFileChosen {
+            get {
+                return ResourceManager.GetString("NoFileChosen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otro.
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Público.
+        /// </summary>
+        internal static string Public {
+            get {
+                return ResourceManager.GetString("Public", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cuestionario.
+        /// </summary>
+        internal static string Quiz {
+            get {
+                return ResourceManager.GetString("Quiz", resourceCulture);
             }
         }
         
@@ -420,6 +609,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guardar.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acción {0} aplicada con éxito..
         /// </summary>
         internal static string SuccessActionApplied {
@@ -452,6 +650,123 @@ namespace CourseProject.Resources {
         internal static string SuccessRegister {
             get {
                 return ResourceManager.GetString("SuccessRegister", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantilla creada con éxito..
+        /// </summary>
+        internal static string SuccessTemplateCreated {
+            get {
+                return ResourceManager.GetString("SuccessTemplateCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantilla eliminada con éxito..
+        /// </summary>
+        internal static string SuccessTemplateDeleted {
+            get {
+                return ResourceManager.GetString("SuccessTemplateDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantilla actualizada con éxito..
+        /// </summary>
+        internal static string SuccessTemplateUpdated {
+            get {
+                return ResourceManager.GetString("SuccessTemplateUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Etiquetas.
+        /// </summary>
+        internal static string Tags {
+            get {
+                return ResourceManager.GetString("Tags", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ej., quiz,educación.
+        /// </summary>
+        internal static string TagsPlaceholder {
+            get {
+                return ResourceManager.GetString("TagsPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Las etiquetas no pueden exceder los 500 caracteres..
+        /// </summary>
+        internal static string TagsTooLong {
+            get {
+                return ResourceManager.GetString("TagsTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantilla no encontrada o acceso denegado..
+        /// </summary>
+        internal static string TemplateNotFoundOrAccessDenied {
+            get {
+                return ResourceManager.GetString("TemplateNotFoundOrAccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mis Plantillas.
+        /// </summary>
+        internal static string TemplatesTitle {
+            get {
+                return ResourceManager.GetString("TemplatesTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, corrija los errores de entrada..
+        /// </summary>
+        internal static string TErrorInvalidInput {
+            get {
+                return ResourceManager.GetString("TErrorInvalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tema.
+        /// </summary>
+        internal static string Theme {
+            get {
+                return ResourceManager.GetString("Theme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El tema no puede exceder los 50 caracteres..
+        /// </summary>
+        internal static string ThemeTooLong {
+            get {
+                return ResourceManager.GetString("ThemeTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Se requiere el ID de usuario..
+        /// </summary>
+        internal static string UserIdRequired {
+            get {
+                return ResourceManager.GetString("UserIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sí.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }

@@ -11,4 +11,14 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Template> Templates { get; set; }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+        
+        modelBuilder.Entity<Template>()
+            .HasOne(t => t.User)
+            .WithMany()
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+    }
 }
