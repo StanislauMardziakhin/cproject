@@ -2,46 +2,68 @@
 @using Microsoft.Extensions.Localization
 @model IEnumerable<CourseProject.Models.Template>
 @inject IStringLocalizer<SharedResources> Localizer
+<script>
+    window.localization = {
+        confirm: "@Localizer["Confirm"]",
+        delete: "@Localizer["Delete"]",
+        publish: "@Localizer["Publish"]",
+        unpublish: "@Localizer["Unpublish"]"
+    };
+</script>
 @{
     ViewData["Title"] = Localizer["TemplatesTitle"];
 }
 <h2>@Localizer["TemplatesTitle"]</h2>
-<a asp-action="Create" class="btn btn-primary mb-3">@Localizer["CreateTemplate"]</a>
+@if (User?.Identity?.IsAuthenticated == true)
+{
+    <a asp-action="Create" asp-controller="Templates" class="btn btn-primary mb-3">@Localizer["Create"]</a>
+    <form asp-action="ApplyAction" asp-controller="Templates" method="post" id="templates-form">
+        @Html.AntiForgeryToken()
+        <div id="error-alert" class="alert alert-danger d-none mt-3" role="alert">
+            @Localizer["AdminErrorNoUsersSelected"]
+        </div>
+        <div class="mb-3">
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    @Localizer["Actions"]
+                </button>
+                <ul class="dropdown-menu">
+                    <li><button type="submit" name="action" value="Delete" class="dropdown-item">@Localizer["Delete"]</button></li>
+                    <li><button type="submit" name="action" value="Publish" class="dropdown-item">@Localizer["Publish"]</button></li>
+                    <li><button type="submit" name="action" value="Unpublish" class="dropdown-item">@Localizer["Unpublish"]</button></li>
+                </ul>
+            </div>
+        </div>
+        <input type="hidden" name="action" id="action-input"/>
+        <input type="hidden" name="templateIds" id="selected-template-ids" value="" />
+    </form>
+}
 <table class="table table-striped table-responsive">
     <thead>
     <tr>
+        <th><input type="checkbox" id="selectAll"/></th>
         <th>@Localizer["Name"]</th>
         <th>@Localizer["Description"]</th>
         <th>@Localizer["Theme"]</th>
         <th>@Localizer["Public"]</th>
-        <th>@Localizer["Actions"]</th>
     </tr>
     </thead>
     <tbody>
     @foreach (var template in Model)
     {
-        <tr>
+        <tr data-id="@template.Id">
+            @if (User?.Identity?.IsAuthenticated == true) { <td><input type="checkbox" name="templateIds" value="@template.Id"/></td> }
             <td>@template.Name</td>
             <td>@template.Description</td>
-            <td>@Localizer[template.Theme]</td>
-            <td>@(template.IsPublic ? Localizer["Yes"] : Localizer["No"])</td>
-            <td>
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        @Localizer["Actions"]
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" asp-action="Edit" asp-route-id="@template.Id">@Localizer["Edit"]</a></li>
-                        <li>
-                            <form asp-action="Delete" asp-route-id="@template.Id" method="post" class="d-inline">
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="dropdown-item">@Localizer["Delete"]</button>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </td>
+            <td>@template.Theme</td>
+            <td>@(template.IsPublic ? Localizer["Public"] : Localizer["No"])</td>
         </tr>
     }
     </tbody>
 </table>
+
+<div class="slide-menu">
+    <button class="btn btn-secondary w-100 mb-2 edit-btn">@Localizer["Edit"]</button>
+    <button class="btn btn-info w-100 view-btn">@Localizer["View"]</button>
+</div>

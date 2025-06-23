@@ -181,8 +181,8 @@
     <value>Tags</value>
   </data>
     <data name="TagsPlaceholder" xml:space="preserve">
-    <value>e.g., quiz,education</value>
-  </data>
+        <value>e.g., quiz, education</value>
+    </data>
     <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
@@ -261,4 +261,31 @@
     <data name="CurrentImage" xml:space="preserve">
     <value>Current image</value>
   </data>
+    <data name="SuccessDeleteTemplate" xml:space="preserve">
+    <value>Selected templates deleted successfully.</value>
+  </data>
+    <data name="SuccessPublishTemplate" xml:space="preserve">
+    <value>Selected templates published successfully.</value>
+  </data>
+    <data name="SuccessUnpublishTemplate" xml:space="preserve">
+    <value>Selected templates unpublished successfully.</value>
+</data>
+    <data name="Publish" xml:space="preserve">
+        <value>Publish</value>
+    </data>
+    <data name="Unpublish" xml:space="preserve">
+        <value>Unpublish</value>
+    </data>
+    <data name="View" xml:space="preserve">
+        <value>View</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>Confirm</value>
+    </data>
+    <data name="ViewTemplate" xml:space="preserve">
+        <value>View template</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Back</value>
+    </data>
 </root>

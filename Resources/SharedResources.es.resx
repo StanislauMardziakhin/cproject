@@ -180,8 +180,8 @@
     <value>Etiquetas</value>
   </data>
     <data name="TagsPlaceholder" xml:space="preserve">
-    <value>ej., quiz,educación</value>
-  </data>
+        <value>ej., quiz, educación</value>
+    </data>
     <data name="Image" xml:space="preserve">
     <value>Imagen</value>
   </data>
@@ -260,4 +260,31 @@
     <data name="CurrentImage" xml:space="preserve">
     <value>Imagen actual</value>
   </data>
+    <data name="SuccessDeleteTemplate" xml:space="preserve">
+    <value>Plantillas seleccionadas eliminadas con éxito.</value>
+  </data>
+    <data name="SuccessPublishTemplate" xml:space="preserve">
+    <value>Plantillas seleccionadas publicadas con éxito.</value>
+  </data>
+    <data name="SuccessUnpublishTemplate" xml:space="preserve">
+    <value>Plantillas seleccionadas no publicadas con éxito.</value>
+</data>
+    <data name="Publish" xml:space="preserve">
+        <value>Publicar</value>
+    </data>
+    <data name="Unpublish" xml:space="preserve">
+        <value>Anular publicación</value>
+    </data>
+    <data name="View" xml:space="preserve">
+        <value>Vista</value>
+    </data>
+    <data name="Confirm" xml:space="preserve">
+        <value>Confirmar</value>
+    </data>
+    <data name="ViewTemplate" xml:space="preserve">
+        <value>Ver plantilla</value>
+    </data>
+    <data name="Back" xml:space="preserve">
+        <value>Atrás</value>
+    </data>
 </root>

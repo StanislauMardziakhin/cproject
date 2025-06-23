@@ -29,3 +29,21 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+@keyframes slideIn {
+    from { right: -200px; }
+    to { right: 0; }
+}
+
+.slide-menu {
+    z-index: 1000;
+    display: none;
+    position: fixed;
+    right: 0;
+    top: 0;
+    background: white;
+    width: 200px;
+    padding: 10px;
+    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
+    animation: slideIn 0.3s;
+}

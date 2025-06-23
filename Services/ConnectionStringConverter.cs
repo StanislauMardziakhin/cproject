@@ -24,12 +24,10 @@ public class ConnectionStringConverter
 
                 var efConnectionString =
                     $"Host={uri.Host};Port={uri.Port};Database={uri.LocalPath.TrimStart('/')};Username={userInfo[0]};Password={userInfo[1]}";
-                Console.WriteLine($"Converted to EF format: {efConnectionString}");
                 return efConnectionString;
             }
             catch (UriFormatException ex)
             {
-                Console.WriteLine($"Error parsing URI: {ex.Message}");
                 throw new InvalidOperationException("Invalid DATABASE_URL format", ex);
             }
 

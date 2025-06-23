@@ -1,0 +1,31 @@
+﻿@using Microsoft.Extensions.Localization
+@model CourseProject.Models.Template
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["ViewTemplate"];
+}
+
+<h2>@Localizer["ViewTemplate"]</h2>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">@Localizer["Name"]: @Model.Name</h5>
+        <p class="card-text"><strong>@Localizer["Description"]:</strong> @Model.Description</p>
+        <p class="card-text"><strong>@Localizer["Theme"]:</strong> @Model.Theme</p>
+        <p class="card-text"><strong>@Localizer["Public"]:</strong> @(Model.IsPublic ? Localizer["Yes"] : Localizer["No"])</p>
+        <p class="card-text"><strong>@Localizer["Tags"]:</strong> @Model.Tags</p>
+        @if (!string.IsNullOrEmpty(Model.ImageUrl))
+        {
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-thumbnail" style="max-width: 200px;" />
+        }
+    </div>
+</div>
+
+<p>
+    @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Admin") || User.Identity.Name == Model.UserId))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["Edit"]</a>
+    }
+    <a asp-action="Index" class="btn btn-secondary">@Localizer["Back"]</a>
+</p>

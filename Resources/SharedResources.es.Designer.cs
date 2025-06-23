@@ -213,11 +213,29 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atrás.
+        /// </summary>
+        internal static string Back {
+            get {
+                return ResourceManager.GetString("Back", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Examinar....
         /// </summary>
         internal static string Browse {
             get {
                 return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirmar.
+        /// </summary>
+        internal static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
             }
         }
         
@@ -555,6 +573,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Publicar.
+        /// </summary>
+        internal static string Publish {
+            get {
+                return ResourceManager.GetString("Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cuestionario.
         /// </summary>
         internal static string Quiz {
@@ -627,6 +654,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plantillas seleccionadas eliminadas con éxito..
+        /// </summary>
+        internal static string SuccessDeleteTemplate {
+            get {
+                return ResourceManager.GetString("SuccessDeleteTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inició sesión con éxito..
         /// </summary>
         internal static string SuccessLogin {
@@ -641,6 +677,15 @@ namespace CourseProject.Resources {
         internal static string SuccessLogout {
             get {
                 return ResourceManager.GetString("SuccessLogout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantillas seleccionadas publicadas con éxito..
+        /// </summary>
+        internal static string SuccessPublishTemplate {
+            get {
+                return ResourceManager.GetString("SuccessPublishTemplate", resourceCulture);
             }
         }
         
@@ -681,6 +726,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plantillas seleccionadas no publicadas con éxito..
+        /// </summary>
+        internal static string SuccessUnpublishTemplate {
+            get {
+                return ResourceManager.GetString("SuccessUnpublishTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Etiquetas.
         /// </summary>
         internal static string Tags {
@@ -690,7 +744,7 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ej., quiz,educación.
+        ///   Looks up a localized string similar to ej., quiz, educación.
         /// </summary>
         internal static string TagsPlaceholder {
             get {
@@ -753,11 +807,38 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Anular publicación.
+        /// </summary>
+        internal static string Unpublish {
+            get {
+                return ResourceManager.GetString("Unpublish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se requiere el ID de usuario..
         /// </summary>
         internal static string UserIdRequired {
             get {
                 return ResourceManager.GetString("UserIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vista.
+        /// </summary>
+        internal static string View {
+            get {
+                return ResourceManager.GetString("View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ver plantilla.
+        /// </summary>
+        internal static string ViewTemplate {
+            get {
+                return ResourceManager.GetString("ViewTemplate", resourceCulture);
             }
         }
         

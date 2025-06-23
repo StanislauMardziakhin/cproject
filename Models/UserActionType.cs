@@ -2,7 +2,7 @@
 
 namespace CourseProject.Models;
 
-public enum ActionType
+public enum UserActionType
 {
     [Display(Name = "Block Users")] Block,
 

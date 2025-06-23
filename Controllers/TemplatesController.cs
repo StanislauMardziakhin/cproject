@@ -19,10 +19,10 @@ public class TemplatesController : Controller
         _localizer = localizer;
     }
     
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(bool? publicOnly = null)
     {
-        var userId = GetUserId();
-        var templates = await _templateService.GetUserTemplatesAsync(userId);
+        var userId = User?.Identity?.IsAuthenticated == true ? GetUserId() : null;
+        var templates = await _templateService.GetUserTemplatesAsync(userId, publicOnly);
         return View(templates);
     }
     
@@ -30,39 +30,39 @@ public class TemplatesController : Controller
     {
         return View(new Template());
     }
-    
+
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(Template template, IFormFile? image)
     {
-        if (!ModelState.IsValid)
-        {
-            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-            Console.WriteLine("ModelState errors: " + string.Join(", ", errors));
-            return HandleError(template, "TErrorInvalidInput");
-        }
+        if (!ModelState.IsValid) return HandleError(template, "TErrorInvalidInput");
         var (succeeded, error) = await _templateService.CreateAsync(template, image, GetUserId());
         return succeeded ? HandleSuccess("SuccessTemplateCreated") : HandleError(template, error);
     }
     
     public async Task<IActionResult> Edit(int id)
     {
-        var template = await _templateService.GetForEditAsync(id, GetUserId());
-        return template != null ? View(template) : NotFound();
+        var userId = User.Identity?.IsAuthenticated == true ? GetUserId() : null;
+        var isAdmin = User.IsInRole("Admin");
+        var template = await _templateService.GetForEditAsync(id, userId, isAdmin);
+        if (template == null)
+        {
+            return NotFound();
+        }
+        return View(template);
     }
     
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(int id, Template template, IFormFile? image)
     {
-        if (id != template.Id || !ModelState.IsValid)
+        if (id != template.Id || !ModelState.IsValid) return HandleError(template, "TErrorInvalidInput");
         {
             var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-            Console.WriteLine("ModelState errors: " + string.Join(", ", errors));
-            return HandleError(template, "TErrorInvalidInput");
+            var (succeeded, error) = await _templateService.UpdateAsync(id, template, image, GetUserId());
+            return succeeded ? HandleSuccess("SuccessTemplateUpdated") : HandleError(template, error);
         }
-        var (succeeded, error) = await _templateService.UpdateAsync(id, template, image, GetUserId());
-        return succeeded ? HandleSuccess("SuccessTemplateUpdated") : HandleError(template, error);
+        
     }
     
     [HttpPost]
@@ -71,6 +71,42 @@ public class TemplatesController : Controller
     {
         var (succeeded, error) = await _templateService.DeleteAsync(id, GetUserId());
         return succeeded ? HandleSuccess("SuccessTemplateDeleted") : HandleError(null, error);
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ApplyAction(string action, string templateIds)
+    {
+        if (string.IsNullOrEmpty(templateIds) || !Enum.TryParse<TemplateActionType>(action, true, out var actionType))
+        {
+            TempData["Error"] = _localizer["ErrorInvalidAction"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+        
+        var ids = templateIds.Split(',').Select(int.Parse).ToArray();
+        if (!ids.Any())
+        {
+            TempData["Error"] = _localizer["AdminErrorNoUsersSelected"].Value;
+            return RedirectToAction(nameof(Index));
+        }
+
+        var userId = GetUserId();
+        var isAdmin = User.IsInRole("Admin");
+        var (succeeded, error) = await _templateService.ApplyMassActionAsync(action.ToLower(), ids, userId, isAdmin);
+        return succeeded ? HandleSuccess($"Success{action}Template") : HandleError(null, error);
+    }
+    
+    [AllowAnonymous]
+    public async Task<IActionResult> View(int id)
+    {
+        var userId = User.Identity?.IsAuthenticated == true ? GetUserId() : null;
+        var isAdmin = User.IsInRole("Admin");
+        var template = await _templateService.GetPublicTemplateAsync(id, userId, isAdmin);
+        if (template == null)
+        {
+            return NotFound();
+        }
+        return View(template);
     }
     
     private string GetUserId()
