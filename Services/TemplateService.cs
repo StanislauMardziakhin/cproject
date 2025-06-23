@@ -39,9 +39,9 @@ public class TemplateService
         return isAdmin || (userId != null && template.UserId == userId) ? template : null;
     }
 
-    public async Task<(bool, string)> UpdateAsync(int id, Template updated, IFormFile? image, string userId)
+    public async Task<(bool, string)> UpdateAsync(int id, Template updated, IFormFile? image, string userId, bool isAdmin = false)
     {
-        var template = await GetForEditAsync(id, userId);
+        var template = await GetForEditAsync(id, userId, isAdmin);
         if (template == null) return (false, "TemplateNotFoundOrAccessDenied");
         UpdateTemplateFields(template, updated);
         await SetImageUrlAsync(template, image);

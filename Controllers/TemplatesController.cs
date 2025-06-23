@@ -58,8 +58,8 @@ public class TemplatesController : Controller
     {
         if (id != template.Id || !ModelState.IsValid) return HandleError(template, "TErrorInvalidInput");
         {
-            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
-            var (succeeded, error) = await _templateService.UpdateAsync(id, template, image, GetUserId());
+            bool isAdmin = User.IsInRole("Admin");
+            var (succeeded, error) = await _templateService.UpdateAsync(id, template, image, GetUserId(), isAdmin);
             return succeeded ? HandleSuccess("SuccessTemplateUpdated") : HandleError(template, error);
         }
         
