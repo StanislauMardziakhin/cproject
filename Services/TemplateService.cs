@@ -39,7 +39,8 @@ public class TemplateService
         return isAdmin || (userId != null && template.UserId == userId) ? template : null;
     }
 
-    public async Task<(bool, string)> UpdateAsync(int id, Template updated, IFormFile? image, string userId, bool isAdmin = false)
+    public async Task<(bool, string)> UpdateAsync(int id, Template updated, IFormFile? image, string userId,
+        bool isAdmin = false)
     {
         var template = await GetForEditAsync(id, userId, isAdmin);
         if (template == null) return (false, "TemplateNotFoundOrAccessDenied");
@@ -135,5 +136,19 @@ public class TemplateService
         var query = _context.Templates.AsQueryable()
             .Where(t => t.Id == id && (isAdmin || t.IsPublic || (userId != null && t.UserId == userId)));
         return await query.FirstOrDefaultAsync();
+    }
+
+    public async Task<List<Template>> SearchAsync(string query)
+    {
+        if (string.IsNullOrWhiteSpace(query)) return new List<Template>();
+        
+        return await _context.Templates
+            .Where(t => t.IsPublic && (
+                EF.Functions.ToTsVector("english", t.Name + " " + t.Description + " " + t.Tags)
+                    .Matches(EF.Functions.ToTsQuery("english", query)) ||
+                EF.Functions.ToTsVector("spanish", t.Name + " " + t.Description + " " + t.Tags)
+                    .Matches(EF.Functions.ToTsQuery("spanish", query))
+            ))
+            .ToListAsync();
     }
 }

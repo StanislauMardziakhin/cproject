@@ -555,6 +555,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No templates found.
+        /// </summary>
+        internal static string NoResults {
+            get {
+                return ResourceManager.GetString("NoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
         internal static string Other {
@@ -641,6 +650,24 @@ namespace CourseProject.Resources {
         internal static string Save {
             get {
                 return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        internal static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search Results.
+        /// </summary>
+        internal static string SearchResults {
+            get {
+                return ResourceManager.GetString("SearchResults", resourceCulture);
             }
         }
         

@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 
 <root>
-    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root"
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                id="root"
                 xmlns="">
         <xsd:element name="root" msdata:IsDataSet="true">
 
@@ -268,7 +269,7 @@
   </data>
     <data name="SuccessUnpublishTemplate" xml:space="preserve">
     <value>Plantillas seleccionadas no publicadas con éxito.</value>
-</data>
+   </data>
     <data name="Publish" xml:space="preserve">
         <value>Publicar</value>
     </data>
@@ -286,5 +287,14 @@
     </data>
     <data name="Back" xml:space="preserve">
         <value>Atrás</value>
+    </data>
+    <data name="Search" xml:space="preserve">
+    <value>Buscar</value>
+    </data>
+    <data name="SearchResults" xml:space="preserve">
+    <value>Resultados de búsqueda</value>
+    </data>
+    <data name="NoResults" xml:space="preserve">
+    <value>No se encontraron plantillas</value>
     </data>
 </root>
