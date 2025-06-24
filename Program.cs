@@ -17,6 +17,9 @@ var connectionStringService = new ConnectionStringConverter(databaseUrl, default
 var efConnectionString = connectionStringService.GetConnectionString();
 Console.WriteLine($"Using connection string: {efConnectionString}");
 
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.AddDebug();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(efConnectionString));
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
