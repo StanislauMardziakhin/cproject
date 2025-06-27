@@ -69,6 +69,24 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add.
+        /// </summary>
+        internal static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Question.
+        /// </summary>
+        internal static string AddQuestion {
+            get {
+                return ResourceManager.GetString("AddQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Assign as Admin.
         /// </summary>
         internal static string AdminActionAssignAdmin {
@@ -213,6 +231,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All templates.
+        /// </summary>
+        internal static string AllTemplates {
+            get {
+                return ResourceManager.GetString("AllTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Back.
         /// </summary>
         internal static string Back {
@@ -231,11 +258,38 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Checkbox.
+        /// </summary>
+        internal static string Checkbox {
+            get {
+                return ResourceManager.GetString("Checkbox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string Close {
+            get {
+                return ResourceManager.GetString("Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirm.
         /// </summary>
         internal static string Confirm {
             get {
                 return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete this question?.
+        /// </summary>
+        internal static string ConfirmDeleteQuestion {
+            get {
+                return ResourceManager.GetString("ConfirmDeleteQuestion", resourceCulture);
             }
         }
         
@@ -312,6 +366,24 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit question.
+        /// </summary>
+        internal static string EditQuestion {
+            get {
+                return ResourceManager.GetString("EditQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editing question.
+        /// </summary>
+        internal static string EditQuestionPlaceholder {
+            get {
+                return ResourceManager.GetString("EditQuestionPlaceholder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit Template.
         /// </summary>
         internal static string EditTemplate {
@@ -326,6 +398,15 @@ namespace CourseProject.Resources {
         internal static string Education {
             get {
                 return ResourceManager.GetString("Education", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error deleting question..
+        /// </summary>
+        internal static string ErrorDeletingQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDeletingQuestion", resourceCulture);
             }
         }
         
@@ -357,6 +438,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No templates selected.
+        /// </summary>
+        internal static string ErrorNoTemplatesSelected {
+            get {
+                return ResourceManager.GetString("ErrorNoTemplatesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registration failed..
         /// </summary>
         internal static string ErrorRegister {
@@ -366,11 +456,29 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error updating question order..
+        /// </summary>
+        internal static string ErrorUpdatingQuestionOrder {
+            get {
+                return ResourceManager.GetString("ErrorUpdatingQuestionOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello.
         /// </summary>
         internal static string Hello {
             get {
                 return ResourceManager.GetString("Hello", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hidden in results table.
+        /// </summary>
+        internal static string HiddenInResults {
+            get {
+                return ResourceManager.GetString("HiddenInResults", resourceCulture);
             }
         }
         
@@ -389,6 +497,15 @@ namespace CourseProject.Resources {
         internal static string ImageUrlTooLong {
             get {
                 return ResourceManager.GetString("ImageUrlTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Non-negative integer.
+        /// </summary>
+        internal static string Integer {
+            get {
+                return ResourceManager.GetString("Integer", resourceCulture);
             }
         }
         
@@ -416,6 +533,15 @@ namespace CourseProject.Resources {
         internal static string LanguageSpanish {
             get {
                 return ResourceManager.GetString("LanguageSpanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading.
+        /// </summary>
+        internal static string Loading {
+            get {
+                return ResourceManager.GetString("Loading", resourceCulture);
             }
         }
         
@@ -461,6 +587,15 @@ namespace CourseProject.Resources {
         internal static string LoginTitle {
             get {
                 return ResourceManager.GetString("LoginTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maximum 4 questions of each type allowed.
+        /// </summary>
+        internal static string MaxQuestionsPerType {
+            get {
+                return ResourceManager.GetString("MaxQuestionsPerType", resourceCulture);
             }
         }
         
@@ -573,6 +708,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Private only.
+        /// </summary>
+        internal static string PrivateOnly {
+            get {
+                return ResourceManager.GetString("PrivateOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Public.
         /// </summary>
         internal static string Public {
@@ -582,11 +726,47 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Public only.
+        /// </summary>
+        internal static string PublicOnly {
+            get {
+                return ResourceManager.GetString("PublicOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Publish.
         /// </summary>
         internal static string Publish {
             get {
                 return ResourceManager.GetString("Publish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question not found or access denied..
+        /// </summary>
+        internal static string QuestionNotFoundOrAccessDenied {
+            get {
+                return ResourceManager.GetString("QuestionNotFoundOrAccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions.
+        /// </summary>
+        internal static string Questions {
+            get {
+                return ResourceManager.GetString("Questions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Questions list.
+        /// </summary>
+        internal static string QuestionsList {
+            get {
+                return ResourceManager.GetString("QuestionsList", resourceCulture);
             }
         }
         
@@ -672,6 +852,33 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select type.
+        /// </summary>
+        internal static string SelectType {
+            get {
+                return ResourceManager.GetString("SelectType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Settings.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single-line string.
+        /// </summary>
+        internal static string String {
+            get {
+                return ResourceManager.GetString("String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} action applied successfully..
         /// </summary>
         internal static string SuccessActionApplied {
@@ -708,11 +915,47 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order updated successfully..
+        /// </summary>
+        internal static string SuccessOrderUpdated {
+            get {
+                return ResourceManager.GetString("SuccessOrderUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected templates published successfully..
         /// </summary>
         internal static string SuccessPublishTemplate {
             get {
                 return ResourceManager.GetString("SuccessPublishTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question added successfully..
+        /// </summary>
+        internal static string SuccessQuestionAdded {
+            get {
+                return ResourceManager.GetString("SuccessQuestionAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question deleted successfully..
+        /// </summary>
+        internal static string SuccessQuestionDeleted {
+            get {
+                return ResourceManager.GetString("SuccessQuestionDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Question updated successfully..
+        /// </summary>
+        internal static string SuccessQuestionUpdated {
+            get {
+                return ResourceManager.GetString("SuccessQuestionUpdated", resourceCulture);
             }
         }
         
@@ -816,6 +1059,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multi-line text.
+        /// </summary>
+        internal static string Text {
+            get {
+                return ResourceManager.GetString("Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         internal static string Theme {
@@ -830,6 +1082,24 @@ namespace CourseProject.Resources {
         internal static string ThemeTooLong {
             get {
                 return ResourceManager.GetString("ThemeTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        internal static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
         
@@ -866,6 +1136,15 @@ namespace CourseProject.Resources {
         internal static string ViewTemplate {
             get {
                 return ResourceManager.GetString("ViewTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show in results table.
+        /// </summary>
+        internal static string VisibleInResults {
+            get {
+                return ResourceManager.GetString("VisibleInResults", resourceCulture);
             }
         }
         

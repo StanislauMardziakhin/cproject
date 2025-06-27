@@ -11,14 +11,21 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     }
 
     public DbSet<Template> Templates { get; set; }
+    public DbSet<Question> Questions { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<Template>()
             .HasOne(t => t.User)
             .WithMany()
             .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Question>()
+            .HasOne(q => q.Template)
+            .WithMany(t => t.Questions)
+            .HasForeignKey(q => q.TemplateId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -1,12 +1,13 @@
-﻿using CourseProject.Models;
+﻿using System.Text.RegularExpressions;
+using CourseProject.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CourseProject.Services;
 
 public class TemplateService
 {
-    private readonly AppDbContext _context;
     private readonly CloudinaryService _cloudinary;
+    private readonly AppDbContext _context;
 
     public TemplateService(AppDbContext context, CloudinaryService cloudinary)
     {
@@ -34,9 +35,13 @@ public class TemplateService
 
     public async Task<Template?> GetForEditAsync(int id, string? userId, bool isAdmin = false)
     {
-        var template = await _context.Templates.FindAsync(id);
-        if (template == null) return null;
-        return isAdmin || (userId != null && template.UserId == userId) ? template : null;
+        var query = _context.Templates
+            .Include(t => t.Questions)
+            .Where(t => t.Id == id);
+
+        if (!isAdmin) query = query.Where(t => t.UserId == userId);
+
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<(bool, string)> UpdateAsync(int id, Template updated, IFormFile? image, string userId,
@@ -138,17 +143,25 @@ public class TemplateService
         return await query.FirstOrDefaultAsync();
     }
 
-    public async Task<List<Template>> SearchAsync(string query)
+    public async Task<List<Template>> SearchAsync(string query, string culture = "en", string filter = "public",
+        bool isAdmin = false)
     {
-        if (string.IsNullOrWhiteSpace(query)) return new List<Template>();
-        
-        return await _context.Templates
-            .Where(t => t.IsPublic && (
-                EF.Functions.ToTsVector("english", t.Name + " " + t.Description + " " + t.Tags)
-                    .Matches(EF.Functions.ToTsQuery("english", query)) ||
-                EF.Functions.ToTsVector("spanish", t.Name + " " + t.Description + " " + t.Tags)
-                    .Matches(EF.Functions.ToTsQuery("spanish", query))
-            ))
+        if (string.IsNullOrWhiteSpace(query)) return [];
+        query = Regex.Replace(query.ToLower(), @"[:\*&\|!']", "").Trim();
+        if (string.IsNullOrEmpty(query))
+            return [];
+
+        var tsConfig = culture.StartsWith("es", StringComparison.OrdinalIgnoreCase) ? "spanish" : "english";
+        var queryable = _context.Templates.AsQueryable();
+        if (!isAdmin || string.Equals(filter, "public", StringComparison.OrdinalIgnoreCase))
+            queryable = queryable.Where(t => t.IsPublic);
+        else if (string.Equals(filter, "private", StringComparison.OrdinalIgnoreCase))
+            queryable = queryable.Where(t => !t.IsPublic);
+
+        return await queryable
+            .Where(t => EF.Functions.ToTsVector(tsConfig,
+                    (t.Name ?? "") + " " + (t.Description ?? "") + " " + (t.Tags ?? ""))
+                .Matches(EF.Functions.ToTsQuery(tsConfig, query + ":*")))
             .ToListAsync();
     }
 }

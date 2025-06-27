@@ -297,4 +297,97 @@
     <data name="NoResults" xml:space="preserve">
     <value>No templates found</value>
     </data>
+    <data name="SuccessQuestionAdded" xml:space="preserve">
+    <value>Question added successfully.</value>
+  </data>
+    <data name="QuestionNotFoundOrAccessDenied" xml:space="preserve">
+    <value>Question not found or access denied.</value>
+  </data>
+    <data name="ErrorUpdatingQuestionOrder" xml:space="preserve">
+    <value>Error updating question order.</value>
+  </data>
+    <data name="String" xml:space="preserve">
+    <value>Single-line string</value>
+  </data>
+    <data name="Text" xml:space="preserve">
+    <value>Multi-line text</value>
+  </data>
+    <data name="Integer" xml:space="preserve">
+    <value>Non-negative integer</value>
+  </data>
+    <data name="Checkbox" xml:space="preserve">
+    <value>Checkbox</value>
+  </data>
+    <data name="AddQuestion" xml:space="preserve">
+    <value>Add Question</value>
+  </data>
+    <data name="Questions" xml:space="preserve">
+        <value>Questions</value>
+    </data>
+    <data name="ErrorDeletingQuestion" xml:space="preserve">
+    <value>Error deleting question.</value>
+  </data>
+    <data name="EditQuestionPlaceholder" xml:space="preserve">
+    <value>Editing question</value>
+  </data>
+    <data name="ConfirmDeleteQuestion" xml:space="preserve">
+    <value>Are you sure you want to delete this question?</value>
+  </data>
+    <data name="Title" xml:space="preserve">
+        <value>Title</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Type</value>
+    </data>
+    <data name="SelectType" xml:space="preserve">
+        <value>Select type</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>Add</value>
+    </data>
+    <data name="ErrorNoTemplatesSelected" xml:space="preserve">
+        <value>No templates selected</value>
+    </data>
+    <data name="MaxQuestionsPerType" xml:space="preserve">
+        <value>Maximum 4 questions of each type allowed</value>
+    </data>
+    <data name="QuestionsList" xml:space="preserve">
+        <value>Questions list</value>
+    </data>
+    <data name="VisibleInResults" xml:space="preserve">
+        <value>Show in results table</value>
+    </data>
+    <data name="HiddenInResults" xml:space="preserve">
+        <value>Hidden in results table</value>
+    </data>
+    <data name="SuccessQuestionUpdated" xml:space="preserve">
+        <value>Question updated successfully.</value>
+    </data>
+    <data name="SuccessQuestionDeleted" xml:space="preserve">
+        <value>Question deleted successfully.</value>
+    </data>
+    <data name="SuccessOrderUpdated" xml:space="preserve">
+        <value>Order updated successfully.</value>
+    </data>
+    <data name="EditQuestion" xml:space="preserve">
+        <value>Edit question</value>
+    </data>
+    <data name="AllTemplates" xml:space="preserve">
+        <value>All templates</value>
+    </data>
+    <data name="PublicOnly" xml:space="preserve">
+        <value>Public only</value>
+    </data>
+    <data name="PrivateOnly" xml:space="preserve">
+        <value>Private only</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>Settings</value>
+    </data>
+    <data name="Close" xml:space="preserve">
+        <value>Close</value>
+    </data>
+    <data name="Loading" xml:space="preserve">
+        <value>Loading</value>
+    </data>
 </root>

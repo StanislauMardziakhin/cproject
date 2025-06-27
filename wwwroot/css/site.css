@@ -31,19 +31,25 @@ body {
 }
 
 @keyframes slideIn {
-    from { right: -200px; }
-    to { right: 0; }
+    from {
+        right: -200px;
+    }
+    to {
+        right: 0;
+    }
 }
 
 .slide-menu {
-    z-index: 1000;
-    display: none;
-    position: fixed;
-    right: 0;
-    top: 0;
+    position: absolute;
+    z-index: 2000;
     background: white;
-    width: 200px;
+    border: 1px solid #ccc;
     padding: 10px;
-    box-shadow: -2px 0 5px rgba(0,0,0,0.1);
-    animation: slideIn 0.3s;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+}
+
+.slide-menu:not(.d-none) {
+    display: block !important;
 }

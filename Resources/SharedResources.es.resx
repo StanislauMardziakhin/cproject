@@ -297,4 +297,97 @@
     <data name="NoResults" xml:space="preserve">
     <value>No se encontraron plantillas</value>
     </data>
+    <data name="SuccessQuestionAdded" xml:space="preserve">
+    <value>Pregunta agregada con éxito.</value>
+  </data>
+    <data name="QuestionNotFoundOrAccessDenied" xml:space="preserve">
+    <value>Pregunta no encontrada o acceso denegado.</value>
+  </data>
+    <data name="ErrorUpdatingQuestionOrder" xml:space="preserve">
+    <value>Error al actualizar el orden de la pregunta.</value>
+  </data>
+    <data name="String" xml:space="preserve">
+    <value>Cadena de una línea</value>
+  </data>
+    <data name="Text" xml:space="preserve">
+    <value>Texto de varias líneas</value>
+  </data>
+    <data name="Integer" xml:space="preserve">
+    <value>Número entero no negativo</value>
+  </data>
+    <data name="Checkbox" xml:space="preserve">
+    <value>Casilla de verificación</value>
+  </data>
+    <data name="AddQuestion" xml:space="preserve">
+    <value>Agregar pregunta</value>
+  </data>
+    <data name="Questions" xml:space="preserve">
+        <value>Preguntas</value>
+    </data>
+    <data name="ErrorDeletingQuestion" xml:space="preserve">
+    <value>Error al eliminar la pregunta</value>
+  </data>
+    <data name="EditQuestionPlaceholder" xml:space="preserve">
+        <value>Pregunta de edición</value>
+    </data>
+    <data name="ConfirmDeleteQuestion" xml:space="preserve">
+        <value>Estás seguro de que quieres eliminar esta pregunta?</value>
+    </data>
+    <data name="Title" xml:space="preserve">
+        <value>Título</value>
+    </data>
+    <data name="Type" xml:space="preserve">
+        <value>Tipo</value>
+    </data>
+    <data name="Add" xml:space="preserve">
+        <value>Añadir</value>
+    </data>
+    <data name="SelectType" xml:space="preserve">
+        <value>Seleccionar tipo</value>
+    </data>
+    <data name="ErrorNoTemplatesSelected" xml:space="preserve">
+        <value>No se seleccionaron plantillas</value>
+    </data>
+    <data name="MaxQuestionsPerType" xml:space="preserve">
+        <value>Máximo 4 preguntas de cada tipo permitidas.</value>
+    </data>
+    <data name="EditQuestion" xml:space="preserve">
+        <value>Editar pregunta</value>
+    </data>
+    <data name="HiddenInResults" xml:space="preserve">
+        <value>Oculto en resultados</value>
+    </data>
+    <data name="QuestionsList" xml:space="preserve">
+        <value>Lista de Preguntas</value>
+    </data>
+    <data name="SuccessOrderUpdated" xml:space="preserve">
+        <value>Orden actualizado con éxito.</value>
+    </data>
+    <data name="SuccessQuestionDeleted" xml:space="preserve">
+        <value>Pregunta eliminada con éxito.</value>
+    </data>
+    <data name="SuccessQuestionUpdated" xml:space="preserve">
+        <value>Orden actualizado con éxito.</value>
+    </data>
+    <data name="VisibleInResults" xml:space="preserve">
+        <value>Mostrar en la tabla de resultados</value>
+    </data>
+    <data name="AllTemplates" xml:space="preserve">
+        <value>Todas las plantillas</value>
+    </data>
+    <data name="PublicOnly" xml:space="preserve">
+        <value>Solo públicas</value>
+    </data>
+    <data name="PrivateOnly" xml:space="preserve">
+        <value>Solo privadas</value>
+    </data>
+    <data name="Settings" xml:space="preserve">
+        <value>Configuración</value>
+    </data>
+    <data name="Close" xml:space="preserve">
+        <value>Cerrar</value>
+    </data>
+    <data name="Loading" xml:space="preserve">
+        <value>Cargando</value>
+    </data>
 </root>

@@ -1,53 +1,117 @@
-﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
-@using Microsoft.Extensions.Localization
-@model CourseProject.Models.Template
+﻿@using Microsoft.Extensions.Localization
+@model Template
 @inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = Localizer["EditTemplate"];
 }
+
 <h2>@Localizer["EditTemplate"]</h2>
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="UserId" />
-    <input type="hidden" asp-for="CreatedAt" />
-    <div class="form-group mb-3">
-        <label asp-for="Name" class="form-label">@Localizer["Name"]</label>
-        <input asp-for="Name" class="form-control" required />
-        <span asp-validation-for="Name" class="text-danger"></span>
+
+<ul class="nav nav-tabs mb-3">
+    <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#settings">@Localizer["Settings"]</a>
+    </li>
+    <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#questions">@Localizer["Questions"]</a></li>
+</ul>
+
+<div class="tab-content">
+    <div id="settings" class="tab-pane fade show active">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id"/>
+            <div class="form-group mb-3">
+                <label asp-for="Name" class="form-label">@Localizer["Name"]</label>
+                <input asp-for="Name" class="form-control" required/>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
+                <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Theme" class="form-label">@Localizer["Theme"]</label>
+                <select asp-for="Theme" class="form-control">
+                    <option value="Education">@Localizer["Education"]</option>
+                    <option value="Quiz">@Localizer["Quiz"]</option>
+                    <option value="Other">@Localizer["Other"]</option>
+                </select>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="IsPublic" class="form-check-label">
+                    <input asp-for="IsPublic" type="checkbox" class="form-check-input"/>
+                    @Localizer["Public"]
+                </label>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Tags" class="form-label">@Localizer["Tags"]</label>
+                <input asp-for="Tags" class="form-control" placeholder="@Localizer["TagsPlaceholder"]"/>
+            </div>
+            <div class="form-group mb-3">
+                <label for="image" class="form-label">@Localizer["Image"]</label>
+                <input type="file" name="image" class="form-control" accept="image/*"/>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <small>@Localizer["CurrentImage"]: <img src="@Model.ImageUrl" alt="@Model.Name"
+                                                            style="max-width: 100px;"/></small>
+                }
+            </div>
+            <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
+        </form>
     </div>
-    <div class="form-group mb-3">
-        <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
-        <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+
+    <div id="questions" class="tab-pane fade">
+        <partial name="_AddQuestion" model="new Question { TemplateId = Model.Id }"/>
+        <h4>@Localizer["QuestionsList"]</h4>
+        <ul id="question-list" class="list-group">
+            @foreach (var question in Model.Questions.OrderBy(q => q.Order))
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-start" data-id="@question.Id">
+                    <div>
+                        <strong>@question.Title</strong>
+                        @if (!question.IsVisibleInResults)
+                        {
+                            <span class="badge bg-secondary">@Localizer["HiddenInResults"]</span>
+                        }
+                        <div class="text-muted small">@question.Description</div>
+                    </div>
+
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item edit-question-link" asp-action="EditQuestion"
+                                   asp-route-id="@question.Id">@Localizer["Edit"]</a></li>
+                            <li><a class="dropdown-item text-danger" asp-action="DeleteQuestion"
+                                   asp-route-id="@question.Id"
+                                   onclick="return confirm('@Localizer["Confirm"] @Localizer["Delete"]?')">
+                                    @Localizer["Delete"]
+                                </a></li>
+                        </ul>
+                    </div>
+                </li>
+            }
+        </ul>
     </div>
-    <div class="form-group mb-3">
-        <label asp-for="Theme" class="form-label">@Localizer["Theme"]</label>
-        <select asp-for="Theme" class="form-control">
-            <option value="Education">@Localizer["Education"]</option>
-            <option value="Quiz">@Localizer["Quiz"]</option>
-            <option value="Other">@Localizer["Other"]</option>
-        </select>
+</div>
+<div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@Localizer["EditQuestion"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="@Localizer["Close"]"></button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-content-placeholder" class="text-center text-muted">
+                    <i class="bi bi-hourglass-split"></i> @Localizer["Loading"]
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group mb-3">
-        <label asp-for="IsPublic" class="form-check-label">
-            <input asp-for="IsPublic" type="checkbox" class="form-check-input" />
-            @Localizer["Public"]
-        </label>
-    </div>
-    <div class="form-group mb-3">
-        <label asp-for="Tags" class="form-label">@Localizer["Tags"]</label>
-        <input asp-for="Tags" class="form-control" placeholder="@Localizer["TagsPlaceholder"]" />
-    </div>
-    <div class="form-group mb-3">
-        <label for="image" class="form-label">@Localizer["Image"]</label>
-        <input type="file" name="image" class="form-control" accept="image/*" />
-        @if (!string.IsNullOrEmpty(Model.ImageUrl))
-        {
-            <img src="@Model.ImageUrl" alt="Current image" class="img-thumbnail mt-2" style="max-width: 200px;" />
-        }
-    </div>
-    <button type="submit" class="btn btn-primary">@Localizer["Save"]</button>
-</form>
+</div>
+
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial"/>
+    <script type="module" src="~/js/templates/index.js" asp-append-version="true"></script>
 }

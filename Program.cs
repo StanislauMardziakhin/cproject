@@ -27,6 +27,7 @@ builder.Services.AddScoped<UserManagementService>();
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<TemplateService>();
 builder.Services.AddScoped<CloudinaryService>();
+builder.Services.AddScoped<QuestionService>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()
@@ -41,7 +42,8 @@ app.UseRequestLocalization(new RequestLocalizationOptions
     DefaultRequestCulture = new RequestCulture("en"),
     SupportedCultures = supportedCultures,
     SupportedUICultures = supportedCultures,
-    RequestCultureProviders = [
+    RequestCultureProviders =
+    [
         new CookieRequestCultureProvider { CookieName = "UserCulture" },
         new QueryStringRequestCultureProvider(),
         new AcceptLanguageHeaderRequestCultureProvider()

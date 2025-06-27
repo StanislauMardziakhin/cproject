@@ -1,0 +1,50 @@
+﻿@using Microsoft.Extensions.Localization
+@model Question
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    var localizedQuestionTypes = Enum.GetValues(typeof(QuestionType))
+        .Cast<QuestionType>()
+        .Select(qt => new SelectListItem
+        {
+            Value = ((int)qt).ToString(),
+            Text = Localizer[qt.ToString()]
+        })
+        .ToList();
+}
+
+<div class="card mb-3">
+    <div class="card-header">@Localizer["AddQuestion"]</div>
+    <div class="card-body">
+        <form asp-action="AddQuestion" asp-controller="Templates" method="post" id="add-question-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="TemplateId"/>
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="form-label">@Localizer["Title"]</label>
+                <input asp-for="Title" class="form-control" required/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group mb-3">
+                <label asp-for="Type" class="form-label">@Localizer["Type"]</label>
+                <select asp-for="Type" class="form-control" required asp-items="localizedQuestionTypes">
+                    <option value="" disabled hidden selected>@Localizer["SelectType"]</option>
+                </select>
+                <small class="form-text text-muted">@Localizer["MaxQuestionsPerType"]</small>
+                <span asp-validation-for="Type" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="IsVisibleInResults" class="form-check-input" type="checkbox" id="addVisibleCheck"
+                       checked/>
+                <label class="form-check-label" for="addVisibleCheck">
+                    @Localizer["VisibleInResults"]
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">@Localizer["Add"]</button>
+        </form>
+    </div>
+</div>
