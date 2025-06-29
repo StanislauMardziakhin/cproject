@@ -21,6 +21,17 @@
         }
     </div>
 </div>
+<div class="mt-3">
+    <a asp-controller="Forms" asp-action="Fill" asp-route-templateId="@Model.Id" class="btn btn-primary">@Localizer["FillForm"]</a>
+</div>
+
+<h4>@Localizer["Forms"]</h4>
+<ul>
+    @foreach (var form in Model.Forms)
+    {
+        <li><a asp-controller="Forms" asp-action="View" asp-route-id="@form.Id">@Localizer["ViewForm"] (@form.CreatedAt)</a></li>
+    }
+</ul>
 
 <p>
     @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Admin") || User.Identity.Name == Model.UserId))

@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model CourseProject.Models.Form
+@inject IStringLocalizer<SharedResources> Localizer
+@{
+    ViewData["Title"] = Localizer["ViewForm"];
+}
+
+<h2>@Localizer["ViewForm"]: @Model.Template.Name</h2>
+<dl class="row">
+    <dt class="col-sm-3">@Localizer["CreatedAt"]</dt>
+    <dd class="col-sm-9">@Model.CreatedAt.ToString("g")</dd>
+    <dt class="col-sm-3">@Localizer["User"]</dt>
+    <dd class="col-sm-9">@Model.User.Name</dd>
+</dl>
+
+<h4>@Localizer["Answers"]</h4>
+<div class="card">
+    <div class="card-body">
+        @foreach (var answer in Model.Answers.Where(a => a.Question.IsVisibleInResults))
+        {
+            <div class="mb-2">
+                <strong>@answer.Question.Title</strong>
+                <p>@answer.Value</p>
+            </div>
+        }
+    </div>
+</div>
+
+<a asp-controller="Templates" asp-action="View" asp-route-id="@Model.TemplateId" class="btn btn-secondary mt-3">@Localizer["Back"]</a>

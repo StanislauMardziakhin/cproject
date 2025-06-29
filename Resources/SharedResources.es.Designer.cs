@@ -240,6 +240,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Respuestas.
+        /// </summary>
+        internal static string Answers {
+            get {
+                return ResourceManager.GetString("Answers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Atrás.
         /// </summary>
         internal static string Back {
@@ -254,6 +263,15 @@ namespace CourseProject.Resources {
         internal static string Browse {
             get {
                 return ResourceManager.GetString("Browse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        internal static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
             }
         }
         
@@ -312,6 +330,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Creado en.
+        /// </summary>
+        internal static string CreatedAt {
+            get {
+                return ResourceManager.GetString("CreatedAt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Crear Plantilla.
         /// </summary>
         internal static string CreateTemplate {
@@ -326,6 +353,15 @@ namespace CourseProject.Resources {
         internal static string CurrentImage {
             get {
                 return ResourceManager.GetString("CurrentImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oscuro.
+        /// </summary>
+        internal static string DarkTheme {
+            get {
+                return ResourceManager.GetString("DarkTheme", resourceCulture);
             }
         }
         
@@ -465,6 +501,24 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rellenar formulario.
+        /// </summary>
+        internal static string FillForm {
+            get {
+                return ResourceManager.GetString("FillForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formularios.
+        /// </summary>
+        internal static string Forms {
+            get {
+                return ResourceManager.GetString("Forms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hola.
         /// </summary>
         internal static string Hello {
@@ -533,6 +587,15 @@ namespace CourseProject.Resources {
         internal static string LanguageSpanish {
             get {
                 return ResourceManager.GetString("LanguageSpanish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Claro.
+        /// </summary>
+        internal static string LightTheme {
+            get {
+                return ResourceManager.GetString("LightTheme", resourceCulture);
             }
         }
         
@@ -879,6 +942,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enviar.
+        /// </summary>
+        internal static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acción {0} aplicada con éxito..
         /// </summary>
         internal static string SuccessActionApplied {
@@ -893,6 +965,15 @@ namespace CourseProject.Resources {
         internal static string SuccessDeleteTemplate {
             get {
                 return ResourceManager.GetString("SuccessDeleteTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formulario enviado correctamente.
+        /// </summary>
+        internal static string SuccessFormSubmitted {
+            get {
+                return ResourceManager.GetString("SuccessFormSubmitted", resourceCulture);
             }
         }
         
@@ -1113,6 +1194,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Usuario.
+        /// </summary>
+        internal static string User {
+            get {
+                return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Se requiere el ID de usuario..
         /// </summary>
         internal static string UserIdRequired {
@@ -1127,6 +1217,15 @@ namespace CourseProject.Resources {
         internal static string View {
             get {
                 return ResourceManager.GetString("View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ver formulario.
+        /// </summary>
+        internal static string ViewForm {
+            get {
+                return ResourceManager.GetString("ViewForm", resourceCulture);
             }
         }
         

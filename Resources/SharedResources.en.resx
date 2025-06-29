@@ -390,4 +390,37 @@
     <data name="Loading" xml:space="preserve">
         <value>Loading</value>
     </data>
+    <data name="SuccessFormSubmitted" xml:space="preserve">
+        <value>Success form submitted</value>
+    </data>
+    <data name="FillForm" xml:space="preserve">
+        <value>Fill form</value>
+    </data>
+    <data name="Submit" xml:space="preserve">
+        <value>Submit</value>
+    </data>
+    <data name="Cancel" xml:space="preserve">
+        <value>Cancel</value>
+    </data>
+    <data name="ViewForm" xml:space="preserve">
+        <value>View form</value>
+    </data>
+    <data name="CreatedAt" xml:space="preserve">
+        <value>Created at</value>
+    </data>
+    <data name="User" xml:space="preserve">
+        <value>User</value>
+    </data>
+    <data name="Answers" xml:space="preserve">
+        <value>Answers</value>
+    </data>
+    <data name="Forms" xml:space="preserve">
+        <value>Forms</value>
+    </data>
+    <data name="LightTheme" xml:space="preserve">
+        <value>Light</value>
+    </data>
+    <data name="DarkTheme" xml:space="preserve">
+        <value>Dark</value>
+    </data>
 </root>

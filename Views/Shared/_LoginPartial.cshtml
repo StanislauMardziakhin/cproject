@@ -28,6 +28,15 @@
             </li>
         </ul>
     </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-dark" href="#" id="themeDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            @Localizer["Theme"]
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="themeDropdown">
+            <li><button class="dropdown-item theme-switch" data-theme="light"><i class="bi bi-sun me-2"></i>@Localizer["LightTheme"]</button></li>
+            <li><button class="dropdown-item theme-switch" data-theme="dark"><i class="bi bi-moon me-2"></i>@Localizer["DarkTheme"]</button></li>
+        </ul>
+    </li>
 @if (SignInManager.IsSignedIn(User))
     {
         var userId = HttpContextAccessor.HttpContext?.User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;

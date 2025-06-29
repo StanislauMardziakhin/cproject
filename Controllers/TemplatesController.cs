@@ -13,13 +13,15 @@ public class TemplatesController : Controller
     private readonly IStringLocalizer<SharedResources> _localizer;
     private readonly QuestionService _questionService;
     private readonly TemplateService _templateService;
+    private readonly FormService _formService;
 
     public TemplatesController(TemplateService templateService, IStringLocalizer<SharedResources> localizer,
-        QuestionService questionService)
+        QuestionService questionService, FormService formService)
     {
         _templateService = templateService;
         _localizer = localizer;
         _questionService = questionService;
+        _formService = formService;
     }
 
     private string GetUserId()
@@ -121,6 +123,7 @@ public class TemplatesController : Controller
         var isAdmin = User.IsInRole("Admin");
         var template = await _templateService.GetPublicTemplateAsync(id, userId, isAdmin);
         if (template == null) return NotFound();
+        template.Forms = await _formService.GetFormsForTemplateAsync(id, userId, isAdmin);
         return View(template);
     }
 

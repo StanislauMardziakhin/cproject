@@ -138,7 +138,9 @@ public class TemplateService
 
     public async Task<Template?> GetPublicTemplateAsync(int id, string? userId = null, bool isAdmin = false)
     {
-        var query = _context.Templates.AsQueryable()
+        var query = _context.Templates
+            .Include(t => t.Questions)
+            .Include(t => t.User)
             .Where(t => t.Id == id && (isAdmin || t.IsPublic || (userId != null && t.UserId == userId)));
         return await query.FirstOrDefaultAsync();
     }

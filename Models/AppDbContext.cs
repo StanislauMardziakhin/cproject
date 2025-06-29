@@ -12,6 +12,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
 
     public DbSet<Template> Templates { get; set; }
     public DbSet<Question> Questions { get; set; }
+    public DbSet<Form> Forms { get; set; }
+    public DbSet<FormAnswer> FormAnswers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,6 +28,26 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(q => q.Template)
             .WithMany(t => t.Questions)
             .HasForeignKey(q => q.TemplateId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Form>()
+            .HasOne(f => f.Template)
+            .WithMany(t => t.Forms)
+            .HasForeignKey(f => f.TemplateId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Form>()
+            .HasOne(f => f.User)
+            .WithMany()
+            .HasForeignKey(f => f.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<FormAnswer>()
+            .HasOne(fa => fa.Form)
+            .WithMany(f => f.Answers)
+            .HasForeignKey(fa => fa.FormId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<FormAnswer>()
+            .HasOne(fa => fa.Question)
+            .WithMany()
+            .HasForeignKey(fa => fa.QuestionId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

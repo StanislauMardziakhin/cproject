@@ -28,6 +28,7 @@ builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<TemplateService>();
 builder.Services.AddScoped<CloudinaryService>();
 builder.Services.AddScoped<QuestionService>();
+builder.Services.AddScoped<FormService>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()

@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model CourseProject.Models.Form
+@inject IStringLocalizer<SharedResources> Localizer
+@{
+    ViewData["Title"] = Localizer["FillForm"];
+}
+
+<h2>@Localizer["FillForm"]: @Model.Template.Name</h2>
+<form asp-action="Fill" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="TemplateId" />
+    @foreach (var question in Model.Template.Questions.OrderBy(q => q.Order))
+    {
+        <div class="form-group mb-3">
+            <label class="form-label">@question.Title</label>
+            @switch (question.Type)
+            {
+                case QuestionType.String:
+                    <input type="text" name="answers[@question.Id]" class="form-control" required />
+                    break;
+                case QuestionType.Text:
+                    <textarea name="answers[@question.Id]" class="form-control" rows="4"></textarea>
+                    break;
+                case QuestionType.Integer:
+                    <input type="number" name="answers[@question.Id]" class="form-control" min="0" required />
+                    break;
+                case QuestionType.Checkbox:
+                    <input type="checkbox" name="answers[@question.Id]" value="true" class="form-check-input" />
+                    break;
+            }
+            @if (!string.IsNullOrEmpty(question.Description))
+            {
+                <small class="form-text text-muted">@question.Description</small>
+            }
+        </div>
+    }
+
+    <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+    <a asp-controller="Templates" asp-action="View" asp-route-id="@Model.TemplateId" class="btn btn-secondary">@Localizer["Cancel"]</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
