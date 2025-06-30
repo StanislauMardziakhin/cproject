@@ -29,6 +29,8 @@ builder.Services.AddScoped<TemplateService>();
 builder.Services.AddScoped<CloudinaryService>();
 builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<FormService>();
+builder.Services.AddScoped<IFormResultService, FormResultService>();
+builder.Services.AddScoped<IResultsAggregatorService, ResultsAggregatorService>();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()

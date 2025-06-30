@@ -37,7 +37,7 @@
         <value>Register</value>
     </data>
     <data name="NavAdminPanel" xml:space="preserve">
-        <value>Admin Panel</value>
+        <value>Admin panel</value>
     </data>
     <data name="LanguageSelector" xml:space="preserve">
         <value>Language</value>
@@ -112,7 +112,7 @@
         <value>Assign as Admin</value>
     </data>
     <data name="AdminActionRemoveAdmin" xml:space="preserve">
-        <value>Remove Admin Role</value>
+        <value>Remove Admin role</value>
     </data>
     <data name="AdminActionDelete" xml:space="preserve">
         <value>Delete</value>
@@ -157,14 +157,14 @@
         <value>Hello</value>
     </data>
     <data name="TemplatesTitle" xml:space="preserve">
-    <value>My Templates</value>
-  </data>
+        <value>My templates</value>
+    </data>
     <data name="CreateTemplate" xml:space="preserve">
-    <value>Create Template</value>
-  </data>
+        <value>Create template</value>
+    </data>
     <data name="EditTemplate" xml:space="preserve">
-    <value>Edit Template</value>
-  </data>
+        <value>Edit template</value>
+    </data>
     <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
@@ -292,7 +292,7 @@
     <value>Search</value>
     </data>
     <data name="SearchResults" xml:space="preserve">
-    <value>Search Results</value>
+        <value>Search results</value>
     </data>
     <data name="NoResults" xml:space="preserve">
     <value>No templates found</value>
@@ -319,8 +319,8 @@
     <value>Checkbox</value>
   </data>
     <data name="AddQuestion" xml:space="preserve">
-    <value>Add Question</value>
-  </data>
+        <value>Add question</value>
+    </data>
     <data name="Questions" xml:space="preserve">
         <value>Questions</value>
     </data>
@@ -422,5 +422,50 @@
     </data>
     <data name="DarkTheme" xml:space="preserve">
         <value>Dark</value>
+    </data>
+    <data name="Dashboard" xml:space="preserve">
+        <value>Dashboard</value>
+    </data>
+    <data name="FormsTitle" xml:space="preserve">
+        <value>My forms</value>
+    </data>
+    <data name="Template" xml:space="preserve">
+        <value>Template</value>
+    </data>
+    <data name="AggregatedResults" xml:space="preserve">
+        <value>Aggregated results</value>
+    </data>
+    <data name="NoAggregatedData" xml:space="preserve">
+        <value>No aggregated data</value>
+    </data>
+    <data name="Question" xml:space="preserve">
+        <value>Question</value>
+    </data>
+    <data name="Min" xml:space="preserve">
+        <value>Min</value>
+    </data>
+    <data name="Max" xml:space="preserve">
+        <value>Max</value>
+    </data>
+    <data name="Average" xml:space="preserve">
+        <value>Average</value>
+    </data>
+    <data name="MostCommonAnswer" xml:space="preserve">
+        <value>Most common answer</value>
+    </data>
+    <data name="TrueCount" xml:space="preserve">
+        <value>True count</value>
+    </data>
+    <data name="FalseCount" xml:space="preserve">
+        <value>False count</value>
+    </data>
+    <data name="ResultsList" xml:space="preserve">
+        <value>Results list</value>
+    </data>
+    <data name="FormId" xml:space="preserve">
+        <value>Form ID</value>
+    </data>
+    <data name="SubmittedAt" xml:space="preserve">
+        <value>Submitted at</value>
     </data>
 </root>

@@ -45,8 +45,18 @@
             <li class="nav-item">
                 <span class="nav-link">@Localizer["Hello"], @userName!</span>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-controller="Templates" asp-action="Index">@Localizer["TemplatesTitle"]</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" href="#" id="dashboardDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    @Localizer["Dashboard"]
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dashboardDropdown">
+                    <li>
+                        <a class="dropdown-item" asp-controller="Templates" asp-action="Index">@Localizer["TemplatesTitle"]</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" asp-controller="Forms" asp-action="Index">@Localizer["FormsTitle"]</a>
+                    </li>
+                </ul>
             </li>
             @if (User.IsInRole("Admin"))
             {

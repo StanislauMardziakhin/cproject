@@ -1,0 +1,39 @@
+﻿@model List<CourseProject.ViewModels.QuestionAggregationResult>
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> Localizer
+
+<h4>@Localizer["AggregatedResults"]</h4>
+
+@if (Model == null || !Model.Any())
+{
+    <p class="text-muted">@Localizer["NoAggregatedData"]</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>@Localizer["Question"]</th>
+            <th>@Localizer["Min"]</th>
+            <th>@Localizer["Max"]</th>
+            <th>@Localizer["Average"]</th>
+            <th>@Localizer["MostCommonAnswer"]</th>
+            <th>@Localizer["TrueCount"]</th>
+            <th>@Localizer["FalseCount"]</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.QuestionTitle</td>
+                <td>@(item.Min?.ToString() ?? "-")</td>
+                <td>@(item.Max?.ToString() ?? "-")</td>
+                <td>@(item.Average?.ToString("F2") ?? "-")</td>
+                <td>@(item.MostCommonAnswer ?? "-")</td>
+                <td>@item.TrueCount</td>
+                <td>@item.FalseCount</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

@@ -382,3 +382,7 @@ ul:not(.list-group) a:hover {
 [data-theme="dark"] [class*="bg-"]:not(.bg-transparent):not(.bg-dark):not(.bg-primary):not(.bg-success):not(.bg-danger) {
     background-color: var(--card-bg) !important;
 }
+
+tr.clickable-row:hover {
+    cursor: pointer;
+}

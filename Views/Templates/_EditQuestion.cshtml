@@ -27,12 +27,6 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
-                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-
-            <div class="mb-3">
                 <label asp-for="Type" class="form-label">@Localizer["Type"]</label>
                 <select asp-for="Type" class="form-select" asp-items="localizedQuestionTypes">
                     <option disabled selected hidden value="">@Localizer["SelectType"]</option>

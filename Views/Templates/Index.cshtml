@@ -59,7 +59,7 @@
     <tbody>
     @foreach (var template in Model)
     {
-        <tr data-id="@template.Id">
+        <tr data-id="@template.Id" class="clickable-row" data-href="@Url.Action("Edit", "Templates", new { id = template.Id })">
             @if (User?.Identity?.IsAuthenticated == true)
             {
                 <td><input type="checkbox" name="templateIds" value="@template.Id"/></td>
@@ -72,18 +72,6 @@
     }
     </tbody>
 </table>
-
-<div class="slide-menu d-none"
-     data-localization='@Html.Raw(JsonConvert.SerializeObject(new
-                        {
-                            confirm = Localizer["Confirm"].Value,
-                            delete = Localizer["Delete"].Value,
-                            publish = Localizer["Publish"].Value,
-                            unpublish = Localizer["Unpublish"].Value
-                        }))'>
-    <button class="btn btn-secondary w-100 mb-2 edit-btn">@Localizer["Edit"]</button>
-    <button class="btn btn-info w-100 view-btn">@Localizer["View"]</button>
-</div>
 
 @section Scripts {
     <script type="module" src="~/js/templates/index.js" asp-append-version="true"></script>

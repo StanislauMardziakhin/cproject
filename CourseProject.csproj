@@ -46,6 +46,13 @@
     <ItemGroup>
         <_ContentIncludedByDefault Remove="Views\Forms\Answers.cshtml"/>
         <_ContentIncludedByDefault Remove="Views\Forms\Fill.cshtml"/>
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\bulk-actions.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\clickable-row.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\modal-loader.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\question-form.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\select-all.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\slide-menu.js" />
+        <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\sortable.js" />
     </ItemGroup>
 
 </Project>

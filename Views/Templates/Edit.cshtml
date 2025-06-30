@@ -2,16 +2,23 @@
 @model Template
 @inject IStringLocalizer<SharedResources> Localizer
 @{
-    ViewData["Title"] = Localizer["EditTemplate"];
+    ViewData["Title"] = $"{Localizer["Template"]}: {Model.Name}";
 }
 
-<h2>@Localizer["EditTemplate"]</h2>
+<h2>@ViewData["Title"]</h2>
 
 <ul class="nav nav-tabs mb-3">
     <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#settings">@Localizer["Settings"]</a>
     </li>
     <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#questions">@Localizer["Questions"]</a></li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="results-tab" data-bs-toggle="tab" href="#results" role="tab" aria-controls="results" aria-selected="false">@Localizer["Results"]</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="aggregated-results-tab" data-bs-toggle="tab" href="#aggregated-results" role="tab" aria-controls="aggregated-results" aria-selected="false">@Localizer["AggregatedResults"]</a>
+    </li>
 </ul>
+
 
 <div class="tab-content">
     <div id="settings" class="tab-pane fade show active">
@@ -85,14 +92,76 @@
                             <li><a class="dropdown-item text-danger" asp-action="DeleteQuestion"
                                    asp-route-id="@question.Id"
                                    onclick="return confirm('@Localizer["Confirm"] @Localizer["Delete"]?')">
-                                    @Localizer["Delete"]
-                                </a></li>
+                                @Localizer["Delete"]
+                            </a></li>
                         </ul>
                     </div>
                 </li>
             }
         </ul>
     </div>
+</div>
+<div id="results" class="tab-pane fade" role="tabpanel" aria-labelledby="results-tab">
+    <h4>@Localizer["ResultsList"]</h4>
+    @if (Model.Forms != null && Model.Forms.Any())
+    {
+        <ul class="list-group">
+            @foreach (var form in Model.Forms)
+            {
+                <li class="list-group-item">
+                    <a asp-controller="Forms" asp-action="View" asp-route-id="@form.Id">
+                        @Localizer["FormId"]: @form.Id, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
+                    </a>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">@Localizer["NoResults"]</p>
+    }
+</div>
+
+<div id="aggregated-results" class="tab-pane fade" role="tabpanel" aria-labelledby="aggregated-results-tab">
+    @{
+        var aggregatedResults = ViewData["AggregatedResults"] as List<CourseProject.ViewModels.QuestionAggregationResult>;
+    }
+    <h4>@Localizer["AggregatedResults"]</h4>
+
+    @if (aggregatedResults == null || !aggregatedResults.Any())
+    {
+        <p class="text-muted">@Localizer["NoAggregatedData"]</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>@Localizer["Question"]</th>
+                <th>@Localizer["Min"]</th>
+                <th>@Localizer["Max"]</th>
+                <th>@Localizer["Average"]</th>
+                <th>@Localizer["MostCommonAnswer"]</th>
+                <th>@Localizer["TrueCount"]</th>
+                <th>@Localizer["FalseCount"]</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in aggregatedResults)
+            {
+                <tr>
+                    <td>@item.QuestionTitle</td>
+                    <td>@(item.Min?.ToString() ?? "-")</td>
+                    <td>@(item.Max?.ToString() ?? "-")</td>
+                    <td>@(item.Average?.ToString("F2") ?? "-")</td>
+                    <td>@(item.MostCommonAnswer ?? "-")</td>
+                    <td>@item.TrueCount</td>
+                    <td>@item.FalseCount</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
 </div>
 <div class="modal fade" id="questionModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">

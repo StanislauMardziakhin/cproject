@@ -1,0 +1,22 @@
+﻿@model CourseProject.Models.Template
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> Localizer
+
+<h4>@Localizer["ResultsList"]</h4>
+
+@if (Model.Forms != null && Model.Forms.Any())
+{
+    <ul class="list-group">
+        @foreach (var form in Model.Forms)
+        {
+            <li class="list-group-item">
+                <a asp-controller="Forms" asp-action="View" asp-route-id="@form.Id">
+                    @Localizer["FormId"]: @form.Id, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
+                </a>
+            </li>
+        }
+    </ul>
+}
+else
+{
+    <p class="text-muted">@Localizer["NoResults"]</p>
+}

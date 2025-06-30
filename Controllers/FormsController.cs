@@ -58,6 +58,14 @@ namespace CourseProject.Controllers;
             if (form == null) return NotFound();
             return View(form);
         }
+        
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var forms = await _formService.GetFormsForUserAsync(userId);
+            return View(forms);
+        }
 
         private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
     }

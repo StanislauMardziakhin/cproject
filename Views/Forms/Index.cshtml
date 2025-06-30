@@ -1,0 +1,54 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
+@model IEnumerable<CourseProject.Models.Form>
+@inject IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["FormsTitle"];
+}
+
+<h2>@Localizer["FormsTitle"]</h2>
+
+@if (User?.Identity?.IsAuthenticated == true)
+{
+    <div class="d-flex flex-wrap gap-2 mb-3 align-items-start">
+        <form asp-action="ApplyAction" asp-controller="Forms" method="post" id="forms-form"
+              class="d-flex gap-2 align-items-start">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="action" id="action-input"/>
+            <input type="hidden" name="formIds" id="selected-form-ids" value=""/>
+
+            <button type="submit" name="action" value="Delete" class="btn btn-danger">
+                <i class="bi bi-trash"></i> @Localizer["Delete"]
+            </button>
+
+            <div id="error-alert" class="alert alert-danger d-none mb-0 ms-2 p-2" role="alert">
+                @Localizer["AdminErrorNoFormsSelected"]
+            </div>
+        </form>
+    </div>
+}
+
+<table class="table table-striped table-responsive">
+    <thead>
+    <tr>
+        <th><input type="checkbox" id="selectAll"/></th>
+        <th>@Localizer["Template"]</th>
+        <th>@Localizer["CreatedAt"]</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var form in Model)
+    {
+        <tr data-id="@form.Id" class="clickable-row" data-href="@Url.Action("View", "Forms", new { id = form.Id })">
+            <td><input type="checkbox" name="formIds" value="@form.Id"/></td>
+            <td>@form.Template?.Name</td>
+            <td>@form.CreatedAt.ToString("g")</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script type="module" src="~/js/forms/index.js" asp-append-version="true"></script>
+}

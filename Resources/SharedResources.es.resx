@@ -28,10 +28,10 @@
         <value>Inicio</value>
     </data>
     <data name="NavLogout" xml:space="preserve">
-        <value>Cerrar Sesión</value>
+        <value>Cerrar sesión</value>
     </data>
     <data name="NavLogin" xml:space="preserve">
-        <value>Iniciar Sesión</value>
+        <value>Iniciar sesión</value>
     </data>
     <data name="NavRegister" xml:space="preserve">
         <value>Registrarse</value>
@@ -112,16 +112,16 @@
         <value>Asignar como Administrador</value>
     </data>
     <data name="AdminActionRemoveAdmin" xml:space="preserve">
-        <value>Eliminar Rol de Administrador</value>
+        <value>Eliminar rol de Administrador</value>
     </data>
     <data name="AdminActionDelete" xml:space="preserve">
         <value>Eliminar</value>
     </data>
     <data name="LoginTitle" xml:space="preserve">
-        <value>Iniciar Sesión</value>
+        <value>Iniciar sesión</value>
     </data>
     <data name="LoginEmail" xml:space="preserve">
-        <value>Correo Electrónico</value>
+        <value>Correo electrónico</value>
     </data>
     <data name="LoginPassword" xml:space="preserve">
         <value>Contraseña</value>
@@ -130,13 +130,13 @@
         <value>Recordarme</value>
     </data>
     <data name="LoginButton" xml:space="preserve">
-        <value>Iniciar Sesión</value>
+        <value>Iniciar sesión</value>
     </data>
     <data name="RegisterTitle" xml:space="preserve">
         <value>Registrarse</value>
     </data>
     <data name="RegisterEmail" xml:space="preserve">
-        <value>Correo Electrónico</value>
+        <value>Correo electrónico</value>
     </data>
     <data name="RegisterPassword" xml:space="preserve">
         <value>Contraseña</value>
@@ -157,14 +157,14 @@
         <value>Hola</value>
     </data>
     <data name="TemplatesTitle" xml:space="preserve">
-    <value>Mis Plantillas</value>
-  </data>
+        <value>Mis plantillas</value>
+    </data>
     <data name="CreateTemplate" xml:space="preserve">
-    <value>Crear Plantilla</value>
-  </data>
+        <value>Crear plantilla</value>
+    </data>
     <data name="EditTemplate" xml:space="preserve">
-    <value>Editar Plantilla</value>
-  </data>
+        <value>Editar [lantilla</value>
+    </data>
     <data name="Name" xml:space="preserve">
     <value>Nombre</value>
   </data>
@@ -358,7 +358,7 @@
         <value>Oculto en resultados</value>
     </data>
     <data name="QuestionsList" xml:space="preserve">
-        <value>Lista de Preguntas</value>
+        <value>Lista de preguntas</value>
     </data>
     <data name="SuccessOrderUpdated" xml:space="preserve">
         <value>Orden actualizado con éxito.</value>
@@ -422,5 +422,50 @@
     </data>
     <data name="LightTheme" xml:space="preserve">
         <value>Claro</value>
+    </data>
+    <data name="Dashboard" xml:space="preserve">
+        <value>Tablero</value>
+    </data>
+    <data name="FormsTitle" xml:space="preserve">
+        <value>Mis formularios</value>
+    </data>
+    <data name="Template" xml:space="preserve">
+        <value>Plantilla</value>
+    </data>
+    <data name="Question" xml:space="preserve">
+        <value>Pregunta</value>
+    </data>
+    <data name="Min" xml:space="preserve">
+        <value>Mín</value>
+    </data>
+    <data name="Max" xml:space="preserve">
+        <value>Máx</value>
+    </data>
+    <data name="MostCommonAnswer" xml:space="preserve">
+        <value>Respuesta más común</value>
+    </data>
+    <data name="TrueCount" xml:space="preserve">
+        <value>Recuento verdadero</value>
+    </data>
+    <data name="NoAggregatedData" xml:space="preserve">
+        <value>Datos no agregados</value>
+    </data>
+    <data name="FalseCount" xml:space="preserve">
+        <value>Recuento falso</value>
+    </data>
+    <data name="Average" xml:space="preserve">
+        <value>Promedio</value>
+    </data>
+    <data name="AggregatedResults" xml:space="preserve">
+        <value>Resultados agregados</value>
+    </data>
+    <data name="ResultsList" xml:space="preserve">
+        <value>Lista de resultados</value>
+    </data>
+    <data name="SubmittedAt" xml:space="preserve">
+        <value>Enviado en</value>
+    </data>
+    <data name="FormId" xml:space="preserve">
+        <value>ID del formulario</value>
     </data>
 </root>
