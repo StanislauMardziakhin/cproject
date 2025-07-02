@@ -31,4 +31,6 @@ public class Template
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public List<Question> Questions { get; set; } = [];
     public List<Form> Forms { get; set; } = [];
+
+    public List<Comment> Comments { get; set; } = [];
 }

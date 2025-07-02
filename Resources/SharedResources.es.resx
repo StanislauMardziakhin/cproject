@@ -501,4 +501,37 @@
     <data name="Manage" xml:space="preserve">
         <value>Administrar</value>
     </data>
+    <data name="Comments" xml:space="preserve">
+        <value>Comentarios</value>
+    </data>
+    <data name="NoComments" xml:space="preserve">
+        <value>Aún no hay comentarios</value>
+    </data>
+    <data name="AddComment" xml:space="preserve">
+        <value>Añadir un comentario</value>
+    </data>
+    <data name="CommentRequired" xml:space="preserve">
+        <value>El comentario no puede estar vacío</value>
+    </data>
+    <data name="SuccessCommentAdded" xml:space="preserve">
+        <value>Comentario añadido con éxito</value>
+    </data>
+    <data name="CommentTooLong" xml:space="preserve">
+        <value>El comentario no puede exceder los 500 caracteres</value>
+    </data>
+    <data name="CommentDeleted" xml:space="preserve">
+        <value>Comentario eliminado con éxito</value>
+    </data>
+    <data name="CommentNotFound" xml:space="preserve">
+        <value>Comentario no encontrado</value>
+    </data>
+    <data name="CommentDeletedButSignalRFailed" xml:space="preserve">
+        <value>Comentario eliminado, pero la actualización en tiempo real falló</value>
+    </data>
+    <data name="DeleteComment" xml:space="preserve">
+        <value>Eliminar comentario</value>
+    </data>
+    <data name="Unauthorized" xml:space="preserve">
+        <value>No estás autorizado para realizar esta acción</value>
+    </data>
 </root>

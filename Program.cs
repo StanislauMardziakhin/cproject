@@ -1,4 +1,5 @@
 using System.Globalization;
+using CourseProject.Hubs;
 using CourseProject.Models;
 using CourseProject.Services;
 using Microsoft.AspNetCore.Identity;
@@ -31,6 +32,8 @@ builder.Services.AddScoped<QuestionService>();
 builder.Services.AddScoped<FormService>();
 builder.Services.AddScoped<IFormResultService, FormResultService>();
 builder.Services.AddScoped<IResultsAggregatorService, ResultsAggregatorService>();
+builder.Services.AddScoped<CommentService>();
+builder.Services.AddSignalR();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()
@@ -64,6 +67,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<CommentHub>("/commentHub");
 
 app.MapControllerRoute(
     "default",

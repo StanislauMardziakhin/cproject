@@ -6,6 +6,7 @@ import {initQuestionForm} from '../shared/question-form.js';
 import {initSortableList} from '../shared/sortable.js';
 import {initClickableRows} from '../shared/clickable-row.js';
 import {initTabFromHash} from '../shared/hash-tabs.js';
+import { initComments } from './comments.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTemplateBulkActions();
@@ -16,4 +17,12 @@ document.addEventListener('DOMContentLoaded', () => {
     initSortableList();
     initClickableRows();
     initTabFromHash();
+
+    const commentTarget = document.querySelector('[data-template-id]');
+    if (commentTarget) {
+        const templateId = Number(commentTarget.dataset.templateId);
+        if (!isNaN(templateId)) {
+            initComments(templateId);
+        }
+    }
 });

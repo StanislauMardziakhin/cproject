@@ -78,6 +78,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Añadir un comentario.
+        /// </summary>
+        internal static string AddComment {
+            get {
+                return ResourceManager.GetString("AddComment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Agregar pregunta.
         /// </summary>
         internal static string AddQuestion {
@@ -321,6 +330,60 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comentario eliminado con éxito.
+        /// </summary>
+        internal static string CommentDeleted {
+            get {
+                return ResourceManager.GetString("CommentDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentario eliminado, pero la actualización en tiempo real falló.
+        /// </summary>
+        internal static string CommentDeletedButSignalRFailed {
+            get {
+                return ResourceManager.GetString("CommentDeletedButSignalRFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentario no encontrado.
+        /// </summary>
+        internal static string CommentNotFound {
+            get {
+                return ResourceManager.GetString("CommentNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario no puede estar vacío.
+        /// </summary>
+        internal static string CommentRequired {
+            get {
+                return ResourceManager.GetString("CommentRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentarios.
+        /// </summary>
+        internal static string Comments {
+            get {
+                return ResourceManager.GetString("Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El comentario no puede exceder los 500 caracteres.
+        /// </summary>
+        internal static string CommentTooLong {
+            get {
+                return ResourceManager.GetString("CommentTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Confirmar.
         /// </summary>
         internal static string Confirm {
@@ -416,6 +479,15 @@ namespace CourseProject.Resources {
         internal static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar comentario.
+        /// </summary>
+        internal static string DeleteComment {
+            get {
+                return ResourceManager.GetString("DeleteComment", resourceCulture);
             }
         }
         
@@ -915,6 +987,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Aún no hay comentarios.
+        /// </summary>
+        internal static string NoComments {
+            get {
+                return ResourceManager.GetString("NoComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ningún archivo seleccionado.
         /// </summary>
         internal static string NoFileChosen {
@@ -1154,6 +1235,15 @@ namespace CourseProject.Resources {
         internal static string SuccessActionApplied {
             get {
                 return ResourceManager.GetString("SuccessActionApplied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comentario añadido con éxito.
+        /// </summary>
+        internal static string SuccessCommentAdded {
+            get {
+                return ResourceManager.GetString("SuccessCommentAdded", resourceCulture);
             }
         }
         
@@ -1415,6 +1505,15 @@ namespace CourseProject.Resources {
         internal static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No estás autorizado para realizar esta acción.
+        /// </summary>
+        internal static string Unauthorized {
+            get {
+                return ResourceManager.GetString("Unauthorized", resourceCulture);
             }
         }
         

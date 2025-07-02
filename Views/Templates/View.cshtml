@@ -1,5 +1,5 @@
 ﻿@using Microsoft.Extensions.Localization
-@model CourseProject.Models.Template
+@model Template
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
@@ -29,11 +29,70 @@
         <h5 class="card-title">@Localizer["Name"]: @Model.Name</h5>
         <p class="card-text"><strong>@Localizer["Description"]:</strong> @Html.Raw(Model.Description)</p>
         <p class="card-text"><strong>@Localizer["Theme"]:</strong> @Model.Theme</p>
-        <p class="card-text"><strong>@Localizer["Public"]:</strong> @(Model.IsPublic ? Localizer["Yes"] : Localizer["No"])</p>
+        <p class="card-text">
+            <strong>@Localizer["Public"]:</strong> @(Model.IsPublic ? Localizer["Yes"] : Localizer["No"])</p>
         <p class="card-text"><strong>@Localizer["Tags"]:</strong> @Model.Tags</p>
         @if (!string.IsNullOrEmpty(Model.ImageUrl))
         {
-            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-thumbnail" style="max-width: 200px;" />
+            <img src="@Model.ImageUrl" alt="@Model.Name" class="img-thumbnail" style="max-width: 200px;"/>
         }
     </div>
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5>@Localizer["Comments"]</h5>
+        </div>
+        <div class="card-body">
+            @if (Model.Comments != null && Model.Comments.Any())
+            {
+                <ul class="list-group mb-3">
+                    @foreach (var comment in Model.Comments)
+                    {
+                        <li class="list-group-item" data-comment-id="@comment.Id">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                            <strong>@comment.User?.Name</strong> <small
+                                class="text-muted">@comment.CreatedAt.ToString("g")</small>
+                                <p>@comment.Content</p>
+                                </div>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <form asp-action="DeleteComment" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="commentId" value="@comment.Id" />
+                                        <input type="hidden" name="templateId" value="@Model.Id" />
+                                        <button type="submit" class="btn btn-link text-danger p-0" title="@Localizer["DeleteComment"]">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </form>
+                                }
+                            </div>
+                        </li>
+                    }
+                </ul>
+            }
+            else
+            {
+                <p class="text-muted">@Localizer["NoComments"]</p>
+            }
+
+            @if (User.Identity?.IsAuthenticated == true)
+            {
+                <form asp-action="AddComment" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="templateId" value="@Model.Id"/>
+                    <div class="mb-3">
+                        <label class="form-label">@Localizer["AddComment"]</label>
+                        <textarea name="content" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
+                </form>
+            }
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script type="module" src="~/js/templates/comments.js" asp-append-version="true"></script>
+    <div data-template-id="@Model.Id"></div>
+    <script type="module" src="~/js/templates/index.js" asp-append-version="true"></script>
+}

@@ -14,6 +14,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Question> Questions { get; set; }
     public DbSet<Form> Forms { get; set; }
     public DbSet<FormAnswer> FormAnswers { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -48,6 +49,16 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .HasOne(fa => fa.Question)
             .WithMany()
             .HasForeignKey(fa => fa.QuestionId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.Template)
+            .WithMany(t => t.Comments)
+            .HasForeignKey(c => c.TemplateId)
+            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Comment>()
+            .HasOne(c => c.User)
+            .WithMany()
+            .HasForeignKey(c => c.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }

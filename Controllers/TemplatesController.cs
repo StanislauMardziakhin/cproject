@@ -16,10 +16,11 @@ public class TemplatesController : Controller
     private readonly FormService _formService;
     private readonly IFormResultService _formResultService;
     private readonly IResultsAggregatorService _resultsAggregatorService;
+    private readonly CommentService _commentService;
 
     public TemplatesController(TemplateService templateService, IStringLocalizer<SharedResources> localizer,
         QuestionService questionService, FormService formService, IFormResultService formResultService,
-        IResultsAggregatorService resultsAggregatorService)
+        IResultsAggregatorService resultsAggregatorService, CommentService commentService)
     {
         _templateService = templateService;
         _localizer = localizer;
@@ -27,6 +28,7 @@ public class TemplatesController : Controller
         _formService = formService;
         _formResultService = formResultService;
         _resultsAggregatorService = resultsAggregatorService;
+        _commentService = commentService;
     }
 
     private string GetUserId()
@@ -139,6 +141,7 @@ public class TemplatesController : Controller
         var template = await _templateService.GetPublicTemplateAsync(id, userId, isAdmin);
         if (template == null) return NotFound();
         template.Forms = await _formService.GetFormsForTemplateAsync(id, userId, isAdmin);
+        template.Comments = await _commentService.GetCommentsAsync(id);
         return View(template);
     }
 
@@ -236,4 +239,51 @@ public class TemplatesController : Controller
         var (succeeded, error) = await _questionService.UpdateQuestionOrderAsync(orders, userId, isAdmin);
         return Json(new { succeeded, error });
     }
+    
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> AddComment(int templateId, string content)
+    {
+        if (string.IsNullOrWhiteSpace(content))
+        {
+            TempData["Error"] = _localizer["CommentRequired"].Value;
+            return RedirectToAction(nameof(View), new { id = templateId });
+        }
+
+        var userId = GetUserId();
+        var (succeeded, error) = await _commentService.AddCommentAsync(templateId, content, userId);
+        if (!succeeded)
+        {
+            TempData["Error"] = _localizer[error].Value;
+            return RedirectToAction(nameof(View), new { id = templateId });
+        }
+
+        TempData["Success"] = _localizer["SuccessCommentAdded"].Value;
+        return RedirectToAction(nameof(View), new { id = templateId });
+    }
+    
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteComment(int commentId, int templateId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            TempData["Error"] = _localizer["UserNotAuthenticated"].Value;
+            return RedirectToAction(nameof(View), new { id = templateId });
+        }
+
+        var (succeeded, error) = await _commentService.DeleteCommentAsync(commentId, userId);
+        if (!succeeded)
+        {
+            TempData["Error"] = _localizer[error].Value;
+            return RedirectToAction(nameof(View), new { id = templateId });
+        }
+
+        TempData["Success"] = _localizer["CommentDeleted"].Value;
+        return RedirectToAction(nameof(View), new { id = templateId });
+    }
+
 }
