@@ -1,10 +1,12 @@
 using System.Globalization;
+using CourseProject;
 using CourseProject.Hubs;
 using CourseProject.Models;
 using CourseProject.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using SharedResources = CourseProject.Resources.SharedResources;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,11 +35,16 @@ builder.Services.AddScoped<FormService>();
 builder.Services.AddScoped<IFormResultService, FormResultService>();
 builder.Services.AddScoped<IResultsAggregatorService, ResultsAggregatorService>();
 builder.Services.AddScoped<CommentService>();
+builder.Services.AddScoped<LikeService>();
 builder.Services.AddSignalR();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()
     .AddViewLocalization()
-    .AddDataAnnotationsLocalization();
+    .AddDataAnnotationsLocalization(options =>
+    {
+        options.DataAnnotationLocalizerProvider = (type, factory) =>
+            factory.Create(typeof(SharedResources));
+    });
 builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
@@ -68,6 +75,7 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHub<CommentHub>("/commentHub");
+app.MapHub<LikeHub>("/likeHub");
 
 app.MapControllerRoute(
     "default",

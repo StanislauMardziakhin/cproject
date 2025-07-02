@@ -532,7 +532,40 @@
     <data name="Unauthorized" xml:space="preserve">
         <value>You are not authorized to perform this action</value>
     </data>
-    <data name="CommentDeletedButSignalRFailed" xml:space="preserve">
-        <value>Comment deleted, but real-time update failed</value>
+    <data name="Like" xml:space="preserve">
+        <value>Like</value>
+    </data>
+    <data name="Unlike" xml:space="preserve">
+        <value>Unlike</value>
+    </data>
+    <data name="LikeSuccess" xml:space="preserve">
+        <value>Template liked successfully</value>
+    </data>
+    <data name="UnlikeSuccess" xml:space="preserve">
+        <value>Like removed successfully</value>
+    </data>
+    <data name="MinimumInputMessage" xml:space="preserve">
+        <value>Please enter 1 or more characters</value>
+    </data>
+    <data name="RequiredField" xml:space="preserve">
+        <value>Required field</value>
+    </data>
+    <data name="TitleTooLong" xml:space="preserve">
+        <value>Title cannot exceed 100 characters</value>
+    </data>
+    <data name="LatestTemplates" xml:space="preserve">
+        <value>Latest templates</value>
+    </data>
+    <data name="Author" xml:space="preserve">
+        <value>Author</value>
+    </data>
+    <data name="TopTemplates" xml:space="preserve">
+        <value>Top templates</value>
+    </data>
+    <data name="FormsCount" xml:space="preserve">
+        <value>Forms filled</value>
+    </data>
+    <data name="AccessDenied" xml:space="preserve">
+        <value>Access denied</value>
     </data>
 </root>

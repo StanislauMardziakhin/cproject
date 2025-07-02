@@ -1,9 +1,13 @@
-﻿@using Microsoft.Extensions.Localization
+﻿@using System.Security.Claims
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.Extensions.Localization
 @model Template
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
     ViewData["Title"] = Localizer["ViewTemplate"];
+    var isLiked = User.Identity?.IsAuthenticated == true && Model.Likes.Any(l => l.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier));
+    var likeIconClass = isLiked ? "bi-hand-thumbs-up-fill text-body-secondary" : "bi-hand-thumbs-up text-body";
 }
 
 <h2>@Localizer["ViewTemplate"]</h2>
@@ -23,8 +27,27 @@
     <a asp-action="Index" class="btn btn-secondary">
         <i class="bi bi-arrow-left"></i> @Localizer["Back"]
     </a>
-</div>
-<div class="card">
+    </div>
+<div class="card position-relative">
+    @if (User.Identity?.IsAuthenticated == true)
+    {
+        <form asp-action="ToggleLike" method="post"
+              class="position-absolute top-0 end-0 m-2 z-1">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="templateId" value="@Model.Id" />
+            <button type="submit"
+                    id="like-button-@Model.Id"
+                    class="btn btn-light border-0 p-1 shadow-sm rounded-circle"
+                    title="@Localizer["Like"]">
+                <i class="bi @likeIconClass fs-5"></i>
+            </button>
+        </form>
+        
+        <div class="position-absolute top-0 end-0 me-5 mt-3 text-muted small z-1">
+            <i class="bi bi-hand-thumbs-up-fill text-body-secondary small me-1"></i>
+            <span id="like-count-@Model.Id">@Model.Likes.Count</span>
+        </div>
+}
     <div class="card-body">
         <h5 class="card-title">@Localizer["Name"]: @Model.Name</h5>
         <p class="card-text"><strong>@Localizer["Description"]:</strong> @Html.Raw(Model.Description)</p>
@@ -82,7 +105,7 @@
                     <input type="hidden" name="templateId" value="@Model.Id"/>
                     <div class="mb-3">
                         <label class="form-label">@Localizer["AddComment"]</label>
-                        <textarea name="content" class="form-control" rows="3" required></textarea>
+                        <textarea name="content" class="form-control" rows="3"></textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">@Localizer["Submit"]</button>
                 </form>
@@ -93,6 +116,7 @@
 
 @section Scripts {
     <script type="module" src="~/js/templates/comments.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/templates/likes.js" asp-append-version="true"></script>
     <div data-template-id="@Model.Id"></div>
     <script type="module" src="~/js/templates/index.js" asp-append-version="true"></script>
 }

@@ -17,10 +17,12 @@ public class TemplatesController : Controller
     private readonly IFormResultService _formResultService;
     private readonly IResultsAggregatorService _resultsAggregatorService;
     private readonly CommentService _commentService;
+    private readonly LikeService _likeService;
 
     public TemplatesController(TemplateService templateService, IStringLocalizer<SharedResources> localizer,
         QuestionService questionService, FormService formService, IFormResultService formResultService,
-        IResultsAggregatorService resultsAggregatorService, CommentService commentService)
+        IResultsAggregatorService resultsAggregatorService, CommentService commentService,
+        LikeService likeService)
     {
         _templateService = templateService;
         _localizer = localizer;
@@ -29,6 +31,7 @@ public class TemplatesController : Controller
         _formResultService = formResultService;
         _resultsAggregatorService = resultsAggregatorService;
         _commentService = commentService;
+        _likeService = likeService;
     }
 
     private string GetUserId()
@@ -285,5 +288,58 @@ public class TemplatesController : Controller
         TempData["Success"] = _localizer["CommentDeleted"].Value;
         return RedirectToAction(nameof(View), new { id = templateId });
     }
+    [HttpPost]
+    [Authorize]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> ToggleLike(int templateId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+        {
+            TempData["Error"] = _localizer["UserNotAuthenticated"].Value;
+            return RedirectToAction(nameof(View), new { id = templateId });
+        }
 
+        var isLiked = await _likeService.IsLikedAsync(templateId, userId);
+        if (isLiked)
+        {
+            var (succeeded, error) = await _likeService.RemoveLikeAsync(templateId, userId);
+            if (!succeeded)
+            {
+                TempData["Error"] = _localizer[error].Value;
+                return RedirectToAction(nameof(View), new { id = templateId });
+            }
+            TempData["Success"] = _localizer["UnlikeSuccess"].Value;
+        }
+        else
+        {
+            var (succeeded, error) = await _likeService.AddLikeAsync(templateId, userId);
+            if (!succeeded)
+            {
+                TempData["Error"] = _localizer[error].Value;
+                return RedirectToAction(nameof(View), new { id = templateId });
+            }
+            TempData["Success"] = _localizer["LikeSuccess"].Value;
+        }
+
+        return RedirectToAction(nameof(View), new { id = templateId });
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> IsLiked(int templateId)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Json(false);
+
+        var isLiked = await _likeService.IsLikedAsync(templateId, userId);
+        return Json(isLiked);
+    }
+    [HttpGet]
+    public async Task<IActionResult> SearchTags(string term)
+    {
+        var tags = await _templateService.SearchTagsAsync(term);
+        return Json(tags.Select(t => new { id = t, text = t }));
+    }
 }

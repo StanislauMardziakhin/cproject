@@ -30,6 +30,10 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>SharedResources.es.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+        <EmbeddedResource Update="Resources\SharedResources.resx">
+          <Generator>PublicResXFileCodeGenerator</Generator>
+          <LastGenOutput>SharedResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
     </ItemGroup>
 
     <ItemGroup>
@@ -42,6 +46,11 @@
             <DesignTime>True</DesignTime>
             <AutoGen>True</AutoGen>
             <DependentUpon>SharedResources.es.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Resources\SharedResources.Designer.cs">
+          <DesignTime>True</DesignTime>
+          <AutoGen>True</AutoGen>
+          <DependentUpon>SharedResources.resx</DependentUpon>
         </Compile>
     </ItemGroup>
 
@@ -56,5 +65,10 @@
         <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\slide-menu.js" />
         <_ContentIncludedByDefault Remove="wwwroot\js\templates\shared\sortable.js" />
     </ItemGroup>
+    <ItemGroup>
+  <None Update="wwwroot/images/default.png">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </None>
+</ItemGroup>
 
 </Project>

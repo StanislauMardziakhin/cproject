@@ -2,9 +2,52 @@
 @inject UserManager<ApplicationUser> UserManager
 @inject IStringLocalizer<SharedResources> Localizer
 @{
-    ViewData["Title"] = "Home";
-    var templates = ViewData["Templates"] as List<Template>;
+    ViewData["Title"] = Localizer["CP"];
+    var latestTemplates = ViewData["LatestTemplates"] as List<Template> ?? [];
+    var topTemplates = ViewData["TopTemplates"] as List<Template> ?? [];
 }
 <div class="text-center">
     <h1 class="display-4">@Localizer["Hello"], @ViewData["UserName"]!</h1>
+</div>
+<div class="container my-5">
+    <h2 class="mb-4">@Localizer["LatestTemplates"]</h2>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var template in latestTemplates)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    @if (!string.IsNullOrEmpty(template.ImageUrl))
+                    {
+                        <img src="@template.ImageUrl" class="card-img-top" alt="@template.Name" style="height: 200px; object-fit: cover;">
+                    }
+                    <div class="card-body">
+                        <h5 class="card-title"><a asp-controller="Templates" asp-action="View" asp-route-id="@template.Id">@template.Name</a></h5>
+                        <p class="card-text">@(string.IsNullOrEmpty(template.Description) ? Localizer["NoDescription"] : template.Description.Length > 100 ? template.Description.Substring(0, 100) + "..." : template.Description)</p>
+                        <p class="card-text"><small class="text-muted">@Localizer["Author"]: @(template.User?.Name ?? Localizer["Unknown"])</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    
+    <h2 class="mt-5 mb-4">@Localizer["TopTemplates"]</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">@Localizer["Name"]</th>
+                <th scope="col">@Localizer["Author"]</th>
+                <th scope="col">@Localizer["FormsCount"]</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in topTemplates)
+            {
+                <tr>
+                    <td><a asp-controller="Templates" asp-action="View" asp-route-id="@template.Id">@template.Name</a></td>
+                    <td>@(template.User?.Name ?? Localizer["Unknown"])</td>
+                    <td>@template.Forms.Count</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>

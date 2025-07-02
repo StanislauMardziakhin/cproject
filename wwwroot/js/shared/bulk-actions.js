@@ -15,8 +15,6 @@
                 unpublish: window.localization.Unpublish
             };
 
-            if (!confirm(`${window.localization.ConfirmDelete} ${labels[action]}?`)) return;
-
             const selected = Array.from(document.querySelectorAll('input[name="templateIds"]:checked')).map(cb => cb.value);
             if (selected.length === 0) {
                 document.getElementById("error-alert")?.classList.remove("d-none");

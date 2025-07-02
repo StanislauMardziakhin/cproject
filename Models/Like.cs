@@ -2,7 +2,7 @@
 
 namespace CourseProject.Models;
 
-public class Comment
+public class Like
 {
     public int Id { get; set; }
 
@@ -15,10 +15,6 @@ public class Comment
     public string UserId { get; set; } = string.Empty;
 
     public ApplicationUser? User { get; set; }
-
-    [Required(ErrorMessageResourceName = "RequiredField", ErrorMessageResourceType = typeof(Resources.SharedResources))]
-    [StringLength(500, ErrorMessageResourceName = "CommentTooLong", ErrorMessageResourceType = typeof(Resources.SharedResources))]
-    public string Content { get; set; } = string.Empty;
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

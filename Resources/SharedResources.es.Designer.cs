@@ -60,6 +60,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Acceso denegado.
+        /// </summary>
+        internal static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acciones.
         /// </summary>
         internal static string Actions {
@@ -276,6 +285,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Autor.
+        /// </summary>
+        internal static string Author {
+            get {
+                return ResourceManager.GetString("Author", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Promedio.
         /// </summary>
         internal static string Average {
@@ -335,15 +353,6 @@ namespace CourseProject.Resources {
         internal static string CommentDeleted {
             get {
                 return ResourceManager.GetString("CommentDeleted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Comentario eliminado, pero la actualización en tiempo real falló.
-        /// </summary>
-        internal static string CommentDeletedButSignalRFailed {
-            get {
-                return ResourceManager.GetString("CommentDeletedButSignalRFailed", resourceCulture);
             }
         }
         
@@ -699,6 +708,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Formularios llenos.
+        /// </summary>
+        internal static string FormsCount {
+            get {
+                return ResourceManager.GetString("FormsCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mis formularios.
         /// </summary>
         internal static string FormsTitle {
@@ -789,11 +807,38 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Últimas plantillas.
+        /// </summary>
+        internal static string LatestTemplates {
+            get {
+                return ResourceManager.GetString("LatestTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Claro.
         /// </summary>
         internal static string LightTheme {
             get {
                 return ResourceManager.GetString("LightTheme", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Me gusta.
+        /// </summary>
+        internal static string Like {
+            get {
+                return ResourceManager.GetString("Like", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantilla marcada como me gusta con éxito.
+        /// </summary>
+        internal static string LikeSuccess {
+            get {
+                return ResourceManager.GetString("LikeSuccess", resourceCulture);
             }
         }
         
@@ -884,6 +929,15 @@ namespace CourseProject.Resources {
         internal static string Min {
             get {
                 return ResourceManager.GetString("Min", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor, ingrese 1 o más caracteres.
+        /// </summary>
+        internal static string MinimumInputMessage {
+            get {
+                return ResourceManager.GetString("MinimumInputMessage", resourceCulture);
             }
         }
         
@@ -992,6 +1046,15 @@ namespace CourseProject.Resources {
         internal static string NoComments {
             get {
                 return ResourceManager.GetString("NoComments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sin descripción.
+        /// </summary>
+        internal static string NoDescription {
+            get {
+                return ResourceManager.GetString("NoDescription", resourceCulture);
             }
         }
         
@@ -1145,6 +1208,15 @@ namespace CourseProject.Resources {
         internal static string RegisterTitle {
             get {
                 return ResourceManager.GetString("RegisterTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campo requerido.
+        /// </summary>
+        internal static string RequiredField {
+            get {
+                return ResourceManager.GetString("RequiredField", resourceCulture);
             }
         }
         
@@ -1491,6 +1563,24 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Título no puede exceder los 50 caracteres..
+        /// </summary>
+        internal static string TitleTooLong {
+            get {
+                return ResourceManager.GetString("TitleTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plantillas principales.
+        /// </summary>
+        internal static string TopTemplates {
+            get {
+                return ResourceManager.GetString("TopTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recuento verdadero.
         /// </summary>
         internal static string TrueCount {
@@ -1514,6 +1604,24 @@ namespace CourseProject.Resources {
         internal static string Unauthorized {
             get {
                 return ResourceManager.GetString("Unauthorized", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ya no me gusta.
+        /// </summary>
+        internal static string Unlike {
+            get {
+                return ResourceManager.GetString("Unlike", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Me gusta eliminado con éxito.
+        /// </summary>
+        internal static string UnlikeSuccess {
+            get {
+                return ResourceManager.GetString("UnlikeSuccess", resourceCulture);
             }
         }
         

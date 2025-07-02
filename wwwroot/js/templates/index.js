@@ -7,6 +7,8 @@ import {initSortableList} from '../shared/sortable.js';
 import {initClickableRows} from '../shared/clickable-row.js';
 import {initTabFromHash} from '../shared/hash-tabs.js';
 import { initComments } from './comments.js';
+import { initLikes } from './likes.js';
+import { initTags } from './tags.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTemplateBulkActions();
@@ -23,6 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const templateId = Number(commentTarget.dataset.templateId);
         if (!isNaN(templateId)) {
             initComments(templateId);
+            initSlideMenu(templateId);
         }
+    }
+    const tagsInput = document.querySelector('#tags-input');
+    if (tagsInput) {
+        initTags();
     }
 });
