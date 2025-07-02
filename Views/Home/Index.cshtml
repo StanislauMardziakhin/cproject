@@ -1,8 +1,10 @@
-﻿@inject UserManager<ApplicationUser> UserManager
+﻿@using Microsoft.Extensions.Localization
+@inject UserManager<ApplicationUser> UserManager
+@inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = "Home";
     var templates = ViewData["Templates"] as List<Template>;
 }
 <div class="text-center">
-    <h1 class="display-4">Hello, @ViewData["UserName"]!</h1>
+    <h1 class="display-4">@Localizer["Hello"], @ViewData["UserName"]!</h1>
 </div>

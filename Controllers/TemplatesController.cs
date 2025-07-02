@@ -104,9 +104,16 @@ public class TemplatesController : Controller
 
         var userId = GetUserId();
         var isAdmin = User.IsInRole("Admin");
+        var successMessageKey = action.ToLower() switch
+        {
+            "delete" => "SuccessDeleteTemplate",
+            "publish" => "SuccessPublishTemplate",
+            "unpublish" => "SuccessUnpublishTemplate",
+            _ => "ErrorInvalidAction"
+        };
         var (actionSucceeded, error) =
             await _templateService.ApplyMassActionAsync(action.ToLower(), ids, userId, isAdmin);
-        return actionSucceeded ? HandleSuccess($"Success{action}Template") : HandleError(null, error);
+        return actionSucceeded ? HandleSuccess(successMessageKey) : HandleError(null, error);
     }
 
     private (bool succeeded, int[] ids, string errorKey) ParseTemplateIds(string templateIds)

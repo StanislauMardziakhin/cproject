@@ -15,10 +15,10 @@
         <form asp-action="ApplyAction" asp-controller="Forms" method="post" id="forms-form"
               class="d-flex gap-2 align-items-start">
             @Html.AntiForgeryToken()
-            <input type="hidden" name="action" id="action-input"/>
+            <input type="hidden" name="action" value="Delete"/>
             <input type="hidden" name="formIds" id="selected-form-ids" value=""/>
 
-            <button type="submit" name="action" value="Delete" class="btn btn-danger">
+            <button type="submit" id="delete-selected" class="btn btn-danger">
                 <i class="bi bi-trash"></i> @Localizer["Delete"]
             </button>
 
@@ -40,7 +40,8 @@
     <tbody>
     @foreach (var form in Model)
     {
-        <tr data-id="@form.Id" class="clickable-row" data-href="@Url.Action("View", "Forms", new { id = form.Id })">
+        <tr data-id="@form.Id" class="clickable-row" 
+            data-href="@Url.Action("View", "Forms", new { id = form.Id, returnUrl = Url.Action("Index", "Forms") })">
             <td><input type="checkbox" name="formIds" value="@form.Id"/></td>
             <td>@form.Template?.Name</td>
             <td>@form.CreatedAt.ToString("g")</td>

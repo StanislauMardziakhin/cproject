@@ -141,6 +141,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Por favor, seleccione al menos un formulario..
+        /// </summary>
+        internal static string AdminErrorNoFormsSelected {
+            get {
+                return ResourceManager.GetString("AdminErrorNoFormsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Por favor, seleccione al menos un usuario..
         /// </summary>
         internal static string AdminErrorNoUsersSelected {
@@ -393,6 +402,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error de base de datos. Por favor contacte al administrador..
+        /// </summary>
+        internal static string DatabaseError {
+            get {
+                return ResourceManager.GetString("DatabaseError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Eliminar.
         /// </summary>
         internal static string Delete {
@@ -425,6 +443,15 @@ namespace CourseProject.Resources {
         internal static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar formulario.
+        /// </summary>
+        internal static string EditForm {
+            get {
+                return ResourceManager.GetString("EditForm", resourceCulture);
             }
         }
         
@@ -474,6 +501,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Formularios no encontrados.
+        /// </summary>
+        internal static string ErrorFormsNotFound {
+            get {
+                return ResourceManager.GetString("ErrorFormsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acción inválida o ningún usuario seleccionado..
         /// </summary>
         internal static string ErrorInvalidAction {
@@ -501,11 +537,38 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No se seleccionaron formularios para la acción.
+        /// </summary>
+        internal static string ErrorNoFormsSelected {
+            get {
+                return ResourceManager.GetString("ErrorNoFormsSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tiene permiso para eliminar estos formularios.
+        /// </summary>
+        internal static string ErrorNoPermission {
+            get {
+                return ResourceManager.GetString("ErrorNoPermission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No se seleccionaron plantillas.
         /// </summary>
         internal static string ErrorNoTemplatesSelected {
             get {
                 return ResourceManager.GetString("ErrorNoTemplatesSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se seleccionaron formularios válidos.
+        /// </summary>
+        internal static string ErrorNoValidForms {
+            get {
+                return ResourceManager.GetString("ErrorNoValidForms", resourceCulture);
             }
         }
         
@@ -618,6 +681,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 	Identificadores de preguntas no válidos.
+        /// </summary>
+        internal static string InvalidQuestionIds {
+            get {
+                return ResourceManager.GetString("InvalidQuestionIds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inglés.
         /// </summary>
         internal static string LanguageEnglish {
@@ -704,6 +776,15 @@ namespace CourseProject.Resources {
         internal static string LoginTitle {
             get {
                 return ResourceManager.GetString("LoginTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Administrar.
+        /// </summary>
+        internal static string Manage {
+            get {
+                return ResourceManager.GetString("Manage", resourceCulture);
             }
         }
         
@@ -1077,6 +1158,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Formularios eliminados correctamente.
+        /// </summary>
+        internal static string SuccessDeleteForms {
+            get {
+                return ResourceManager.GetString("SuccessDeleteForms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plantillas seleccionadas eliminadas con éxito..
         /// </summary>
         internal static string SuccessDeleteTemplate {
@@ -1091,6 +1181,15 @@ namespace CourseProject.Resources {
         internal static string SuccessFormSubmitted {
             get {
                 return ResourceManager.GetString("SuccessFormSubmitted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formulario de éxito enviado.
+        /// </summary>
+        internal static string SuccessFormUpdated {
+            get {
+                return ResourceManager.GetString("SuccessFormUpdated", resourceCulture);
             }
         }
         

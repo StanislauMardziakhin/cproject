@@ -22,6 +22,7 @@
             <div class="dropdown">
                 <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
                     @Localizer["Actions"]
                 </button>
                 <ul class="dropdown-menu">
@@ -59,13 +60,14 @@
     <tbody>
     @foreach (var template in Model)
     {
-        <tr data-id="@template.Id" class="clickable-row" data-href="@Url.Action("Edit", "Templates", new { id = template.Id })">
+        <tr data-id="@template.Id" class="clickable-row"
+            data-href="@Url.Action("Edit", "Templates", new { id = template.Id })">
             @if (User?.Identity?.IsAuthenticated == true)
             {
                 <td><input type="checkbox" name="templateIds" value="@template.Id"/></td>
             }
             <td>@template.Name</td>
-            <td>@template.Description</td>
+            <td>@Html.Raw(template.Description)</td>
             <td>@template.Theme</td>
             <td>@(template.IsPublic ? Localizer["Public"] : Localizer["No"])</td>
         </tr>

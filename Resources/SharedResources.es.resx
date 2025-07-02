@@ -468,4 +468,37 @@
     <data name="FormId" xml:space="preserve">
         <value>ID del formulario</value>
     </data>
+    <data name="InvalidQuestionIds" xml:space="preserve">
+        <value>	Identificadores de preguntas no válidos</value>
+    </data>
+    <data name="DatabaseError" xml:space="preserve">
+        <value>Error de base de datos. Por favor contacte al administrador.</value>
+    </data>
+    <data name="ErrorFormsNotFound" xml:space="preserve">
+        <value>Formularios no encontrados</value>
+    </data>
+    <data name="ErrorNoPermission" xml:space="preserve">
+        <value>No tiene permiso para eliminar estos formularios</value>
+    </data>
+    <data name="ErrorNoFormsSelected" xml:space="preserve">
+        <value>No se seleccionaron formularios para la acción</value>
+    </data>
+    <data name="ErrorNoValidForms" xml:space="preserve">
+        <value>No se seleccionaron formularios válidos</value>
+    </data>
+    <data name="SuccessDeleteForms" xml:space="preserve">
+        <value>Formularios eliminados correctamente</value>
+    </data>
+    <data name="AdminErrorNoFormsSelected" xml:space="preserve">
+        <value>Por favor, seleccione al menos un formulario.</value>
+    </data>
+    <data name="EditForm" xml:space="preserve">
+        <value>Editar formulario</value>
+    </data>
+    <data name="SuccessFormUpdated" xml:space="preserve">
+        <value>Formulario de éxito enviado</value>
+    </data>
+    <data name="Manage" xml:space="preserve">
+        <value>Administrar</value>
+    </data>
 </root>

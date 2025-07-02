@@ -15,32 +15,39 @@
     <div class="alert alert-info">@TempData["Info"]</div>
 }
 
-<form asp-action="Index" method="get">
-    <div class="input-group mb-3">
-        <input type="text" name="query" value="@query" class="form-control" placeholder="@Localizer["Search"]"/>
+<form asp-action="Index" method="get" class="mb-3">
+    <div class="row g-2">
+        <div class="col-md-8">
+            <div class="input-group">
+                <input type="text" name="query" value="@query" class="form-control" placeholder="@Localizer["Search"]"/>
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i> @Localizer["Search"]
+                </button>
+            </div>
+        </div>
+
         @if (User.IsInRole("Admin"))
         {
-            <div class="input-group-append ml-2">
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="filter" value="all" id="filterAll" class="form-check-input"
-                           @(filter == "all" ? "checked" : "")/>
-                    <label class="form-check-label" for="filterAll">@Localizer["AllTemplates"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="filter" value="public" id="filterPublic" class="form-check-input"
-                           @(filter == "public" ? "checked" : "")/>
-                    <label class="form-check-label" for="filterPublic">@Localizer["PublicOnly"]</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="filter" value="private" id="filterPrivate" class="form-check-input"
-                           @(filter == "private" ? "checked" : "")/>
-                    <label class="form-check-label" for="filterPrivate">@Localizer["PrivateOnly"]</label>
+            <div class="col-md-4">
+                <div class="d-flex align-items-center gap-2 flex-wrap mt-1">
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="filter" value="all" id="filterAll" class="form-check-input"
+                               @(filter == "all" ? "checked" : "")/>
+                        <label class="form-check-label" for="filterAll">@Localizer["AllTemplates"]</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="filter" value="public" id="filterPublic" class="form-check-input"
+                               @(filter == "public" ? "checked" : "")/>
+                        <label class="form-check-label" for="filterPublic">@Localizer["PublicOnly"]</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" name="filter" value="private" id="filterPrivate" class="form-check-input"
+                               @(filter == "private" ? "checked" : "")/>
+                        <label class="form-check-label" for="filterPrivate">@Localizer["PrivateOnly"]</label>
+                    </div>
                 </div>
             </div>
         }
-        <div class="input-group-append">
-            <button type="submit" class="btn btn-primary">@Localizer["Search"]</button>
-        </div>
     </div>
 </form>
 

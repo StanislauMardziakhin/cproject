@@ -7,11 +7,27 @@
 }
 
 <h2>@Localizer["ViewTemplate"]</h2>
+<div class="d-flex flex-wrap gap-2 mb-3 align-items-start">
+    <a asp-controller="Forms" asp-action="Fill" asp-route-templateId="@Model.Id" class="btn btn-success">
+        <i class="bi bi-pencil-square"></i> @Localizer["FillForm"]
+    </a>
 
+    @if (User.Identity?.IsAuthenticated == true &&
+         (User.IsInRole("Admin") || User.Identity.Name == Model.UserId))
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">
+            <i class="bi bi-gear"></i> @Localizer["Manage"]
+        </a>
+    }
+
+    <a asp-action="Index" class="btn btn-secondary">
+        <i class="bi bi-arrow-left"></i> @Localizer["Back"]
+    </a>
+</div>
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">@Localizer["Name"]: @Model.Name</h5>
-        <p class="card-text"><strong>@Localizer["Description"]:</strong> @Model.Description</p>
+        <p class="card-text"><strong>@Localizer["Description"]:</strong> @Html.Raw(Model.Description)</p>
         <p class="card-text"><strong>@Localizer["Theme"]:</strong> @Model.Theme</p>
         <p class="card-text"><strong>@Localizer["Public"]:</strong> @(Model.IsPublic ? Localizer["Yes"] : Localizer["No"])</p>
         <p class="card-text"><strong>@Localizer["Tags"]:</strong> @Model.Tags</p>
@@ -21,14 +37,3 @@
         }
     </div>
 </div>
-<div class="mt-3">
-    <a asp-controller="Forms" asp-action="Fill" asp-route-templateId="@Model.Id" class="btn btn-primary">@Localizer["FillForm"]</a>
-</div>
-
-<p>
-    @if (User.Identity?.IsAuthenticated == true && (User.IsInRole("Admin") || User.Identity.Name == Model.UserId))
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">@Localizer["Edit"]</a>
-    }
-    <a asp-action="Index" class="btn btn-secondary">@Localizer["Back"]</a>
-</p>

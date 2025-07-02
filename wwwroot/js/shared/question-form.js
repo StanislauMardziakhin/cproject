@@ -29,18 +29,26 @@
                 const question = {
                     id: q.id,
                     title: $('<div>').text(q.title).html(),
-                    type: $('<div>').text(window.localization.QuestionTypes[q.type]),
+                    type: window.localization.QuestionTypes[q.type],
                     description: q.description ? $('<div>').text(q.description).html() : '',
                     isVisibleInResults: q.isVisibleInResults
                 };
 
                 $('#question-list').append(`
-                    <li class="list-group-item" data-id="${question.id}">
-                        ${question.title} (${question.type})${question.isVisibleInResults ? '' : ' [' + window.localization.HiddenInResults + ']'}
-                        <small>${question.description}</small>
-                        <div class="float-end">
-                            <a href="/Templates/EditQuestion/${question.id}" class="btn btn-sm btn-primary">${window.localization.Edit}</a>
-                            <a href="/Templates/DeleteQuestion/${question.id}" class="btn btn-sm btn-danger" onclick="return confirm('${window.localization.ConfirmDelete}')">${window.localization.Delete}</a>
+                    <li class="list-group-item d-flex justify-content-between align-items-start" data-id="${question.id}">
+                        <div>
+                            <strong>${question.title}</strong>
+                            ${question.isVisibleInResults ? '' : `<span class="badge bg-secondary">${window.localization.HiddenInResults}</span>`}
+                            <div class="text-muted small">${question.description}</div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-sm btn-light" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-three-dots-vertical"></i>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item edit-question-link" href="/Templates/EditQuestion/${question.id}">${window.localization.Edit}</a></li>
+                                <li><a class="dropdown-item text-danger" href="/Templates/DeleteQuestion/${question.id}" onclick="return confirm('${window.localization.ConfirmDelete}')">${window.localization.Delete}</a></li>
+                            </ul>
                         </div>
                     </li>
                 `);

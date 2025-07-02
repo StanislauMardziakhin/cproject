@@ -468,4 +468,38 @@
     <data name="SubmittedAt" xml:space="preserve">
         <value>Submitted at</value>
     </data>
+    <data name="InvalidQuestionIds" xml:space="preserve">
+        <value>Invalid question identifiers</value>
+    </data>
+    <data name="DatabaseError" xml:space="preserve">
+        <value>Database error. Please contact the administrator.</value>
+    </data>
+    <data name="ErrorFormsNotFound" xml:space="preserve">
+        <value>Forms not found</value>
+    </data>
+    <data name="ErrorNoPermission" xml:space="preserve">
+        <value>You don't have permission to delete these forms</value>
+    </data>
+    <data name="ErrorNoFormsSelected" xml:space="preserve">
+        <value>No forms selected for action</value>
+    </data>
+    <data name="ErrorNoValidForms" xml:space="preserve">
+        <value>No valid forms selected</value>
+    </data>
+    <data name="SuccessDeleteForms" xml:space="preserve">
+        <value>Form successfully deleted</value>
+    </data>
+    <data name="AdminErrorNoFormsSelected" xml:space="preserve">
+        <value>Please select at least one form.</value>
+    </data>
+    <data name="EditForm" xml:space="preserve">
+        <value>Edit form
+</value>
+    </data>
+    <data name="SuccessFormUpdated" xml:space="preserve">
+        <value>Success form submitted</value>
+    </data>
+    <data name="Manage" xml:space="preserve">
+        <value>Manage</value>
+    </data>
 </root>

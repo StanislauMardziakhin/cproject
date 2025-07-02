@@ -10,7 +10,7 @@
         {
             <li class="list-group-item">
                 <a asp-controller="Forms" asp-action="View" asp-route-id="@form.Id">
-                    @Localizer["FormId"]: @form.Id, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
+                    @Localizer["User"]: @form.User.Name, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
                 </a>
             </li>
         }

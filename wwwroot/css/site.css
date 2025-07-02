@@ -386,3 +386,53 @@ ul:not(.list-group) a:hover {
 tr.clickable-row:hover {
     cursor: pointer;
 }
+
+[data-theme="dark"] {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .form-check-label,
+[data-theme="dark"] .form-switch .form-check-label {
+    color: var(--form-text);
+}
+
+[data-theme="dark"] .input-group-text {
+    background-color: #444;
+    color: var(--text-color);
+    border-color: var(--form-border);
+}
+
+[data-theme="dark"] .alert {
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .badge {
+    background-color: var(--badge-bg);
+    color: var(--text-color);
+}
+
+[data-theme="dark"] .form-floating > .form-control::placeholder,
+[data-theme="dark"] .form-floating > .form-control-plaintext::placeholder {
+    color: var(--form-placeholder);
+}
+
+.btn-actions::before {
+    content: "\f142";
+    font-family: "bootstrap-icons";
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+    margin-right: 0.5rem;
+    display: inline-block;
+}
+
+.table td,
+.table th {
+    color: var(--text-color);
+}
+.card-body {
+    color: var(--text-color);
+}
+.card-body p {
+    color: var(--text-color);
+}

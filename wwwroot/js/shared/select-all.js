@@ -1,9 +1,10 @@
-﻿export function initSelectAll() {
+﻿export function initSelectAll(name) {
     const selectAll = document.getElementById('selectAll');
     if (!selectAll) return;
 
     selectAll.addEventListener('change', () => {
-        document.querySelectorAll('input[name="templateIds"]').forEach(cb => {
+        const checkboxes = document.querySelectorAll(`input[name="${name}"]`);
+        checkboxes.forEach(cb => {
             cb.checked = selectAll.checked;
         });
     });

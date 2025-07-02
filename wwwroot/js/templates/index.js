@@ -5,13 +5,15 @@ import {initModalLoader} from '../shared/modal-loader.js';
 import {initQuestionForm} from '../shared/question-form.js';
 import {initSortableList} from '../shared/sortable.js';
 import {initClickableRows} from '../shared/clickable-row.js';
+import {initTabFromHash} from '../shared/hash-tabs.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTemplateBulkActions();
     initSlideMenu();
-    initSelectAll();
+    initSelectAll('templateIds');
     initModalLoader();
     initQuestionForm();
     initSortableList();
-    initClickableRows()
+    initClickableRows();
+    initTabFromHash();
 });
