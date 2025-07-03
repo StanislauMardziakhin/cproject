@@ -28,7 +28,6 @@
     $(tagsInput).on('change', function() {
         const selectedTags = $(this).val() || [];
         tagsHidden.value = selectedTags.join(', ');
-        console.log('Tags updated on change:', tagsHidden.value);
     });
     
     if (tagsHidden.value) {
@@ -45,7 +44,6 @@
         form.addEventListener('submit', () => {
             const selectedTags = $(tagsInput).val() || [];
             tagsHidden.value = selectedTags.join(', ');
-            console.log('Tags updated before submit:', tagsHidden.value);
         });
     }
 }

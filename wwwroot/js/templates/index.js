@@ -9,6 +9,7 @@ import {initTabFromHash} from '../shared/hash-tabs.js';
 import { initComments } from './comments.js';
 import { initLikes } from './likes.js';
 import { initTags } from './tags.js';
+import './access.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initTemplateBulkActions();

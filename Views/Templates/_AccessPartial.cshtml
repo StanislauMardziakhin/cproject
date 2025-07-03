@@ -1,0 +1,40 @@
+﻿@model CourseProject.Models.Template
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<SharedResources> Localizer
+
+<div class="form-group mb-3" id="restricted-access">
+    <h4>@Localizer["RestrictAccess"]</h4>
+    <p class="text-muted">@Localizer["AccessHelpText"]</p>
+
+    <div class="mb-3">
+        <select id="userSearch" class="form-control" data-placeholder="@Localizer["SearchUsersPlaceholder"]"></select>
+    </div>
+    
+    <h5>@Localizer["AllowedUsers"]</h5>
+
+    <ul id="userList" class="list-group mt-2" data-template-id="@Model.Id">
+        @if (!Model.TemplateAccesses.Any())
+        {
+            <li class="list-group-item text-muted">@Localizer["NoUsersAdded"]</li>
+        }
+        else
+        {
+            @foreach (var access in Model.TemplateAccesses.OrderBy(a => a.User.Name))
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center"
+                    data-user-id="@access.UserId"
+                    data-name="@access.User.Name"
+                    data-email="@access.User.Email">
+                    <span>@access.User.Name (@access.User.Email)</span>
+                    <button type="button"
+                            class="btn btn-outline-danger btn-sm remove-user"
+                            title="@Localizer["Delete"]"
+                            aria-label="@Localizer["Delete"]"
+                            data-user-id="@access.UserId">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </li>
+            }
+        }
+    </ul>
+</div>

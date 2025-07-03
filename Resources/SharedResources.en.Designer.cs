@@ -60,11 +60,29 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access.
+        /// </summary>
+        internal static string Access {
+            get {
+                return ResourceManager.GetString("Access", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access denied.
         /// </summary>
         internal static string AccessDenied {
             get {
                 return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can select the user who will have access to your template..
+        /// </summary>
+        internal static string AccessHelpText {
+            get {
+                return ResourceManager.GetString("AccessHelpText", resourceCulture);
             }
         }
         
@@ -263,6 +281,15 @@ namespace CourseProject.Resources {
         internal static string AggregatedResults {
             get {
                 return ResourceManager.GetString("AggregatedResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allowed users.
+        /// </summary>
+        internal static string AllowedUsers {
+            get {
+                return ResourceManager.GetString("AllowedUsers", resourceCulture);
             }
         }
         
@@ -1069,6 +1096,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No users added.
+        /// </summary>
+        internal static string NoUsersAdded {
+            get {
+                return ResourceManager.GetString("NoUsersAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Other.
         /// </summary>
         internal static string Other {
@@ -1213,6 +1249,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restirct access.
+        /// </summary>
+        internal static string RestrictAccess {
+            get {
+                return ResourceManager.GetString("RestrictAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results list.
         /// </summary>
         internal static string ResultsList {
@@ -1245,6 +1290,15 @@ namespace CourseProject.Resources {
         internal static string SearchResults {
             get {
                 return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search users....
+        /// </summary>
+        internal static string SearchUsersPlaceholder {
+            get {
+                return ResourceManager.GetString("SearchUsersPlaceholder", resourceCulture);
             }
         }
         
@@ -1632,6 +1686,15 @@ namespace CourseProject.Resources {
         internal static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already added.
+        /// </summary>
+        internal static string UserAlreadyAdded {
+            get {
+                return ResourceManager.GetString("UserAlreadyAdded", resourceCulture);
             }
         }
         

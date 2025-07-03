@@ -16,6 +16,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<FormAnswer> FormAnswers { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Like> Likes { get; set; }
+    public DbSet<TemplateAccess> TemplateAccesses { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -71,5 +72,15 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
             .WithMany()
             .HasForeignKey(l => l.UserId)
             .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<TemplateAccess>()
+            .HasKey(ta => ta.Id);
+        modelBuilder.Entity<TemplateAccess>()
+            .HasOne(ta => ta.Template)
+            .WithMany(t => t.TemplateAccesses)
+            .HasForeignKey(ta => ta.TemplateId);
+        modelBuilder.Entity<TemplateAccess>()
+            .HasOne(ta => ta.User)
+            .WithMany()
+            .HasForeignKey(ta => ta.UserId);
     }
 }

@@ -342,4 +342,32 @@ public class TemplatesController : Controller
         var tags = await _templateService.SearchTagsAsync(term);
         return Json(tags.Select(t => new { id = t, text = t }));
     }
+    [HttpPost]
+    [HttpPost]
+    public async Task<IActionResult> AddUserAccess(int templateId, string userId)
+    {
+        try
+        {
+            await _templateService.AddUserAccessAsync(templateId, userId);
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { error = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveUserAccess(int templateId, string userId)
+    {
+        await _templateService.RemoveUserAccessAsync(templateId, userId);
+        return Json(new { success = true });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> SearchUsers(string query)
+    {
+        var users = await _templateService.SearchUsersAsync(query);
+        return Json(users.Select(u => new { u.Id, u.Name, u.Email }));
+    }
 }

@@ -1,5 +1,5 @@
 ﻿import Sortable from 'https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/+esm';
-
+import { showToast } from './toast.js';
 export function initSortableList() {
     const questionList = document.getElementById('question-list');
     if (!questionList) return;
@@ -22,7 +22,7 @@ export function initSortableList() {
                     "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
                 },
                 success: function () {
-                    alert(window.localization.SuccessOrderUpdated);
+                    showToast(window.localization.SuccessOrderUpdated, 'success');
                 }
             });
         }

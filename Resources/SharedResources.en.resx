@@ -568,4 +568,25 @@
     <data name="AccessDenied" xml:space="preserve">
         <value>Access denied</value>
     </data>
+    <data name="AccessHelpText" xml:space="preserve">
+        <value>Here you can select the user who will have access to your template.</value>
+    </data>
+    <data name="NoUsersAdded" xml:space="preserve">
+        <value>No users added</value>
+    </data>
+    <data name="RestrictAccess" xml:space="preserve">
+        <value>Restirct access</value>
+    </data>
+    <data name="SearchUsersPlaceholder" xml:space="preserve">
+        <value>Search users...</value>
+    </data>
+    <data name="AllowedUsers" xml:space="preserve">
+        <value>Allowed users</value>
+    </data>
+    <data name="Access" xml:space="preserve">
+        <value>Access</value>
+    </data>
+    <data name="UserAlreadyAdded" xml:space="preserve">
+        <value>User already added</value>
+    </data>
 </root>

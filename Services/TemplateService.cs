@@ -12,7 +12,8 @@ public class TemplateService
     private readonly IStringLocalizer<SharedResources> _localizer;
     private const string DefaultImageUrl = "/images/default.png";
 
-    public TemplateService(AppDbContext context, CloudinaryService cloudinary, IStringLocalizer<SharedResources> localizer)
+    public TemplateService(AppDbContext context, CloudinaryService cloudinary,
+        IStringLocalizer<SharedResources> localizer)
     {
         _context = context;
         _cloudinary = cloudinary;
@@ -21,10 +22,10 @@ public class TemplateService
 
     public async Task<List<Template>> GetUserTemplatesAsync(string userId, bool? isPublic = null)
     {
-        var query = _context.Templates.AsQueryable();
-        if (string.IsNullOrEmpty(userId) && isPublic == true)
-            query = query.Where(t => t.IsPublic);
-        else if (!string.IsNullOrEmpty(userId)) query = query.Where(t => t.UserId == userId);
+        var query = _context.Templates
+            .Where(t => t.UserId == userId);
+        if (isPublic.HasValue)
+            query = query.Where(t => t.IsPublic == isPublic.Value);
         return await query.ToListAsync();
     }
 
@@ -37,10 +38,26 @@ public class TemplateService
         return (true, string.Empty);
     }
 
+    private IQueryable<Template> ApplyAccessFilter(IQueryable<Template> query, string? userId, bool isAdmin)
+    {
+        if (isAdmin)
+            return query;
+
+        if (string.IsNullOrEmpty(userId))
+            return query.Where(t => t.IsPublic);
+
+        return query.Where(t =>
+            t.IsPublic ||
+            t.UserId == userId ||
+            t.TemplateAccesses.Any(a => a.UserId == userId));
+    }
+
     public async Task<Template?> GetForEditAsync(int id, string? userId, bool isAdmin = false)
     {
         var query = _context.Templates
             .Include(t => t.Questions)
+            .Include(t => t.TemplateAccesses)
+            .ThenInclude(ta => ta.User)
             .Where(t => t.Id == id);
 
         if (!isAdmin) query = query.Where(t => t.UserId == userId);
@@ -155,12 +172,14 @@ public class TemplateService
             .Include(t => t.Questions)
             .Include(t => t.User)
             .Include(t => t.Likes)
-            .Where(t => t.Id == id && (isAdmin || t.IsPublic || (userId != null && t.UserId == userId)));
+            .Include(t => t.TemplateAccesses)
+            .Where(t => t.Id == id && (isAdmin || t.IsPublic || (userId != null && t.UserId == userId) ||
+                                       t.TemplateAccesses.Any(ta => ta.UserId == userId)));
         return await query.FirstOrDefaultAsync();
     }
 
     public async Task<List<Template>> SearchAsync(string query, string culture = "en", string filter = "public",
-        bool isAdmin = false)
+        string? userId = null, bool isAdmin = false)
     {
         if (string.IsNullOrWhiteSpace(query)) return [];
         query = Regex.Replace(query.ToLower(), @"[:\*&\|!']", "").Trim();
@@ -168,18 +187,17 @@ public class TemplateService
             return [];
 
         var tsConfig = culture.StartsWith("es", StringComparison.OrdinalIgnoreCase) ? "spanish" : "english";
-        var queryable = _context.Templates.AsQueryable();
-        if (!isAdmin || string.Equals(filter, "public", StringComparison.OrdinalIgnoreCase))
-            queryable = queryable.Where(t => t.IsPublic);
-        else if (string.Equals(filter, "private", StringComparison.OrdinalIgnoreCase))
-            queryable = queryable.Where(t => !t.IsPublic);
-
-        return await queryable
+        var templates = _context.Templates
+            .Include(t => t.TemplateAccesses);
+        var filtered = ApplyAccessFilter(templates, userId, isAdmin);
+        return await filtered
             .Where(t => EF.Functions.ToTsVector(tsConfig,
                     (t.Name ?? "") + " " + (t.Description ?? "") + " " + (t.Tags ?? ""))
                 .Matches(EF.Functions.ToTsQuery(tsConfig, query + ":*")))
             .ToListAsync();
+
     }
+
     public async Task<List<string>> SearchTagsAsync(string query)
     {
         if (string.IsNullOrWhiteSpace(query)) return [];
@@ -195,30 +213,97 @@ public class TemplateService
             .SelectMany(t => t.Split(',', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries))
             .Where(t => t.ToLower().Contains(query))
             .Distinct()
-            .Take(10) 
+            .Take(10)
             .ToList();
-        
+
         return uniqueTags;
     }
-    public async Task<List<Template>> GetLatestTemplatesAsync(int count = 6)
+
+    public async Task<List<Template>> GetLatestTemplatesAsync(string? userId, bool isAdmin = false, int count = 6)
     {
-        return await _context.Templates
+        IQueryable<Template> query = _context.Templates
             .Include(t => t.User)
-            .Where(t => t.IsPublic)
+            .Include(t => t.Forms)
+            .Include(t => t.TemplateAccesses);
+
+        query = ApplyAccessFilter(query, userId, isAdmin);
+
+        return await query
             .OrderByDescending(t => t.Id)
             .Take(count)
             .ToListAsync();
     }
 
-    public async Task<List<Template>> GetTopTemplatesByFormsAsync(int count = 5)
+    public async Task<List<Template>> GetTopTemplatesByFormsAsync(string? userId, bool isAdmin = false, int count = 5)
     {
-        return await _context.Templates
+        var query = _context.Templates
             .Include(t => t.User)
             .Include(t => t.Forms)
-            .Where(t => t.IsPublic)
+            .Include(t => t.TemplateAccesses)
+            .AsQueryable();
+
+        query = ApplyAccessFilter(query, userId, isAdmin);
+
+        return await query
             .OrderByDescending(t => t.Forms.Count)
             .ThenBy(t => t.Name)
             .Take(count)
+            .ToListAsync();
+    }
+
+    public async Task AddUserAccessAsync(int templateId, string userId)
+    {
+        var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
+        if (!userExists)
+            throw new Exception("User not found");
+
+        var templateExists = await _context.Templates.AnyAsync(t => t.Id == templateId);
+        if (!templateExists)
+            throw new Exception("Template not found");
+
+        var alreadyExists = await _context.TemplateAccesses
+            .AnyAsync(a => a.TemplateId == templateId && a.UserId == userId);
+
+        if (alreadyExists)
+            return;
+
+        var access = new TemplateAccess
+        {
+            TemplateId = templateId,
+            UserId = userId
+        };
+
+        _context.TemplateAccesses.Add(access);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task RemoveUserAccessAsync(int templateId, string userId)
+    {
+        var access = await _context.TemplateAccesses
+            .FirstOrDefaultAsync(ta => ta.TemplateId == templateId && ta.UserId == userId);
+        if (access != null)
+        {
+            _context.TemplateAccesses.Remove(access);
+            await _context.SaveChangesAsync();
+        }
+    }
+
+    public async Task<List<ApplicationUser>> GetUsersWithAccessAsync(int templateId)
+    {
+        return await _context.TemplateAccesses
+            .Where(ta => ta.TemplateId == templateId)
+            .Include(ta => ta.User)
+            .Select(ta => ta.User)
+            .OrderBy(u => u.Name)
+            .ToListAsync();
+    }
+
+    public async Task<List<ApplicationUser>> SearchUsersAsync(string query)
+    {
+        return await _context.Users
+            .Where(u => u.Name.Contains(query) || u.Email.Contains(query))
+            .OrderBy(u => u.Name)
+            .Take(10)
             .ToListAsync();
     }
 }

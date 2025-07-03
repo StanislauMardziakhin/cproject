@@ -1,4 +1,5 @@
-﻿export function initQuestionForm() {
+﻿import { showToast } from './toast.js';
+export function initQuestionForm() {
     const form = $('#add-question-form');
     if (!form.length) return;
 
@@ -17,11 +18,8 @@
                 'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
             },
             success: function (data) {
-                console.log("data.question:", data.question);
-                console.log("q.type:", data.question.type);
-                console.log("localized:", window.localization.QuestionTypes[data.question.type]);
                 if (!data.succeeded) {
-                    alert(data.error || window.localization.ErrorInvalidInput);
+                    showToast(data.error || window.localization.ErrorInvalidInput, 'danger');
                     return;
                 }
 
@@ -47,7 +45,7 @@
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item edit-question-link" href="/Templates/EditQuestion/${question.id}">${window.localization.Edit}</a></li>
-                                <li><a class="dropdown-item text-danger" href="/Templates/DeleteQuestion/${question.id}" onclick="return confirm('${window.localization.ConfirmDelete}')">${window.localization.Delete}</a></li>
+                                <li><a class="dropdown-item text-danger" href="/Templates/DeleteQuestion/${question.id}">${window.localization.Delete}</a></li>
                             </ul>
                         </div>
                     </li>
@@ -56,10 +54,10 @@
                 form[0].reset();
                 form.find('input[type="checkbox"]').prop('checked', true);
                 form.find('select').val('');
-                alert(window.localization.SuccessQuestionAdded);
+                showToast(window.localization.SuccessQuestionAdded, 'success');
             },
             error: function () {
-                alert(window.localization.ErrorInvalidInput);
+                showToast(window.localization.ErrorInvalidInput, 'danger');
             }
         });
     });

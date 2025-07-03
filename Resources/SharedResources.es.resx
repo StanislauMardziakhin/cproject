@@ -570,4 +570,28 @@
     <data name="AccessDenied" xml:space="preserve">
         <value>Acceso denegado</value>
     </data>
+    <data name="NoAggregatorFound" xml:space="preserve">
+        <value>No se encontró ningún agregador para el tipo de pregunta</value>
+    </data>
+    <data name="AccessHelpText" xml:space="preserve">
+        <value>Aquí puedes seleccionar el usuario que tendrá acceso a tu plantilla.</value>
+    </data>
+    <data name="NoUsersAdded" xml:space="preserve">
+        <value>No hay usuarios añadidos</value>
+    </data>
+    <data name="SearchUsersPlaceholder" xml:space="preserve">
+        <value>Buscar usuarias...</value>
+    </data>
+    <data name="RestrictAccess" xml:space="preserve">
+        <value>Restringir el acceso</value>
+    </data>
+    <data name="AllowedUsers" xml:space="preserve">
+        <value>Usuarios permitidos</value>
+    </data>
+    <data name="Access" xml:space="preserve">
+        <value>Acceso</value>
+    </data>
+    <data name="UserAlreadyAdded" xml:space="preserve">
+        <value>Usuario ya agregado</value>
+    </data>
 </root>

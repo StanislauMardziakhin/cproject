@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Security.Claims;
 using CourseProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,8 @@ public class SearchController : Controller
     {
         var culture = CultureInfo.CurrentUICulture.Name;
         var isAdmin = User.IsInRole("Admin");
-        var templates = await _templateService.SearchAsync(query, culture, filter, isAdmin);
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var templates = await _templateService.SearchAsync(query, culture, filter, userId, isAdmin);
         ViewBag.Query = query;
         ViewBag.Filter = filter;
         if (!templates.Any())

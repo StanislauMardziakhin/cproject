@@ -60,11 +60,29 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access.
+        /// </summary>
+        public static string Access {
+            get {
+                return ResourceManager.GetString("Access", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Access denied.
         /// </summary>
         public static string AccessDenied {
             get {
                 return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Here you can select the user who will have access to your template..
+        /// </summary>
+        public static string AccessHelpText {
+            get {
+                return ResourceManager.GetString("AccessHelpText", resourceCulture);
             }
         }
         
@@ -263,6 +281,15 @@ namespace CourseProject.Resources {
         public static string AggregatedResults {
             get {
                 return ResourceManager.GetString("AggregatedResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allowed users.
+        /// </summary>
+        public static string AllowedUsers {
+            get {
+                return ResourceManager.GetString("AllowedUsers", resourceCulture);
             }
         }
         
@@ -1042,6 +1069,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No aggregator found for question type.
+        /// </summary>
+        public static string NoAggregatorFound {
+            get {
+                return ResourceManager.GetString("NoAggregatorFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No comments yet.
         /// </summary>
         public static string NoComments {
@@ -1074,6 +1110,15 @@ namespace CourseProject.Resources {
         public static string NoResults {
             get {
                 return ResourceManager.GetString("NoResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No users added.
+        /// </summary>
+        public static string NoUsersAdded {
+            get {
+                return ResourceManager.GetString("NoUsersAdded", resourceCulture);
             }
         }
         
@@ -1222,6 +1267,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restirct access.
+        /// </summary>
+        public static string RestrictAccess {
+            get {
+                return ResourceManager.GetString("RestrictAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Results list.
         /// </summary>
         public static string ResultsList {
@@ -1254,6 +1308,15 @@ namespace CourseProject.Resources {
         public static string SearchResults {
             get {
                 return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search users....
+        /// </summary>
+        public static string SearchUsersPlaceholder {
+            get {
+                return ResourceManager.GetString("SearchUsersPlaceholder", resourceCulture);
             }
         }
         
@@ -1641,6 +1704,15 @@ namespace CourseProject.Resources {
         public static string User {
             get {
                 return ResourceManager.GetString("User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User already added.
+        /// </summary>
+        public static string UserAlreadyAdded {
+            get {
+                return ResourceManager.GetString("UserAlreadyAdded", resourceCulture);
             }
         }
         

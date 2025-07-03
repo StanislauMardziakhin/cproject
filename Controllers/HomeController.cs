@@ -24,9 +24,12 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {
         var user = await _userManager.GetUserAsync(User);
+        var userId = user?.Id;
+        var isAdmin = User.IsInRole("Admin");
+
         ViewData["UserName"] = user?.Name ?? "Guest";
-        var latestTemplates = await _templateService.GetLatestTemplatesAsync(6);
-        var topTemplates = await _templateService.GetTopTemplatesByFormsAsync(5);
+        var latestTemplates = await _templateService.GetLatestTemplatesAsync(userId, isAdmin);
+        var topTemplates = await _templateService.GetTopTemplatesByFormsAsync(userId, isAdmin);
         ViewData["LatestTemplates"] = latestTemplates;
         ViewData["TopTemplates"] = topTemplates;
         return View();
