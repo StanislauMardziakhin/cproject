@@ -25,54 +25,24 @@ public class CommentService
         var template = await _context.Templates.FindAsync(templateId);
         if (template == null)
             return (false, "TemplateNotFound");
-
-        var comment = new Comment
-        {
-            TemplateId = templateId,
-            UserId = userId,
-            Content = content,
-            CreatedAt = DateTime.UtcNow
-        };
-
+        var comment = CreateComment(templateId, content, userId);
         _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
-        var user = await _context.Users.FindAsync(userId);
-        var userName = user?.Name;
-        await _hubContext.Clients
-            .Group($"template-{templateId}")
-            .SendAsync("ReceiveComment", new
-            {
-                commentId = comment.Id,
-                userName,
-                content = comment.Content,
-                createdAt = comment.CreatedAt,
-                templateId = comment.TemplateId
-            });
+        var userName = await GetUserNameAsync(userId);
+        await NotifyCommentAddedAsync(templateId, comment, userName);
         return (true, string.Empty);
     }
 
     public async Task<(bool succeeded, string error)> DeleteCommentAsync(int commentId, string userId)
     {
-        var user = await _userManager.FindByIdAsync(userId);
-        if (user == null || !await _userManager.IsInRoleAsync(user, "Admin"))
+        if (!await IsUserAdminAsync(userId))
             return (false, "Unauthorized");
-
-        var comment = await _context.Comments
-            .FirstOrDefaultAsync(c => c.Id == commentId);
+        var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == commentId);
         if (comment == null)
             return (false, "CommentNotFound");
-
         _context.Comments.Remove(comment);
         await _context.SaveChangesAsync();
-
-        await _hubContext.Clients
-            .Group($"template-{comment.TemplateId}")
-            .SendAsync("CommentDeleted", new
-            {
-                commentId = comment.Id,
-                templateId = comment.TemplateId
-            });
-
+        await NotifyCommentDeletedAsync(comment);
         return (true, string.Empty);
     }
 
@@ -83,5 +53,53 @@ public class CommentService
             .Where(c => c.TemplateId == templateId)
             .OrderBy(c => c.CreatedAt)
             .ToListAsync();
+    }
+
+    private static Comment CreateComment(int templateId, string content, string userId)
+    {
+        return new Comment
+        {
+            TemplateId = templateId,
+            UserId = userId,
+            Content = content,
+            CreatedAt = DateTime.UtcNow
+        };
+    }
+
+    private async Task<string?> GetUserNameAsync(string userId)
+    {
+        var user = await _context.Users.FindAsync(userId);
+        return user?.Name;
+    }
+
+    private async Task<bool> IsUserAdminAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        return user != null && await _userManager.IsInRoleAsync(user, "Admin");
+    }
+
+    private async Task NotifyCommentAddedAsync(int templateId, Comment comment, string? userName)
+    {
+        await _hubContext.Clients
+            .Group($"template-{templateId}")
+            .SendAsync("ReceiveComment", new
+            {
+                commentId = comment.Id,
+                userName,
+                content = comment.Content,
+                createdAt = comment.CreatedAt,
+                templateId = comment.TemplateId
+            });
+    }
+
+    private async Task NotifyCommentDeletedAsync(Comment comment)
+    {
+        await _hubContext.Clients
+            .Group($"template-{comment.TemplateId}")
+            .SendAsync("CommentDeleted", new
+            {
+                commentId = comment.Id,
+                templateId = comment.TemplateId
+            });
     }
 }

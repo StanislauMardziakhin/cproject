@@ -235,11 +235,14 @@
     <value>Plantilla no encontrada o acceso denegado.</value>
   </data>
     <data name="NameRequired" xml:space="preserve">
-    <value>El nombre es obligatorio.</value>
-  </data>
+        <value>El nombre es obligatorio.</value>
+    </data>
+    <data name="TypeRequired" xml:space="preserve">
+        <value>El tipo de pregunta es obligatorio.</value>
+    </data>
     <data name="NameTooLong" xml:space="preserve">
-    <value>El nombre no puede exceder los 100 caracteres.</value>
-  </data>
+        <value>El nombre no puede exceder 100 caracteres.</value>
+    </data>
     <data name="DescriptionTooLong" xml:space="preserve">
     <value>La descripción no puede exceder los 500 caracteres.</value>
   </data>
@@ -593,5 +596,8 @@
     </data>
     <data name="UserAlreadyAdded" xml:space="preserve">
         <value>Usuario ya agregado</value>
+    </data>
+    <data name="Results" xml:space="preserve">
+        <value>Resultados</value>
     </data>
 </root>

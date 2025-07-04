@@ -235,8 +235,11 @@
     <value>Template not found or access denied.</value>
   </data>
     <data name="NameRequired" xml:space="preserve">
-    <value>Name is required.</value>
-  </data>
+        <value>Name is required.</value>
+    </data>
+    <data name="TypeRequired" xml:space="preserve">
+        <value>Question type is required.</value>
+    </data>
     <data name="NameTooLong" xml:space="preserve">
     <value>Name cannot exceed 100 characters.</value>
   </data>
@@ -588,5 +591,8 @@
     </data>
     <data name="UserAlreadyAdded" xml:space="preserve">
         <value>User already added</value>
+    </data>
+    <data name="Results" xml:space="preserve">
+        <value>Results</value>
     </data>
 </root>

@@ -15,10 +15,9 @@
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/CourseProject.styles.css" asp-append-version="true"/>
     <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <div id="toast-container" class="position-fixed bottom-0 end-0 p-3" style="z-index: 1100;"></div>
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -40,7 +39,7 @@
         </div>
     </nav>
 </header>
-<div class="container">
+<div class="container flex-grow-1">
     <partial name="_Notifications"/>
     <main role="main" class="pb-3">
         @RenderBody()
@@ -48,7 +47,7 @@
     <input type="hidden" id="antiforgery-token" name="__RequestVerificationToken"
            value="@antiforgery.GetAndStoreTokens(Context).RequestToken"/>
 </div>
-<footer class="border-top footer text-muted">
+<footer class="border-top footer text-muted mt-auto">
     <div class="container">
         &copy; 2025 - @Localizer["CP"]
     </div>
@@ -73,9 +72,13 @@
         Delete: "@Localizer["Delete"]",
         ConfirmDelete: "@Localizer["Confirm"] @Localizer["Delete"]?",
         SuccessQuestionAdded: "@Localizer["SuccessQuestionAdded"]",
+        SuccessQuestionUpdated: "@Localizer["SuccessQuestionUpdated"]",
         ErrorInvalidInput: "@Localizer["TErrorInvalidInput"]",
         SuccessOrderUpdated: "@Localizer["SuccessOrderUpdated"]",
         Loading: "@Localizer["Loading"]",
+        RequiredField: "@Localizer["RequiredField"]",
+        Publish: "@Localizer["Publish"]",
+        Unpublish: "@Localizer["Unpublish"]",
         QuestionTypes: @Html.Raw(questionTypesJson)
     };
 </script>

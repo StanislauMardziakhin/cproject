@@ -14,38 +14,25 @@ public class QuestionService
         _templateService = templateService;
     }
 
-    public async Task<(bool, string)> AddQuestionAsync(int templateId, Question question, string userId,
-        bool isAdmin = false)
+    public async Task<(bool, string)> AddQuestionAsync(int templateId, Question question, string userId, bool isAdmin = false)
     {
         var template = await _templateService.GetForEditAsync(templateId, userId, isAdmin);
         if (template == null)
             return (false, "TemplateNotFoundOrAccessDenied");
-
-        var questionCount = await _context.Questions
-            .Where(q => q.TemplateId == templateId && q.Type == question.Type)
-            .CountAsync();
-        if (questionCount >= 4)
+        if (await ExceedsMaxQuestionsOfType(templateId, question.Type))
             return (false, "MaxQuestionsPerType");
-
         question.TemplateId = templateId;
         question.Template = null;
-        var maxOrder = await _context.Questions
-            .Where(q => q.TemplateId == templateId)
-            .Select(q => (int?)q.Order)
-            .MaxAsync() ?? 0;
-
-        question.Order = maxOrder + 1;
-
+        question.Order = await GetNextOrderForTemplate(templateId);
         _context.Questions.Add(question);
-        await _context.SaveChangesAsync();
-        return (true, string.Empty);
+        return await TrySaveChangesAsync();
     }
 
     public async Task<Question?> GetQuestionAsync(int id, string userId, bool isAdmin)
     {
         return await _context.Questions
             .Include(q => q.Template)
-            .Where(q => q.Id == id && (isAdmin || q.Template.UserId == userId))
+            .Where(q => q.Id == id && (isAdmin || (q.Template != null && q.Template.UserId == userId)))
             .FirstOrDefaultAsync();
     }
 
@@ -54,20 +41,10 @@ public class QuestionService
         var existingQuestion = await GetQuestionAsync(id, userId, isAdmin);
         if (existingQuestion == null)
             return (false, "QuestionNotFoundOrAccessDenied");
-
-        var questionCount = await _context.Questions
-            .Where(q => q.TemplateId == existingQuestion.TemplateId && q.Type == updatedQuestion.Type && q.Id != id)
-            .CountAsync();
-        if (questionCount >= 4)
+        if (await ExceedsMaxQuestionsOfType(existingQuestion.TemplateId, updatedQuestion.Type, id))
             return (false, "MaxQuestionsPerType");
-
-        existingQuestion.Title = updatedQuestion.Title;
-        existingQuestion.Description = updatedQuestion.Description;
-        existingQuestion.Type = updatedQuestion.Type;
-        existingQuestion.IsVisibleInResults = updatedQuestion.IsVisibleInResults;
-
-        await _context.SaveChangesAsync();
-        return (true, string.Empty);
+        UpdateQuestionFields(existingQuestion, updatedQuestion);
+        return await TrySaveChangesAsync();
     }
 
     public async Task<(bool, string)> DeleteQuestionAsync(int id, string userId, bool isAdmin = false)
@@ -75,45 +52,81 @@ public class QuestionService
         var question = await GetQuestionAsync(id, userId, isAdmin);
         if (question == null)
             return (false, "QuestionNotFoundOrAccessDenied");
-
         _context.Questions.Remove(question);
-        await _context.SaveChangesAsync();
-        return (true, string.Empty);
+        return await TrySaveChangesAsync();
     }
 
-    public async Task<(bool, string)> UpdateQuestionOrderAsync(List<QuestionOrder> orders, string userId,
-        bool isAdmin = false)
+    public async Task<(bool, string)> UpdateQuestionOrderAsync(List<QuestionOrder> orders, string userId, bool isAdmin = false)
     {
         var questionIds = orders.Select(o => o.Id).ToList();
         var questions = await _context.Questions
             .Include(q => q.Template)
-            .Where(q => questionIds.Contains(q.Id) && (isAdmin || q.Template.UserId == userId))
+            .Where(q => questionIds.Contains(q.Id) && (isAdmin || (q.Template != null && q.Template.UserId == userId)))
             .ToListAsync();
-
         if (questions.Count != orders.Count)
             return (false, "QuestionNotFoundOrAccessDenied");
-
-        foreach (var question in questions)
-        {
-            var order = orders.First(o => o.Id == question.Id).Order;
-            question.Order = order;
-        }
-
-        await _context.SaveChangesAsync();
-        return (true, string.Empty);
+        UpdateQuestionOrders(questions, orders);
+        return await TrySaveChangesAsync();
     }
 
     public async Task<List<Question>> GetQuestionsAsync(int templateId, string? userId = null, bool isAdmin = false)
     {
         var query = _context.Questions
             .Where(q => q.TemplateId == templateId);
-
         if (!isAdmin && userId != null)
-            query = query.Where(q => q.Template.UserId == userId || q.Template.IsPublic);
-
+            query = query.Where(q => (q.Template != null && q.Template.UserId == userId) || (q.Template != null && q.Template.IsPublic));
         return await query
             .OrderBy(q => q.Order)
             .ToListAsync();
+    }
+
+    private async Task<bool> ExceedsMaxQuestionsOfType(int templateId, QuestionType type, int? excludeId = null)
+    {
+        var query = _context.Questions
+            .Where(q => q.TemplateId == templateId && q.Type == type);
+        if (excludeId.HasValue)
+            query = query.Where(q => q.Id != excludeId.Value);
+        var count = await query.CountAsync();
+        return count >= 4;
+    }
+
+    private async Task<int> GetNextOrderForTemplate(int templateId)
+    {
+        var maxOrder = await _context.Questions
+            .Where(q => q.TemplateId == templateId)
+            .Select(q => (int?)q.Order)
+            .MaxAsync();
+        return (maxOrder ?? 0) + 1;
+    }
+
+    private static void UpdateQuestionFields(Question existing, Question updated)
+    {
+        existing.Title = updated.Title;
+        existing.Description = updated.Description;
+        existing.Type = updated.Type;
+        existing.IsVisibleInResults = updated.IsVisibleInResults;
+    }
+
+    private static void UpdateQuestionOrders(List<Question> questions, List<QuestionOrder> orders)
+    {
+        foreach (var question in questions)
+        {
+            var order = orders.First(o => o.Id == question.Id).Order;
+            question.Order = order;
+        }
+    }
+
+    private async Task<(bool, string)> TrySaveChangesAsync()
+    {
+        try
+        {
+            await _context.SaveChangesAsync();
+            return (true, string.Empty);
+        }
+        catch
+        {
+            return (false, "DatabaseError");
+        }
     }
 }
 

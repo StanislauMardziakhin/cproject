@@ -1,4 +1,5 @@
-﻿@model CourseProject.Models.Template
+﻿@using CourseProject.ViewModels
+@model TemplateViewModel
 @inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> Localizer
 
 <h4>@Localizer["ResultsList"]</h4>
@@ -9,8 +10,8 @@
         @foreach (var form in Model.Forms)
         {
             <li class="list-group-item">
-                <a asp-controller="Forms" asp-action="View" asp-route-id="@form.Id">
-                    @Localizer["User"]: @form.User.Name, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
+                <a asp-controller="Forms" asp-action="View" asp-route-id="@form.FormId">
+                    @Localizer["User"]: @form.UserName, @Localizer["SubmittedAt"]: @form.CreatedAt.ToLocalTime().ToString("g")
                 </a>
             </li>
         }

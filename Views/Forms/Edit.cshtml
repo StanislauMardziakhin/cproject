@@ -1,22 +1,22 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.Localization
-@model Form
+@using CourseProject.ViewModels
+@model FormResultViewModel
 @inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = Localizer["EditForm"];
 }
 
-<h2>@Localizer["EditForm"]: @Model.Template?.Name</h2>
+<h2>@Localizer["EditForm"]: @Model.TemplateName</h2>
 
 <form asp-action="Edit" method="post">
     @Html.AntiForgeryToken()
-    <input type="hidden" asp-for="Id"/>
-    @foreach (var question in Model.Template.Questions.OrderBy(q => q.Order))
+    <input type="hidden" name="FormId" value="@Model.FormId" />
+    @foreach (var answer in Model.Answers.OrderBy(a => a.QuestionId))
     {
-        var answer = Model.Answers.FirstOrDefault(a => a.QuestionId == question.Id)?.Value ?? "";
         <div class="mb-3">
-            <label class="form-label">@question.Title</label>
-            <input class="form-control" name="answers[@question.Id]" value="@answer"/>
+            <label class="form-label">@answer.QuestionTitle</label>
+            <input class="form-control" name="answers[@answer.QuestionId]" value="@answer.Value"/>
         </div>
     }
 

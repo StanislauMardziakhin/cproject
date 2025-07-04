@@ -1,6 +1,6 @@
 ﻿@using CourseProject.ViewModels
 @using Microsoft.Extensions.Localization
-@model Template
+@model TemplateViewModel
 @inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = $"{Localizer["Template"]}: {Model.Name}";
@@ -63,7 +63,7 @@
             </div>
             <div class="form-group mb-3">
                 <label for="image" class="form-label">@Localizer["Image"]</label>
-                <input type="file" name="image" class="form-control" accept="image/*"/>
+                <input type="file" name="image" id="image" class="form-control" accept="image/*"/>
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
                     <small>@Localizer["CurrentImage"]: <img src="@Model.ImageUrl" alt="@Model.Name"
@@ -75,10 +75,10 @@
     </div>
 
     <div id="questions" class="tab-pane fade">
-        <partial name="_AddQuestion" model="new Question { TemplateId = Model.Id }"/>
+        <partial name="~/Views/TemplateQuestions/_AddQuestion.cshtml" model="new QuestionViewModel { TemplateId = Model.Id }"/>
         <h4>@Localizer["QuestionsList"]</h4>
         <ul id="question-list" class="list-group">
-            @foreach (var question in Model.Questions.OrderBy(q => q.Order))
+            @foreach (var question in Model.QuestionsViewModel.OrderBy(q => q.Order))
             {
                 <li class="list-group-item d-flex justify-content-between align-items-start" data-id="@question.Id">
                     <div>
@@ -95,9 +95,9 @@
                             <i class="bi bi-three-dots-vertical"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item edit-question-link" asp-action="EditQuestion"
+                            <li><a class="dropdown-item edit-question-link" asp-action="EditQuestion" asp-controller="TemplateQuestions"
                                    asp-route-id="@question.Id">@Localizer["Edit"]</a></li>
-                            <li><a class="dropdown-item text-danger" asp-action="DeleteQuestion"
+                            <li><a class="dropdown-item text-danger" asp-action="DeleteQuestion" asp-controller="TemplateQuestions"
                                    asp-route-id="@question.Id">@Localizer["Delete"]</a></li>
                         </ul>
                     </div>

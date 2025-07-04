@@ -1,4 +1,5 @@
-﻿@model CourseProject.Models.Template
+﻿@using CourseProject.ViewModels
+@model TemplateViewModel
 @using Microsoft.Extensions.Localization
 @inject IStringLocalizer<SharedResources> Localizer
 
@@ -19,13 +20,13 @@
         }
         else
         {
-            @foreach (var access in Model.TemplateAccesses.OrderBy(a => a.User.Name))
+            @foreach (var access in Model.TemplateAccesses.OrderBy(a => a.UserName))
             {
                 <li class="list-group-item d-flex justify-content-between align-items-center"
                     data-user-id="@access.UserId"
-                    data-name="@access.User.Name"
-                    data-email="@access.User.Email">
-                    <span>@access.User.Name (@access.User.Email)</span>
+                    data-name="@access.UserName"
+                    data-email="@access.UserEmail">
+                    <span>@access.UserName (@access.UserEmail)</span>
                     <button type="button"
                             class="btn btn-outline-danger btn-sm remove-user"
                             title="@Localizer["Delete"]"

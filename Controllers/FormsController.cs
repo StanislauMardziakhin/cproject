@@ -4,6 +4,7 @@ using CourseProject.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
+using CourseProject.ViewModels;
 
 namespace CourseProject.Controllers;
 
@@ -19,41 +20,70 @@ public class FormsController : Controller
         _localizer = localizer;
     }
 
-    private string GetUserId()
+    private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+    private bool IsAdmin() => User.IsInRole("Admin");
+
+    private async Task<Form?> ReloadFormForFilling(int templateId)
     {
-        return User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+        return await _formService.GetFormForFillingAsync(templateId, GetUserId(), IsAdmin());
+    }
+
+    private async Task<Form?> ReloadFormForEditing(int formId)
+    {
+        return await _formService.GetFormForEditingAsync(formId, GetUserId(), IsAdmin());
+    }
+
+    private IActionResult HandleFormError(string errorKey)
+    {
+        TempData["Error"] = _localizer[errorKey].Value;
+        return RedirectToAction(nameof(Index));
+    }
+
+    private FormResultViewModel ToFormResultViewModel(Form form)
+    {
+        return new FormResultViewModel
+        {
+            FormId = form.Id,
+            TemplateId = form.TemplateId,
+            TemplateName = form.Template?.Name,
+            UserEmail = form.User?.Email,
+            UserName = form.User?.Name,
+            UserId = form.UserId,
+            CreatedAt = form.CreatedAt,
+            Answers = form.Answers.Select(a => new FormAnswerViewModel
+            {
+                QuestionId = a.QuestionId,
+                QuestionTitle = a.Question.Title,
+                IsVisibleInResults = a.Question.IsVisibleInResults,
+                QuestionType = a.Question.Type,
+                Value = a.Value
+            }).ToList()
+        };
     }
 
     [HttpGet]
     public async Task<IActionResult> Fill(int templateId)
     {
-        var form = await _formService.GetFormForFillingAsync(templateId, GetUserId(), User.IsInRole("Admin"));
+        var form = await ReloadFormForFilling(templateId);
         if (form == null) return NotFound();
-        return View(form);
+        var viewModel = ToFormResultViewModel(form);
+        return View(viewModel);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Fill(Form form, Dictionary<int, string> answers)
+    public async Task<IActionResult> Fill(int templateId, Dictionary<int, string> answers)
     {
-        if (!ModelState.IsValid)
-        {
-            var reloadedForm =
-                await _formService.GetFormForFillingAsync(form.TemplateId, GetUserId(), User.IsInRole("Admin"));
-            if (reloadedForm == null) return NotFound();
-            return View(reloadedForm);
-        }
-
+        var form = new Form { TemplateId = templateId };
         var (success, errorMessage) = await _formService.SaveFormAsync(form, answers, GetUserId());
         if (!success)
         {
             ModelState.AddModelError(string.Empty, _localizer[errorMessage].Value);
-            var reloadedForm =
-                await _formService.GetFormForFillingAsync(form.TemplateId, GetUserId(), User.IsInRole("Admin"));
+            var reloadedForm = await ReloadFormForFilling(templateId);
             if (reloadedForm == null) return NotFound();
-            return View(reloadedForm);
+            var viewModel = ToFormResultViewModel(reloadedForm);
+            return View(viewModel);
         }
-
         TempData["Success"] = _localizer["SuccessFormSubmitted"].Value;
         return RedirectToAction("Index", "Templates");
     }
@@ -62,23 +92,24 @@ public class FormsController : Controller
     public async Task<IActionResult> View(int id, string? returnUrl)
     {
         var userId = GetUserId();
-        var isAdmin = User.IsInRole("Admin");
+        var isAdmin = IsAdmin();
         var form = await _formService.GetFormForViewingAsync(id, userId, isAdmin);
         if (form == null) return NotFound();
+        var viewModel = ToFormResultViewModel(form);
         ViewData["BackUrl"] = !string.IsNullOrEmpty(returnUrl)
             ? returnUrl
-            : isAdmin || form.Template.UserId == userId
+            : isAdmin || form.Template?.UserId == userId
                 ? Url.Action("Edit", "Templates", new { id = form.TemplateId }) + "#results"
                 : Url.Action("Index", "Forms");
-        return View(form);
+        return View(viewModel);
     }
 
     [Authorize]
     public async Task<IActionResult> Index()
     {
-        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-        var forms = await _formService.GetFormsForUserAsync(userId);
-        return View(forms);
+        var forms = await _formService.GetFormsForUserAsync(GetUserId());
+        var viewModels = forms.Select(ToFormResultViewModel).ToList();
+        return View(viewModels);
     }
 
     [HttpPost]
@@ -86,49 +117,30 @@ public class FormsController : Controller
     public async Task<IActionResult> ApplyAction(string action, string formIds)
     {
         if (string.IsNullOrWhiteSpace(formIds))
-        {
-            TempData["Error"] = _localizer["ErrorNoFormsSelected"].Value;
-            return RedirectToAction(nameof(Index));
-        }
-
+            return HandleFormError("ErrorNoFormsSelected");
         if (!string.Equals(action, "Delete", StringComparison.OrdinalIgnoreCase))
-        {
-            TempData["Error"] = _localizer["ErrorInvalidAction"].Value;
-            return RedirectToAction(nameof(Index));
-        }
-
+            return HandleFormError("ErrorInvalidAction");
         var ids = formIds.Split(',', StringSplitOptions.RemoveEmptyEntries)
             .Select(id => int.TryParse(id, out var parsedId) ? parsedId : (int?)null)
             .Where(id => id.HasValue)
             .Select(id => id!.Value)
             .ToList();
-
         if (!ids.Any())
-        {
-            TempData["Error"] = _localizer["ErrorNoValidForms"].Value;
-            return RedirectToAction(nameof(Index));
-        }
-
-        var userId = GetUserId();
-        var isAdmin = User.IsInRole("Admin");
-
-        var (success, errorKey) = await _formService.DeleteFormsAsync(ids, userId, isAdmin);
-
+            return HandleFormError("ErrorNoValidForms");
+        var (success, errorKey) = await _formService.DeleteFormsAsync(ids, GetUserId(), IsAdmin());
         if (!success)
-        {
-            TempData["Error"] = _localizer[errorKey].Value;
-            return RedirectToAction(nameof(Index));
-        }
-
+            return HandleFormError(errorKey);
         TempData["Success"] = _localizer["SuccessDeleteForms"].Value;
         return RedirectToAction(nameof(Index));
     }
+
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
-        var form = await _formService.GetFormForEditingAsync(id, GetUserId(), User.IsInRole("Admin"));
+        var form = await ReloadFormForEditing(id);
         if (form == null) return NotFound();
-        return View(form);
+        var viewModel = ToFormResultViewModel(form);
+        return View(viewModel);
     }
 
     [HttpPost]
@@ -137,20 +149,20 @@ public class FormsController : Controller
     {
         if (!ModelState.IsValid)
         {
-            var reloadedForm = await _formService.GetFormForEditingAsync(form.Id, GetUserId(), User.IsInRole("Admin"));
+            var reloadedForm = await ReloadFormForEditing(form.Id);
             if (reloadedForm == null) return NotFound();
-            return View(reloadedForm);
+            var viewModel = ToFormResultViewModel(reloadedForm);
+            return View(viewModel);
         }
-
-        var (success, errorKey) = await _formService.EditFormAsync(form.Id, answers, GetUserId(), User.IsInRole("Admin"));
+        var (success, errorKey) = await _formService.EditFormAsync(form.Id, answers, GetUserId(), IsAdmin());
         if (!success)
         {
             ModelState.AddModelError(string.Empty, _localizer[errorKey]);
-            var reloadedForm = await _formService.GetFormForEditingAsync(form.Id, GetUserId(), User.IsInRole("Admin"));
+            var reloadedForm = await ReloadFormForEditing(form.Id);
             if (reloadedForm == null) return NotFound();
-            return View(reloadedForm);
+            var viewModel = ToFormResultViewModel(reloadedForm);
+            return View(viewModel);
         }
-
         TempData["Success"] = _localizer["SuccessFormUpdated"].Value;
         return RedirectToAction("View", new { id = form.Id });
     }

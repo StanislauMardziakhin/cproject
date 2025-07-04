@@ -1,5 +1,6 @@
 ﻿@using Microsoft.Extensions.Localization
-@model Question
+@using CourseProject.ViewModels
+@model QuestionViewModel
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
@@ -15,7 +16,7 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form asp-action="EditQuestion" asp-controller="Templates" method="post" id="edit-question-form">
+        <form asp-action="EditQuestion" asp-controller="TemplateQuestions" method="post" id="edit-question-form">
             @Html.AntiForgeryToken()
             <input type="hidden" asp-for="Id"/>
             <input type="hidden" asp-for="TemplateId"/>
@@ -29,7 +30,7 @@
             <div class="mb-3">
                 <label asp-for="Description" class="form-label">@Localizer["Description"]</label>
                 <input asp-for="Description" class="form-control"/>
-                <span asp-validation-for="Title" class="text-danger"></span>
+                <span asp-validation-for="Description" class="text-danger"></span>
             </div>
 
             <div class="mb-3">

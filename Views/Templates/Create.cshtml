@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.Localization
-@model CourseProject.Models.Template
+@using CourseProject.ViewModels
+@model TemplateViewModel
 @inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = Localizer["CreateTemplate"];
@@ -40,7 +41,7 @@
     </div>
     <div class="form-group mb-3">
         <label for="image" class="form-label">@Localizer["Image"]</label>
-        <input type="file" name="image" class="form-control" accept="image/*" />
+        <input type="file" name="image" id="image" class="form-control" accept="image/*" />
     </div>
     <button type="submit" class="btn btn-primary">@Localizer["Create"]</button>
 </form>

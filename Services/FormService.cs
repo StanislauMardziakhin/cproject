@@ -18,50 +18,38 @@ public class FormService
     {
         var template = await _templateService.GetPublicTemplateAsync(templateId, userId, isAdmin);
         if (template == null) return null;
-
-        return new Form
+        
+        var form = new Form
         {
             TemplateId = templateId,
-            Template = template
+            Template = template,
+            Answers = template.Questions.Select(q => new FormAnswer
+            {
+                QuestionId = q.Id,
+                Question = q,
+                Value = string.Empty
+            }).ToList()
         };
+        
+        return form;
     }
 
-    public async Task<(bool Success, string ErrorMessage)> SaveFormAsync(Form form, Dictionary<int, string> answers,
-        string userId)
+    public async Task<(bool Success, string ErrorMessage)> SaveFormAsync(Form form, Dictionary<int, string> answers, string userId)
     {
         var template = await _templateService.GetPublicTemplateAsync(form.TemplateId, userId, false);
         if (template == null) return (false, "TemplateNotFoundOrAccessDenied");
+        if (!AreQuestionIdsValid(template, answers)) return (false, "InvalidQuestionIds");
+        
 
-        var questionIds = template.Questions.Select(q => q.Id).ToHashSet();
-        if (answers.Keys.Any(key => !questionIds.Contains(key))) return (false, "InvalidQuestionIds");
-
-        form.UserId = userId;
-        form.CreatedAt = DateTime.UtcNow;
-        form.Answers = answers.Select(a => new FormAnswer
-        {
-            QuestionId = a.Key,
-            Value = a.Value ?? string.Empty
-        }).ToList();
-
+        form.Template = template;
+        PrepareFormForSave(form, answers, userId);
         _context.Forms.Add(form);
-        try
-        {
-            await _context.SaveChangesAsync();
-        }
-        catch (Exception ex)
-        {
-            if (ex.InnerException != null)
-            {
-            }
-
-            return (false, "DatabaseError");
-        }
-
-        return (true, string.Empty);
+        return await TrySaveChangesAsync("DatabaseError");
     }
 
     public async Task<Form?> GetFormForViewingAsync(int formId, string userId, bool isAdmin)
     {
+
         var form = await _context.Forms
             .Include(f => f.Template)
             .ThenInclude(t => t.Questions)
@@ -72,8 +60,7 @@ public class FormService
 
         if (form == null) return null;
 
-        if (!isAdmin && form.UserId != userId && form.Template.UserId != userId)
-            return null;
+        if (!isAdmin && form.UserId != userId && form.Template?.UserId != userId) return null;
 
         return form;
     }
@@ -81,8 +68,7 @@ public class FormService
     public async Task<List<Form>> GetFormsForTemplateAsync(int templateId, string? userId, bool isAdmin)
     {
         var template = await _templateService.GetPublicTemplateAsync(templateId, userId, isAdmin);
-        if (template == null) return new List<Form>();
-
+        if (template == null) return [];
         return await _context.Forms
             .Where(f => f.TemplateId == templateId)
             .Include(f => f.User)
@@ -92,7 +78,7 @@ public class FormService
     public async Task<IEnumerable<Form>> GetFormsForUserAsync(string userId)
     {
         if (string.IsNullOrEmpty(userId))
-            return new List<Form>();
+            return [];
         return await _context.Forms
             .Where(f => f.UserId == userId)
             .Include(f => f.Template)
@@ -104,18 +90,15 @@ public class FormService
         var forms = await _context.Forms
             .Where(f => formIds.Contains(f.Id))
             .ToListAsync();
-
-        if (!forms.Any())
+        if (forms.Count == 0)
             return (false, "ErrorFormsNotFound");
-
-        if (!isAdmin)
-            if (forms.Any(f => f.UserId != userId))
-                return (false, "ErrorNoPermission");
-
+        if (!isAdmin && forms.Any(f => f.UserId != userId))
+            return (false, "ErrorNoPermission");
         _context.Forms.RemoveRange(forms);
         await _context.SaveChangesAsync();
         return (true, string.Empty);
     }
+
     public async Task<Form?> GetFormForEditingAsync(int formId, string userId, bool isAdmin)
     {
         var form = await _context.Forms
@@ -123,15 +106,14 @@ public class FormService
             .ThenInclude(a => a.Question)
             .Include(f => f.Template)
             .FirstOrDefaultAsync(f => f.Id == formId);
-
         if (form == null) return null;
         if (!isAdmin && form.UserId != userId) return null;
-
         return form;
     }
 
     public async Task<(bool Success, string ErrorKey)> EditFormAsync(int formId, Dictionary<int, string> updatedAnswers, string userId, bool isAdmin)
     {
+
         var form = await _context.Forms
             .Include(f => f.Answers)
             .Include(f => f.Template)
@@ -140,9 +122,35 @@ public class FormService
 
         if (form == null) return (false, "ErrorFormNotFound");
         if (!isAdmin && form.UserId != userId) return (false, "ErrorNoPermission");
+        var validQuestionIds = form?.Template?.Questions?.Select(q => q.Id).ToHashSet() ?? [];
+        UpdateAnswers(form!, updatedAnswers, validQuestionIds);
+        return await TrySaveChangesAsync("ErrorFormSave");
+    }
+    
+    private static bool AreQuestionIdsValid(Template template, Dictionary<int, string> answers)
+    {
+        var questionIds = template.Questions.Select(q => q.Id).ToHashSet();
+        return !answers.Keys.Any(key => !questionIds.Contains(key));
+    }
 
-        var validQuestionIds = form.Template.Questions.Select(q => q.Id).ToHashSet();
+    private static void PrepareFormForSave(Form form, Dictionary<int, string> answers, string userId)
+    {
+        form.UserId = userId;
+        form.CreatedAt = DateTime.UtcNow;
 
+
+        var questionIds = form.Template?.Questions?.Select(q => q.Id).ToHashSet() ?? [];
+
+
+        form.Answers = questionIds.Select(questionId => new FormAnswer
+        {
+            QuestionId = questionId,
+            Value = answers.TryGetValue(questionId, out var value) ? value : "false"
+        }).ToList();
+    }
+
+    private static void UpdateAnswers(Form form, Dictionary<int, string> updatedAnswers, HashSet<int> validQuestionIds)
+    {
         foreach (var answer in form.Answers)
         {
             if (updatedAnswers.TryGetValue(answer.QuestionId, out var value) && validQuestionIds.Contains(answer.QuestionId))
@@ -150,7 +158,10 @@ public class FormService
                 answer.Value = value;
             }
         }
+    }
 
+    private async Task<(bool Success, string ErrorMessage)> TrySaveChangesAsync(string errorKey)
+    {
         try
         {
             await _context.SaveChangesAsync();
@@ -158,7 +169,7 @@ public class FormService
         }
         catch
         {
-            return (false, "ErrorFormSave");
+            return (false, errorKey);
         }
     }
 }

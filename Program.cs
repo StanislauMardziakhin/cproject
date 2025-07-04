@@ -1,5 +1,4 @@
 using System.Globalization;
-using CourseProject;
 using CourseProject.Hubs;
 using CourseProject.Models;
 using CourseProject.Services;
@@ -9,16 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using SharedResources = CourseProject.Resources.SharedResources;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
-Console.WriteLine($"Raw DATABASE_URL: {(string.IsNullOrEmpty(databaseUrl) ? "null or empty" : databaseUrl)}");
 var defaultConnection = builder.Configuration.GetConnectionString("DefaultConnection");
-Console.WriteLine(
-    $"DefaultConnection: {(string.IsNullOrEmpty(defaultConnection) ? "null or empty" : defaultConnection)}");
-
 var connectionStringService = new ConnectionStringConverter(databaseUrl, defaultConnection);
 var efConnectionString = connectionStringService.GetConnectionString();
-Console.WriteLine($"Using connection string: {efConnectionString}");
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(efConnectionString));
@@ -36,6 +29,10 @@ builder.Services.AddScoped<IFormResultService, FormResultService>();
 builder.Services.AddScoped<IResultsAggregatorService, ResultsAggregatorService>();
 builder.Services.AddScoped<CommentService>();
 builder.Services.AddScoped<LikeService>();
+builder.Services.AddScoped<TemplateAccessService>();
+builder.Services.AddScoped<TemplatePublicationService>();
+builder.Services.AddScoped<ImageService>();
+builder.Services.AddScoped<TemplateSearchService>();
 builder.Services.AddSignalR();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()

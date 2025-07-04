@@ -231,6 +231,9 @@
     <data name="NameRequired" xml:space="preserve">
     <value>Name is required.</value>
   </data>
+    <data name="TypeRequired" xml:space="preserve">
+    <value>Question type is required.</value>
+  </data>
     <data name="NameTooLong" xml:space="preserve">
     <value>Name cannot exceed 100 characters.</value>
   </data>
@@ -588,5 +591,8 @@
     </data>
     <data name="Access" xml:space="preserve">
         <value>Access</value>
+    </data>
+    <data name="Results" xml:space="preserve">
+        <value>Results</value>
     </data>
 </root>

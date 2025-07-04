@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.Localization
-@model IEnumerable<CourseProject.Models.Form>
+@using CourseProject.ViewModels
+@model IEnumerable<FormResultViewModel>
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
@@ -9,7 +10,7 @@
 
 <h2>@Localizer["FormsTitle"]</h2>
 
-@if (User?.Identity?.IsAuthenticated == true)
+@if (User.Identity?.IsAuthenticated == true)
 {
     <div class="d-flex flex-wrap gap-2 mb-3 align-items-start">
         <form asp-action="ApplyAction" asp-controller="Forms" method="post" id="forms-form"
@@ -40,10 +41,10 @@
     <tbody>
     @foreach (var form in Model)
     {
-        <tr data-id="@form.Id" class="clickable-row" 
-            data-href="@Url.Action("View", "Forms", new { id = form.Id, returnUrl = Url.Action("Index", "Forms") })">
-            <td><input type="checkbox" name="formIds" value="@form.Id"/></td>
-            <td>@form.Template?.Name</td>
+        <tr data-id="@form.FormId" class="clickable-row" 
+            data-href="@Url.Action("View", "Forms", new { id = form.FormId, returnUrl = Url.Action("Index", "Forms") })">
+            <td><input type="checkbox" name="formIds" value="@form.FormId"/></td>
+            <td>@form.TemplateName</td>
             <td>@form.CreatedAt.ToString("g")</td>
         </tr>
     }

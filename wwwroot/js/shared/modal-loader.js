@@ -1,4 +1,6 @@
-﻿export function initModalLoader() {
+﻿import { initQuestionForm } from './question-form.js';
+
+export function initModalLoader() {
     const modalElement = document.getElementById('questionModal');
     if (!modalElement) return;
 
@@ -14,9 +16,14 @@
             modal.show();
 
             try {
-                const response = await fetch(this.href);
+                const response = await fetch(this.href, {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                });
                 const html = await response.text();
                 modalBody.innerHTML = html;
+                initQuestionForm();
             } catch (error) {
                 modalBody.innerHTML = `<div class="alert alert-danger">${window.localization.ErrorInvalidInput}</div>`;
                 console.error('Error loading modal content', error);

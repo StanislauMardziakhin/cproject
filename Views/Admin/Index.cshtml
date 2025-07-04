@@ -64,32 +64,7 @@
         </tbody>
     </table>
 </form>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('selectAll').addEventListener('change', function () {
-            document.querySelectorAll('input[name="userIds"]').forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-        });
 
-        document.querySelectorAll('.action-button').forEach(button => {
-            button.addEventListener('click', function () {
-                const form = document.querySelector('form[action="/Admin/ApplyAction"]');
-                const actionInput = document.getElementById('action-input');
-                actionInput.value = this.dataset.action;
-                form.dispatchEvent(new Event('submit'));
-            });
-        });
-
-        const form = document.getElementById('admin-form');
-        if (form) {
-            form.addEventListener('submit', function (e) {
-                if (!document.querySelectorAll('input[name="userIds"]:checked').length) {
-                    e.preventDefault();
-                    const alert = document.getElementById('error-alert');
-                    alert.classList.remove('d-none');
-                }
-            });
-        }
-    });
-</script>
+@section Scripts {
+    <script type="module" src="~/js/admin/index.js" asp-append-version="true"></script>
+}

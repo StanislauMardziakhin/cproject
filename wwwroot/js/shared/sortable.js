@@ -14,7 +14,7 @@ export function initSortableList() {
             }));
 
             $.ajax({
-                url: '/Templates/UpdateQuestionOrder',
+                url: '/TemplateQuestions/UpdateQuestionOrder',
                 method: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify({orders: order}),

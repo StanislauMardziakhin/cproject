@@ -2,6 +2,8 @@
     const tagsInput = document.querySelector('#tags-input');
     const tagsHidden = document.querySelector('#tags-hidden');
     
+    if (!tagsInput) return;
+    
     $(tagsInput).select2({
         tags: true,
         tokenSeparators: [',', ' '],
@@ -14,17 +16,21 @@
             data: params => ({ term: params.term || '' }),
             processResults: data => ({
                 results: data.map(tag => ({
-                    id: tag.id,
-                    text: tag.text
+                    id: tag,
+                    text: tag
                 }))
             }),
-            cache: true
+            cache: true,
+            error: function() {
+                console.error('Failed to load tags');
+            }
         },
         minimumInputLength: 1,
         language: {
-            inputTooShort: () => MinimumInputMessage
+            inputTooShort: () => tagsInput.dataset.minimumInputMessage
         }
     });
+    
     $(tagsInput).on('change', function() {
         const selectedTags = $(this).val() || [];
         tagsHidden.value = selectedTags.join(', ');

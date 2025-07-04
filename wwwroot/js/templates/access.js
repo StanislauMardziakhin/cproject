@@ -1,4 +1,4 @@
-﻿import { showToast } from '../shared/toast.js';
+﻿import { showToast, handleAjaxError, removeListPlaceholder, buildUserListItem } from '../shared/utils.js';
 $(function () {
     const $userSearch = $('#userSearch');
     const $userList = $('#userList');
@@ -55,23 +55,13 @@ $(function () {
             data: {templateId, userId: data.id},
             headers: {'RequestVerificationToken': token},
             success: function () {
-                $userList.find('.text-muted').remove();
-                const li = `
-        <li class="list-group-item d-flex justify-content-between align-items-center"
-            data-user-id="${data.id}" data-name="${data.name}" data-email="${data.email}">
-            <span>${data.name} (${data.email})</span>
-            <button type="button"
-                class="btn btn-outline-danger btn-sm remove-user"
-                title="${window.localization?.Remove || 'Remove'}"
-                aria-label="${window.localization?.Remove || 'Remove'}"
-                data-user-id="${data.id}">
-            <i class="bi bi-x-lg"></i>
-        </button>
-        </li>`;
+                removeListPlaceholder($userList);
+                const li = buildUserListItem(data, window.localization);
                 $userList.append(li);
                 $userSearch.val(null).trigger('change');
                 sortUserListByName();
-            }
+            },
+            error: handleAjaxError
         });
     });
 
@@ -87,19 +77,18 @@ $(function () {
                     const noUsersText = window.localization?.NoUsersAdded || 'No users added';
                     $userList.append(`<li class="list-group-item text-muted">${noUsersText}</li>`);
                 }
-            }
+            },
+            error: handleAjaxError
         });
     });
 
     function sortUserListByName() {
         const items = $userList.children('li').get();
-
         items.sort((a, b) => {
             const aName = ($(a).data('name') || '').toLowerCase();
             const bName = ($(b).data('name') || '').toLowerCase();
             return aName.localeCompare(bName);
         });
-
         $userList.append(items);
     }
 
@@ -108,13 +97,11 @@ $(function () {
     function sortUserList() {
         const sortBy = $('#sortOrder').val();
         const items = $userList.children('li').get();
-
         items.sort((a, b) => {
             const aValue = $(a).data(sortBy) || '';
             const bValue = $(b).data(sortBy) || '';
             return aValue.localeCompare(bValue);
         });
-
         $userList.append(items);
     }
 });

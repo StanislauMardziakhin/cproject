@@ -1,5 +1,6 @@
 ﻿@using Microsoft.Extensions.Localization
-@model IEnumerable<Template>
+@using CourseProject.ViewModels
+@model IEnumerable<TemplateViewModel>
 @inject IStringLocalizer<SharedResources> Localizer
 
 @{
@@ -57,6 +58,7 @@
         <th>@Localizer["Name"]</th>
         <th>@Localizer["Description"]</th>
         <th>@Localizer["Theme"]</th>
+        <th>@Localizer["Tags"]</th>
     </tr>
     </thead>
     <tbody>
@@ -66,6 +68,15 @@
             <td><a asp-controller="Templates" asp-action="View" asp-route-id="@template.Id">@template.Name</a></td>
             <td>@template.Description</td>
             <td>@template.Theme</td>
+            <td>
+                @if (!string.IsNullOrEmpty(template.Tags))
+                {
+                    @foreach (var tag in template.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                    {
+                        <span class="badge bg-secondary me-1">@tag.Trim()</span>
+                    }
+                }
+            </td>
         </tr>
     }
     </tbody>
@@ -74,4 +85,8 @@
 @if (!Model.Any())
 {
     <p class="text-muted">@Localizer["NoResults"]</p>
+}
+
+@section Scripts {
+    <script type="module" src="~/js/search/index.js" asp-append-version="true"></script>
 }

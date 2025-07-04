@@ -1,18 +1,14 @@
 ﻿@using Microsoft.Extensions.Localization
-@inject UserManager<ApplicationUser> UserManager
+@using CourseProject.ViewModels
+@model HomePageViewModel
 @inject IStringLocalizer<SharedResources> Localizer
 @{
     ViewData["Title"] = Localizer["CP"];
-    var latestTemplates = ViewData["LatestTemplates"] as List<Template> ?? [];
-    var topTemplates = ViewData["TopTemplates"] as List<Template> ?? [];
 }
-<div class="text-center">
-    <h1 class="display-4">@Localizer["Hello"], @ViewData["UserName"]!</h1>
-</div>
 <div class="container my-5">
     <h2 class="mb-4">@Localizer["LatestTemplates"]</h2>
     <div class="row row-cols-1 row-cols-md-3 g-4">
-        @foreach (var template in latestTemplates)
+        @foreach (var template in Model.LatestTemplates)
         {
             <div class="col">
                 <div class="card h-100">
@@ -22,8 +18,21 @@
                     }
                     <div class="card-body">
                         <h5 class="card-title"><a asp-controller="Templates" asp-action="View" asp-route-id="@template.Id">@template.Name</a></h5>
-                        <p class="card-text">@(string.IsNullOrEmpty(template.Description) ? Localizer["NoDescription"] : template.Description.Length > 100 ? template.Description.Substring(0, 100) + "..." : template.Description)</p>
-                        <p class="card-text"><small class="text-muted">@Localizer["Author"]: @(template.User?.Name ?? Localizer["Unknown"])</small></p>
+                        <p class="card-text">@template.DescriptionTruncated</p>
+                        @if (!string.IsNullOrEmpty(template.Tags))
+                        {
+                            <div class="mb-2">
+                                @foreach (var tag in template.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Take(3))
+                                {
+                                    <span class="badge bg-secondary me-1 small">@tag.Trim()</span>
+                                }
+                                @if (template.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Length > 3)
+                                {
+                                    <span class="badge bg-light text-dark me-1 small">+@(template.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Length - 3)</span>
+                                }
+                            </div>
+                        }
+                        <p class="card-text"><small class="text-muted">@Localizer["Author"]: @(template.OwnerName ?? Localizer["Name"])</small></p>
                     </div>
                 </div>
             </div>
@@ -40,12 +49,12 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var template in topTemplates)
+            @foreach (var template in Model.TopTemplates)
             {
                 <tr>
                     <td><a asp-controller="Templates" asp-action="View" asp-route-id="@template.Id">@template.Name</a></td>
-                    <td>@(template.User?.Name ?? Localizer["Unknown"])</td>
-                    <td>@template.Forms.Count</td>
+                    <td>@(template.OwnerName ?? Localizer["Name"])</td>
+                    <td>@template.FormsCount</td>
                 </tr>
             }
         </tbody>
