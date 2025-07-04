@@ -600,4 +600,10 @@
     <data name="Results" xml:space="preserve">
         <value>Resultados</value>
     </data>
+    <data name="PasswordRequirements" xml:space="preserve">
+        <value>La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial.</value>
+    </data>
+    <data name="InvalidEmailFormat" xml:space="preserve">
+        <value>Formato de correo electrónico no válido.</value>
+    </data>
 </root>

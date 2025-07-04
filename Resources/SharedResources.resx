@@ -595,4 +595,7 @@
     <data name="Results" xml:space="preserve">
         <value>Results</value>
     </data>
+    <data name="PasswordRequirements" xml:space="preserve">
+        <value>Password must contain at least one uppercase letter, one digit, and one special character.</value>
+    </data>
 </root>
