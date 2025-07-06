@@ -8,7 +8,7 @@ $(function () {
     $userSearch.select2({
         placeholder: $userSearch.data('placeholder'),
         ajax: {
-            url: '/Templates/SearchUsers',
+            url: '/TemplateAccess/SearchUsers',
             dataType: 'json',
             data: params => ({query: params.term}),
             processResults: data => {
@@ -51,7 +51,7 @@ $(function () {
             return;
         }
         $.post({
-            url: '/Templates/AddUserAccess',
+            url: '/TemplateAccess/AddUserAccess',
             data: {templateId, userId: data.id},
             headers: {'RequestVerificationToken': token},
             success: function () {
@@ -68,7 +68,7 @@ $(function () {
     $userList.on('click', '.remove-user', function () {
         const userId = $(this).data('user-id');
         $.post({
-            url: '/Templates/RemoveUserAccess',
+            url: '/TemplateAccess/RemoveUserAccess',
             data: {templateId, userId},
             headers: {'RequestVerificationToken': token},
             success: function () {
