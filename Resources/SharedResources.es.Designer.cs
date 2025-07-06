@@ -798,6 +798,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Formato de correo electrónico no válido..
+        /// </summary>
+        internal static string InvalidEmailFormat {
+            get {
+                return ResourceManager.GetString("InvalidEmailFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 	Identificadores de preguntas no válidos.
         /// </summary>
         internal static string InvalidQuestionIds {
@@ -996,7 +1005,7 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El nombre no puede exceder los 100 caracteres..
+        ///   Looks up a localized string similar to El nombre no puede exceder 100 caracteres..
         /// </summary>
         internal static string NameTooLong {
             get {
@@ -1127,6 +1136,15 @@ namespace CourseProject.Resources {
         internal static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La contraseña debe contener al menos una letra mayúscula, un número y un carácter especial..
+        /// </summary>
+        internal static string PasswordRequirements {
+            get {
+                return ResourceManager.GetString("PasswordRequirements", resourceCulture);
             }
         }
         
@@ -1572,6 +1590,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plantilla no encontrada.
+        /// </summary>
+        internal static string TemplateNotFound {
+            get {
+                return ResourceManager.GetString("TemplateNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plantilla no encontrada o acceso denegado..
         /// </summary>
         internal static string TemplateNotFoundOrAccessDenied {
@@ -1671,6 +1698,15 @@ namespace CourseProject.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to El tipo de pregunta es obligatorio..
+        /// </summary>
+        internal static string TypeRequired {
+            get {
+                return ResourceManager.GetString("TypeRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No estás autorizado para realizar esta acción.
         /// </summary>
         internal static string Unauthorized {
@@ -1730,6 +1766,15 @@ namespace CourseProject.Resources {
         internal static string UserIdRequired {
             get {
                 return ResourceManager.GetString("UserIdRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario no encontrado.
+        /// </summary>
+        internal static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
         

@@ -20,7 +20,7 @@ public class AdminFormsController : Controller
         _localizer = localizer;
     }
 
-    private string GetUserId() => User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+    private string GetUserId() => User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
     private bool IsAdmin() => User.IsInRole("Admin");
 
     private async Task<Form?> ReloadFormForEditing(int formId)
@@ -31,7 +31,7 @@ public class AdminFormsController : Controller
     private IActionResult HandleFormError(string errorKey)
     {
         TempData["Error"] = _localizer[errorKey].Value;
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("Index", "UserForms");
     }
 
     [HttpGet]
@@ -83,7 +83,7 @@ public class AdminFormsController : Controller
         if (!success)
             return HandleFormError(errorKey);
         TempData["Success"] = _localizer["SuccessDeleteForms"].Value;
-        return RedirectToAction(nameof(Index));
+        return RedirectToAction("Index",  "UserForms");
     }
 
     private FormResultViewModel ToFormResultViewModel(Form form)

@@ -1,5 +1,6 @@
 using CourseProject.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,21 +10,23 @@ namespace CourseProject.Services;
 public class TemplateAccessService
 {
     private readonly AppDbContext _context;
+    private readonly IStringLocalizer<SharedResources> _localizer;
 
-    public TemplateAccessService(AppDbContext context)
+    public TemplateAccessService(AppDbContext context, IStringLocalizer<SharedResources> localizer)
     {
         _context = context;
+        _localizer = localizer;
     }
 
     public async Task AddUserAccessAsync(int templateId, string userId)
     {
         var userExists = await _context.Users.AnyAsync(u => u.Id == userId);
         if (!userExists)
-            throw new Exception("User not found");
+            throw new Exception(_localizer["UserNotFound"].Value);
 
         var templateExists = await _context.Templates.AnyAsync(t => t.Id == templateId);
         if (!templateExists)
-            throw new Exception("Template not found");
+            throw new Exception(_localizer["TemplateNotFound"].Value);
 
         var alreadyExists = await _context.TemplateAccesses
             .AnyAsync(a => a.TemplateId == templateId && a.UserId == userId);

@@ -31,7 +31,7 @@ public class FormResultService : IFormResultService
         return forms.Select(f => new FormResultViewModel
         {
             FormId = f.Id,
-            UserEmail = f.User?.Email ?? "Anonymous",
+            UserEmail = f.User?.Email,
             CreatedAt = f.CreatedAt,
             Answers = f.Answers
                 .Where(a => a.Question.IsVisibleInResults)

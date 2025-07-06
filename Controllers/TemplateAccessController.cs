@@ -15,15 +15,8 @@ public class TemplateAccessController : Controller
     [HttpPost]
     public async Task<IActionResult> AddUserAccess(int templateId, string userId)
     {
-        try
-        {
             await _templateAccessService.AddUserAccessAsync(templateId, userId);
             return Json(new { success = true });
-        }
-        catch (Exception ex)
-        {
-            return StatusCode(500, new { error = ex.Message });
-        }
     }
 
     [HttpPost]

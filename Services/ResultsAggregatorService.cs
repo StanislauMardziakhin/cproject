@@ -2,6 +2,7 @@
 using CourseProject.Services.Aggregators;
 using CourseProject.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace CourseProject.Services;
 
@@ -15,10 +16,10 @@ public class ResultsAggregatorService : IResultsAggregatorService
     private readonly AppDbContext _context;
     private readonly AnswerAggregatorFactory _factory;
 
-    public ResultsAggregatorService(AppDbContext context)
+    public ResultsAggregatorService(AppDbContext context, IStringLocalizer<SharedResources> localizer)
     {
         _context = context;
-        _factory = new AnswerAggregatorFactory();
+        _factory = new AnswerAggregatorFactory(localizer);
     }
 
     public async Task<List<QuestionAggregationResult>> GetAggregatedResultsAsync(int templateId)

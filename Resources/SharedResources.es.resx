@@ -606,4 +606,10 @@
     <data name="InvalidEmailFormat" xml:space="preserve">
         <value>Formato de correo electrónico no válido.</value>
     </data>
+    <data name="UserNotFound" xml:space="preserve">
+        <value>Usuario no encontrado</value>
+    </data>
+    <data name="TemplateNotFound" xml:space="preserve">
+        <value>Plantilla no encontrada</value>
+    </data>
 </root>

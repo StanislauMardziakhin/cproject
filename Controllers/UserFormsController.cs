@@ -82,13 +82,12 @@ public class UserFormsController : Controller
         var viewModel = ToFormResultViewModel(form);
         ViewData["BackUrl"] = !string.IsNullOrEmpty(returnUrl)
             ? returnUrl
-            : isAdmin || form.Template.UserId == userId
+            : isAdmin || form.Template?.UserId == userId
                 ? Url.Action("Edit", "Templates", new { id = form.TemplateId }) + "#results"
                 : Url.Action("Index", "UserForms");
         return View(viewModel);
     }
 
-    [Authorize]
     public async Task<IActionResult> Index()
     {
         var forms = await _formService.GetFormsForUserAsync(GetUserId());

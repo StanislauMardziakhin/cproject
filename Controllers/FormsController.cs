@@ -104,7 +104,6 @@ public class FormsController : Controller
         return View(viewModel);
     }
 
-    [Authorize]
     public async Task<IActionResult> Index()
     {
         var forms = await _formService.GetFormsForUserAsync(GetUserId());

@@ -33,7 +33,7 @@ public class HomeController : Controller
         var latestViewModels = latestTemplates.Select(t => ToViewModel(t)).ToList();
         var topViewModels = topTemplates.Select(t => ToViewModel(t)).ToList();
 
-        var model = new CourseProject.ViewModels.HomePageViewModel
+        var model = new ViewModels.HomePageViewModel
         {
             LatestTemplates = latestViewModels,
             TopTemplates = topViewModels
