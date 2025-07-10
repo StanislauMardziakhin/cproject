@@ -38,6 +38,7 @@ public class SalesforceService
             throw new InvalidOperationException(_localizer["SalesforceInvalidConfig"]!);
 
         privateKeyPem = privateKeyPem.Replace("\\n", "\n");
+        Console.WriteLine(privateKeyPem);
 
         try
         {
