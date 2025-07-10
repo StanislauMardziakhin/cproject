@@ -612,4 +612,43 @@
     <data name="TemplateNotFound" xml:space="preserve">
         <value>Plantilla no encontrada</value>
     </data>
+    <data name="SalesforceIntegrationError" xml:space="preserve">
+    <value>Error de integración con Salesforce. Por favor, inténtelo de nuevo más tarde.</value>
+  </data>
+  <data name="AccountAndContactCreated" xml:space="preserve">
+    <value>Cuenta y contacto creados correctamente en Salesforce.</value>
+  </data>
+  <data name="SalesforceInvalidConfig" xml:space="preserve">
+    <value>Configuración de integración de Salesforce no válida. Por favor, contacte al administrador.</value>
+  </data>
+  <data name="SalesforceAuthError" xml:space="preserve">
+    <value>Error de autenticación de Salesforce.</value>
+  </data>
+  <data name="SalesforceConnectionError" xml:space="preserve">
+    <value>Error de conexión con Salesforce.</value>
+  </data>
+  <data name="SalesforceResponseError" xml:space="preserve">
+    <value>Error al procesar la respuesta de Salesforce.</value>
+  </data>
+  <data name="SalesforceGeneralError" xml:space="preserve">
+    <value>Error de integración con Salesforce.</value>
+  </data>
+  <data name="SalesforceIntegrationTitle" xml:space="preserve">
+    <value>Integración con Salesforce</value>
+  </data>
+  <data name="SendToSalesforce" xml:space="preserve">
+    <value>Enviar a Salesforce</value>
+  </data>
+  <data name="AccountName" xml:space="preserve">
+    <value>Nombre de la cuenta</value>
+  </data>
+  <data name="ContactFirstName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="ContactLastName" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="ContactEmail" xml:space="preserve">
+    <value>Correo electrónico</value>
+  </data>
 </root>

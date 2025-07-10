@@ -59,5 +59,3 @@ public class CommentViewModel
     public string UserName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
 }
-
-// Add more as needed for the UI

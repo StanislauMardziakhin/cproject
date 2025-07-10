@@ -1,0 +1,36 @@
+@model CourseProject.ViewModels.SalesforceViewModel
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SharedResources> Localizer
+
+@{
+    ViewData["Title"] = Localizer["SalesforceIntegrationTitle"];
+}
+
+<h2>@Localizer["SalesforceIntegrationTitle"]</h2>
+
+<form asp-action="CreateAccountAndContact" method="post">
+    <div class="form-group">
+        <label asp-for="AccountName"></label>
+        <input asp-for="AccountName" class="form-control" />
+        <span asp-validation-for="AccountName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactFirstName"></label>
+        <input asp-for="ContactFirstName" class="form-control" />
+        <span asp-validation-for="ContactFirstName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactLastName"></label>
+        <input asp-for="ContactLastName" class="form-control" />
+        <span asp-validation-for="ContactLastName" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ContactEmail"></label>
+        <input asp-for="ContactEmail" class="form-control" />
+        <span asp-validation-for="ContactEmail" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">@Localizer["SendToSalesforce"]</button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+} 

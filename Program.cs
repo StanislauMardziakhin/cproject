@@ -33,6 +33,7 @@ builder.Services.AddScoped<TemplateAccessService>();
 builder.Services.AddScoped<TemplatePublicationService>();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddScoped<TemplateSearchService>();
+builder.Services.AddScoped<SalesforceService>();
 builder.Services.AddSignalR();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddControllersWithViews()

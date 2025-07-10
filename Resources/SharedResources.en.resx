@@ -613,4 +613,43 @@
     <data name="NoDescription" xml:space="preserve">
         <value>No description</value>
     </data>
+    <data name="AccountAndContactCreated" xml:space="preserve">
+        <value>Account and contact successfully created in Salesforce.</value>
+    </data>
+    <data name="AccountName" xml:space="preserve">
+        <value>Account Name</value>
+    </data>
+    <data name="ContactEmail" xml:space="preserve">
+        <value>Email</value>
+    </data>
+    <data name="ContactFirstName" xml:space="preserve">
+        <value>First Name</value>
+    </data>
+    <data name="ContactLastName" xml:space="preserve">
+        <value>Last Name</value>
+    </data>
+    <data name="SalesforceAuthError" xml:space="preserve">
+        <value>Salesforce authentication error.</value>
+    </data>
+    <data name="SalesforceConnectionError" xml:space="preserve">
+        <value>Salesforce connection error.</value>
+    </data>
+    <data name="SalesforceGeneralError" xml:space="preserve">
+        <value>Salesforce integration error.</value>
+    </data>
+    <data name="SalesforceIntegrationError" xml:space="preserve">
+        <value>Salesforce integration error. Please try again later.</value>
+    </data>
+    <data name="SalesforceIntegrationTitle" xml:space="preserve">
+        <value>Salesforce Integration</value>
+    </data>
+    <data name="SalesforceInvalidConfig" xml:space="preserve">
+        <value>Salesforce Integration</value>
+    </data>
+    <data name="SalesforceResponseError" xml:space="preserve">
+        <value>Salesforce response processing error.</value>
+    </data>
+    <data name="SendToSalesforce" xml:space="preserve">
+        <value>Send to Salesforce</value>
+    </data>
 </root>
