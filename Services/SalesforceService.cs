@@ -37,9 +37,6 @@ public class SalesforceService
         if (string.IsNullOrEmpty(clientId) || string.IsNullOrEmpty(username) || string.IsNullOrEmpty(privateKeyPem))
             throw new InvalidOperationException(_localizer["SalesforceInvalidConfig"]!);
 
-        privateKeyPem = privateKeyPem.Replace("\\n", "\n");
-        Console.WriteLine(privateKeyPem);
-
         try
         {
             var now = DateTime.UtcNow;
